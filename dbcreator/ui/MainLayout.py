@@ -6,7 +6,6 @@ from PyQt5.QtWidgets import QToolTip
 
 
 class Ui_MainWindow(object):
-
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(673, 594)
@@ -26,9 +25,6 @@ class Ui_MainWindow(object):
         self.listWidget_2 = QtWidgets.QListWidget(self.centralwidget)
         self.listWidget_2.setGeometry(QtCore.QRect(270, 290, 221, 261))
         self.listWidget_2.setObjectName("listWidget_2")
-        self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
-        self.lineEdit.setGeometry(QtCore.QRect(20, 40, 471, 201))
-        self.lineEdit.setObjectName("lineEdit")
         self.pushButton_2 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_2.setGeometry(QtCore.QRect(520, 100, 131, 41))
         font = QtGui.QFont()
@@ -37,14 +33,6 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.pushButton_2.setFont(font)
         self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setGeometry(QtCore.QRect(520, 160, 131, 41))
-        font = QtGui.QFont()
-        font.setPointSize(10)
-        font.setBold(True)
-        font.setWeight(75)
-        self.pushButton_3.setFont(font)
-        self.pushButton_3.setObjectName("pushButton_3")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(20, 20, 161, 16))
         font = QtGui.QFont()
@@ -69,6 +57,9 @@ class Ui_MainWindow(object):
         font.setWeight(75)
         self.label_3.setFont(font)
         self.label_3.setObjectName("label_3")
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setGeometry(QtCore.QRect(20, 40, 471, 211))
+        self.textEdit.setObjectName("textEdit")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 673, 21))
@@ -81,34 +72,37 @@ class Ui_MainWindow(object):
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
-        MainWindow.setWindowIcon(QIcon('Capture.png'))
+        MainWindow.setWindowIcon(QIcon('isyntax.png'))
         self.pushButton.clicked.connect(self.goBtnClicked)
         self.pushButton_2.clicked.connect(self.clearBtnClicked)
-        MainWindow.closeEvent=self.cancelBtnClicked
+        MainWindow.closeEvent = self.cancelBtnClicked
         self.listWidget.itemClicked.connect(self.listItemClicked)
         QToolTip.setFont(QFont('SansSerif', 10))
         self.pushButton.setToolTip("Click to retrieve <b>entities</b> in your text")
+        self.pushButton_2.setToolTip("Click to clear the text")
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Go"))
         self.pushButton_2.setText(_translate("MainWindow", "Clear"))
-        self.pushButton_3.setText(_translate("MainWindow", "Cancel"))
         self.label.setText(_translate("MainWindow", "Enter Your Text Here :"))
         self.label_2.setText(_translate("MainWindow", "Entities :"))
         self.label_3.setText(_translate("MainWindow", "Attributes :"))
 
     def goBtnClicked(self):
-        item = self.lineEdit.text()
+        item = self.textEdit.toPlainText()
         self.listWidget.addItem(item)
-        sender = self.pushButton
-        self.statusBar().showMessage(sender.text() + ' was pressed')
+        # sender = self.pushButton
+        # sender_2 = self.pushButton_2
+        # if(sender.clicked()):
+        #     MainWindow.statusBar().showMessage(sender.text() + ' was pressed')
+        # elif(sender_2.clicked()):
+        #     MainWindow.statusBar().showMessage(sender_2.text() + ' was pressed')
 
     def clearBtnClicked(self):
-        self.lineEdit.clear()
-        self.listWidget.clear()
-        self.listWidget_2.clear()
+        self.textEdit.clear()
+        self.textEdit.setFocus()
 
     def cancelBtnClicked(self, event):
         reply = QMessageBox.question(MainWindow, 'Message', "Are you sure to quit?", QMessageBox.Yes | QMessageBox.No,
@@ -120,6 +114,7 @@ class Ui_MainWindow(object):
             event.ignore()
 
     def listItemClicked(self, item):
+        self.listWidget_2.clear()
         self.listWidget_2.addItem(item.text())
 
 if __name__ == "__main__":

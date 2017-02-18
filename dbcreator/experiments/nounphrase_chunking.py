@@ -22,8 +22,6 @@ for sent in tagged_sentences:
     print('Tagged Sentence: {}'.format(sent))
     result = cp.parse(sent)
 
-    result.draw()
-
     extract_gen = extract_np(result)
 
     print('Noun Phrases: {}'.format([x for x in extract_gen]))
