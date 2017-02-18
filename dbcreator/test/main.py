@@ -5,6 +5,10 @@ import nltk
 
 text = getContentFromFile('../samples/sample1.txt')
 
-tagged_sentences = getTaggedSentences(text)
 
-# entities = getEntitiesWithAttributes(tagged_sentences)
+## primary data sets
+tagged_sentences = getTaggedSentences(text)
+chunked_sents = getChunkedSentences(tagged_sentences)
+
+
+
