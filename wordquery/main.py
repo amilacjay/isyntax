@@ -1,5 +1,5 @@
 import re
-from Project_v2.preprocessor import *
+from wordquery.preprocessor import *
 
 __author__ = 'ChaminiKD'
 

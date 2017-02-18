@@ -1,6 +1,6 @@
 import xml.etree.ElementTree as ET
 from nltk.metrics import *
-from Project_v2 import shared
+from wordquery import shared
 
 __author__ = 'ChaminiKD'
 

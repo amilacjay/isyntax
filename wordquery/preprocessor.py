@@ -1,7 +1,7 @@
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from Project_v2.element_identifier import *
+from wordquery.element_identifier import *
 
 
 __author__ = 'ChaminiKD'
