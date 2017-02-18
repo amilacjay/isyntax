@@ -13,6 +13,7 @@ class App:
 
         text = getContentFromFile(self.filePath)
 
+        entityList = []
 
         ## primary data sets
         tagged_sentences = getTaggedSentences(text)
@@ -20,8 +21,6 @@ class App:
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, PrimaryKeyExtractor]
-
-        entityList = []
 
         for extractor in extractorsList:
             extObject = extractor()
@@ -32,10 +31,10 @@ class App:
             elif isinstance(extObject, SecondaryExtractor):
                 extObject.execute(entities=entityList)
 
-
+        return entityList
 
 ## Main Program Executing
 
 
 app = App(filePath='samples/sample1.txt')
-app.run()
+entities = app.run()
