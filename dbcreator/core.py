@@ -15,6 +15,17 @@ def getTaggedSentences(text):
     sentenses = [word_tokenize(sent) for sent in sentenses]
     sentenses = [pos_tag(sent) for sent in sentenses]
 
+    temp = []
+
+    for taggedSent in sentenses:
+        t = []
+        for index, taggedWord in enumerate(taggedSent):
+            t.append((taggedWord[0], taggedWord[1], index))
+
+        temp.append(t)
+
+    sentenses = temp
+
     return sentenses
 
 def getEntitiesWithAttributes(taggedSents):
@@ -23,7 +34,7 @@ def getEntitiesWithAttributes(taggedSents):
 def extract_np(psent):
     for subtree in psent.subtrees():
         if subtree.label() == 'NP':
-            yield [(word, tag) for word, tag in subtree.leaves()]
+            yield [(word, tag, index) for word, tag, index in subtree.leaves()]
 
 
 def getChunkedSentences(taggedSents):
