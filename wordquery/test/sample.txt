@@ -1,0 +1,8 @@
+What is the address of the employee ‘John B. Smith’?
+What is the birth date and address of the employee ‘John B. Smith’?
+What is the SSN of the employee ‘John B. Smith’?
+Who are the ‘male’ employees?
+Who are the ‘female’ employees?
+What is the SSN of the employee ‘John B. Smith’?
+What is the Dno of Department ‘Research’?
+What is the name and address of all employees who work for the ‘Research’ department?

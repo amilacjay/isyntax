@@ -1,0 +1,24 @@
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('address', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
+Noun Phrases: ['address', 'employee ‘John B. Smith’']
+
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('birth', 'NN'), ('date', 'NN'), ('and', 'CC'), ('address', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
+Noun Phrases: ['birth date', 'address', 'employee ‘John B. Smith’']
+
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('SSN', 'NNP'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
+Noun Phrases: ['SSN', 'employee ‘John B. Smith’']
+
+Tagged Sentence: [('Who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('‘male’', 'JJ'), ('employees', 'NNS'), ('?', '.')]
+Noun Phrases: ['employees']
+
+Tagged Sentence: [('Who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('‘female’', 'JJ'), ('employees', 'NNS'), ('?', '.')]
+Noun Phrases: ['employees']
+
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('SSN', 'NNP'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
+Noun Phrases: ['SSN', 'employee ‘John B. Smith’']
+
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('Dno', 'NNP'), ('of', 'IN'), ('Department', 'NNP'), ('‘Research’', 'NNP'), ('?', '.')]
+Noun Phrases: ['Dno', 'Department ‘Research’']
+
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('and', 'CC'), ('address', 'NN'), ('of', 'IN'), ('all', 'DT'), ('employees', 'NNS'), ('who', 'WP'), ('work', 'VBP'), ('for', 'IN'), ('the', 'DT'), ('‘Research’', 'NNP'), ('department', 'NN'), ('?', '.')]
+Noun Phrases: ['name', 'address', 'employees', '‘Research’', 'department']
+
