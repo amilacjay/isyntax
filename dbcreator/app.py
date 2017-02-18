@@ -18,6 +18,7 @@ class App:
         tagged_sentences = getTaggedSentences(text)
         chunked_sents = getChunkedSentences(tagged_sentences)
 
+        ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, PrimaryKeyExtractor]
 
         entityList = []
