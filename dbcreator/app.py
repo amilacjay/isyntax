@@ -17,7 +17,7 @@ class App:
 
         ## primary data sets
         tagged_sentences = getTaggedSentences(text)
-        chunked_sents = getChunkedSentences(tagged_sentences)
+        chunked_sentences = getChunkedSentences(tagged_sentences)
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, PrimaryKeyExtractor]
@@ -26,7 +26,7 @@ class App:
             extObject = extractor()
 
             if isinstance(extObject, PrimaryExtractor):
-                extObject.execute(tagged_sents=tagged_sentences, target=entityList)
+                extObject.execute(tagged_sents=tagged_sentences, chunked_sents=chunked_sentences, target=entityList)
 
             elif isinstance(extObject, SecondaryExtractor):
                 extObject.execute(entities=entityList)
@@ -38,3 +38,9 @@ class App:
 
 app = App(filePath='samples/sample1.txt')
 entities = app.run()
+
+for i, e in enumerate(entities):
+    print('Entity ', i)
+    print('Candidate Names: ', e.name)
+    print('Candidate Attributes', e.attributes)
+    print()
