@@ -70,7 +70,7 @@ print(query.replace('[','').replace(']',''))
 cv2.imshow('gray', gray)
 cv2.imshow('thresh', thresh)
 cv2.imshow('removed', removed)
-# cv2.imshow('circled', test)
+# cv2.imshow('circled', experiments)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

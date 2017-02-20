@@ -5,7 +5,7 @@ import islib as isx
 
 
 
-image = cv2.imread('test/images/hand-drawn-circles(open).png', cv2.IMREAD_COLOR)
+image = cv2.imread('experiments/images/hand-drawn-circles(open).png', cv2.IMREAD_COLOR)
 
 image2 = np.ones(image.shape)*255
 

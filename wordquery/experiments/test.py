@@ -1,7 +1,7 @@
 import nltk
 from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
-from Project_v2.element_identifier import *
+# from Project_v2.element_identifier import *
 
 __author__ = 'ChaminiKD'
 

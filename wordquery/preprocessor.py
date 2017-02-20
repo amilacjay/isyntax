@@ -1,29 +1,40 @@
 import nltk
 from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
-from wordquery.element_identifier import *
-
+import re
 
 __author__ = 'ChaminiKD'
 
+# extract the value from the user query
+def getvalue(S):
+    pattern = re.compile('\'[A-Za-z0-9 _-]*\'', re.IGNORECASE)
+    listofHits = re.findall(pattern, S)
+    if listofHits:
+        for hitWord in listofHits:
+            value = hitWord
+            S = S.replace(value, " ", 1)
+            # print('Values =', value)
+            return value, S
 
+    else:
+        print("No value provided by the user")
+
+
+# tokenize
 def getTokenz(S):
     tokenz = nltk.word_tokenize(S)
-    print("tokens :", tokenz)
-    remove_stopWords(tokenz)
+    return tokenz
 
-#remove escape words
+
+# remove escape words
 def remove_stopWords(tokenz):
     filtered_words = [word for word in tokenz if word not in stopwords.words('english')]
-    print("filtered_words : ", filtered_words)
     escapeWords = ['what', 'who', 'whose', 'is', 'a', 'at', 'is', '.', ',', '(', ')']
-
     resultWords = [word for word in filtered_words if word.lower() not in escapeWords]
-    print("resultWords :", resultWords)
-    pos_tagging(resultWords)
+    return resultWords
 
-# POS tagging the remaining words
+
+# POS tagging
 def pos_tagging(S):
     tagged = nltk.pos_tag(S)
-    print(tagged)
-    sort_nouns(tagged)
+    return tagged

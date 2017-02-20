@@ -1,31 +1,31 @@
-import re
+from wordquery.elementIdentifier import *
 from wordquery.preprocessor import *
 
 __author__ = 'ChaminiKD'
 
-# S = input("Enter: ")
-# What is the birthdate and address of employee 'John B Smith'
+userInput = " What is the birthdate and address of employee 'John B Smith' "
 
-S = " What is the birthdate and address of employee 'John B Smith' "
+value, S = getvalue(userInput)
+print("value", value)
+print("remaining sentence", S)
 
-# Getting the value from the text
-def getvalue(S):
-    pattern = re.compile('\'[A-Za-z0-9 _-]*\'', re.IGNORECASE)
-    listofHits = re.findall(pattern, S)
-    if listofHits:
-        for hitWord in listofHits:
-            # values = hitWord
-            S = S.replace(hitWord, " ", 1)
-            print('Values =', hitWord)
-    else:
-        print("No value provided by the user")
-    getTokenz(S)
+tokens = getTokenz(userInput)
+print(tokens)
 
+postag_list = []
+postag_list = pos_tagging(tokens)
+print("pos tags", postag_list)
 
-getvalue(S)
+f = open('out/pos_tags', 'w')
+for tag in postag_list:
+    f.write(str(tag))
+    f.write("\n")
 
+noun_list = chunk_nouns(postag_list)
+print(noun_list)
 
-
+tables = identify_tables(noun_list)
+attributes = identify_attributes(noun_list)
 
 
 

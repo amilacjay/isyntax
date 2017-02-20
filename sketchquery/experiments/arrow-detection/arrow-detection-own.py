@@ -3,7 +3,7 @@ import numpy as np
 import islib as isx
 from QueryModel import *
 
-image = cv2.imread('test/images/cond-arrow-table.jpg', cv2.IMREAD_COLOR)
+image = cv2.imread('experiments/images/cond-arrow-table.jpg', cv2.IMREAD_COLOR)
 
 duplicate = image.copy()
 
