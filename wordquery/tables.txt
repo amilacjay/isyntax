@@ -1,6 +1,0 @@
-{'tbname': 'department'}
-{'tbname': 'dependent'}
-{'tbname': 'dept_locations'}
-{'tbname': 'employee'}
-{'tbname': 'project'}
-{'tbname': 'works_on'}

@@ -1,23 +1,37 @@
 import xml.etree.ElementTree as ET
+import nltk
 from nltk.metrics import *
-from wordquery import shared
 
 __author__ = 'ChaminiKD'
+
 
 def sort_nouns(taggs):
     nouns = [word for word, pos in taggs if pos == 'NN']
     print("nouns list :", nouns)
-    identify_tables(nouns)
 
+def extract_np(psent):
+    for subtree in psent.subtrees():
+        if subtree.label() == 'NP':
+            yield ' '.join(word for word, tag in subtree.leaves())
 
-# retrieve table names form company.xml
+def chunk_nouns(tags):
+    # grammar = "NP: {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}"
+    grammar = "NP: {<NNS>*<NN>*}"
+
+    cp = nltk.RegexpParser(grammar)
+    result = cp.parse(tags)
+    extract_gen = extract_np(result)
+    # text_file.write('Noun Phrases: {}'.format([x for x in extract_gen]))
+    return [x for x in extract_gen]
+
+# retrieve table names from company.xml
 def get_Table_names():
     tree = ET.parse("company.xml")
     tables = [el.attrib.get('tbname') for el in tree.findall('.//table')]
     return tables
 
 
-# retrieve attribute names form company.xml
+# retrieve attribute names from company.xml
 def get_attribute_names():
     tree = ET.parse("company.xml")
     attributes = [el.attrib.get('attname') for el in tree.findall('.//attribute')]
@@ -32,10 +46,7 @@ def identify_tables(nouns):
         for x in table_list:
             dist = edit_distance(n.lower(), x.lower())
             combine.append([n, x, dist])
-            # if dist < min_val:
-            #     min_val = dist
-            # count.append(dist)
-        # combine.sor0t(key=lambda x:x[1])
+
         temp = []
         for a in combine:
             if n == a[0]:
@@ -46,7 +57,7 @@ def identify_tables(nouns):
 
             if x[1] == 0:
                 print("table found : " + x[0])
-                shared.tab.append(x[0])
+
         print("***********")
     identify_attributes(nouns)
 
@@ -69,8 +80,6 @@ def identify_attributes(nouns):
 
             if x[1] == 0:
                 print("attribute found : " + x[0])
-                shared.att.append( x[0])
+
         print("***********")
 
-    print("identified table names" , shared.tab )
-    print("identified attribute names" , shared.att)

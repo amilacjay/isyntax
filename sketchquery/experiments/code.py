@@ -5,7 +5,7 @@ from QueryModel import *
 
 
 
-image = cv2.imread('test/images/query1(opened).jpg', cv2.IMREAD_COLOR)
+image = cv2.imread('experiments/images/query1(opened).jpg', cv2.IMREAD_COLOR)
 
 ratio, resized = isx.optimalSize(image, sqr=550)
 
@@ -71,7 +71,7 @@ print(query.replace('[','').replace(']',''))
 cv2.imshow('gray', gray)
 cv2.imshow('thresh', thresh)
 cv2.imshow('removed', removed)
-# cv2.imshow('circled', test)
+# cv2.imshow('circled', experiments)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()

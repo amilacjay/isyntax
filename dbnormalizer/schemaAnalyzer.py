@@ -62,16 +62,16 @@ funcdeps = [
 
 subset = [[['A'], ['D', 'E']]]
 
-# test
+# experiments
 test = Analyzer(funcdeps, '', R, candidateKeys, subset)
 
 test.reflexitivity()
 # print(i[0], '->', i[1])
 
-# test.augmentation()
+# experiments.augmentation()
 
 for a in test.removeDup():
     print(a)
-# for a in test.getLHS():
-#     for b in test.getRHS():
+# for a in experiments.getLHS():
+#     for b in experiments.getRHS():
 #         print(a, '->', b)
