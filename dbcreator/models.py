@@ -1,4 +1,5 @@
 from enum import Enum
+from PyQt5.QtWidgets import QListWidgetItem
 
 class DataType(Enum):
     VARCHAR = 0
@@ -8,8 +9,9 @@ class DataType(Enum):
     DATETIME = 4
 
 
-class Entity:
+class Entity(QListWidgetItem):
     def __init__(self, name):
+        super().__init__(str(name))
         self.name = name
         self.attributes = []
 
