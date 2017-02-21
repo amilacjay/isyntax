@@ -27,6 +27,7 @@ noun_list = chunk_nouns(postag_list)
 print(noun_list)
 
 tables = extract_tables(noun_list)
+print("@@@@@@@@@@@@@@@@@@@@@@@@", tables)
 attributes = extract_attributes(noun_list)
 
 table_list = get_Table_names()

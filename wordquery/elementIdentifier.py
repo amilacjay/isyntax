@@ -109,6 +109,7 @@ def extract_tables(nouns):
         # print(temp[0], temp[1], temp[2])
         table_file.write(str(temp))
         table_file.write("\n")
+        return temp
 
 
 def extract_attributes(nouns):
@@ -126,6 +127,7 @@ def extract_attributes(nouns):
         print(temp)
         att_file.write(str(temp))
         att_file.write("\n")
+
 
 
 def setSementicKB(type, list):
