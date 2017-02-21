@@ -2,6 +2,8 @@
 ('is', 'VBZ')
 ('the', 'DT')
 ('address', 'NN')
+('and', 'CC')
+('salary', 'NN')
 ('of', 'IN')
 ('employee', 'NN')
 ("'John", 'POS')

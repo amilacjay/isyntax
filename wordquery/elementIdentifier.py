@@ -112,6 +112,7 @@ def extract_tables(nouns):
 
 
 def extract_attributes(nouns):
+    att_file = open('out/attributes1.txt', 'w')
     attribute_list = get_attribute_names()
     print("Attribute list", attribute_list)
     for n in nouns:
@@ -123,6 +124,8 @@ def extract_attributes(nouns):
         # print(count)
         temp = sorted(count, key=itemgetter(2))
         print(temp)
+        att_file.write(str(temp))
+        att_file.write("\n")
 
 
 def setSementicKB(type, list):
@@ -159,12 +162,23 @@ def tableIdentifier(knowledgeBase, nounList):
 
         print("*******")
 
-        # sim = x.wup_similarity(n)
-        # print(sim)
+def attributeIdentifier(knowledgeBase, nounList):
+    list2 = []
+    for n in nounList:
+        syn = wordnet.synsets(n, pos='n')
+        for a in knowledgeBase:
+            for x in a[1]:
+                # print(syn)
+                sim = x.wup_similarity(syn[0])
+                print(n, syn[0], ":", x, "=", sim)
+                if sim >= 0.7:
+                    print("attribute found:", n)
+                    list2.append(n)
+        print("*******")
+    return list2
 
-        # w1 = wordnet.synset('surname.n.01')
-        # w2 = wordnet.synset('name.n.01')
-        # print(w1.wup_similarity(w2))
+        # print("*******")
+
 
 # asd = setSementicKB('tables', ['department', 'dependent', 'employee'])
 # assw = tableIdentifier(asd, ['labourer'])
