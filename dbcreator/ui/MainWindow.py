@@ -57,9 +57,11 @@ class Ui_MainWindow(object):
         self.btn_analyze = QtWidgets.QPushButton(self.centralwidget)
         self.btn_analyze.setGeometry(QtCore.QRect(20, 210, 113, 32))
         self.btn_analyze.setObjectName("btn_analyze")
+        self.btn_analyze.setEnabled(False)
         self.btn_generate = QtWidgets.QPushButton(self.centralwidget)
         self.btn_generate.setGeometry(QtCore.QRect(140, 210, 113, 32))
         self.btn_generate.setObjectName("btn_generate")
+        self.btn_generate.setEnabled(False)
         self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
         self.pushButton_3.setEnabled(False)
         self.pushButton_3.setGeometry(QtCore.QRect(260, 210, 113, 32))
@@ -81,6 +83,7 @@ class Ui_MainWindow(object):
         self.btn_browse.clicked.connect(self.browseBtnClicked)
         self.btn_analyze.clicked.connect(self.analyzeBtnClicked)
         self.entitylist.itemClicked.connect(self.entityListItemClicked)
+        self.btn_reset.clicked.connect(self.resetBtnClicked)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -113,13 +116,22 @@ class Ui_MainWindow(object):
     def browseBtnClicked(self):
         path, _ = QtWidgets.QFileDialog.getOpenFileName()
         self.filePath = path
-        self.description.setText(getContentFromFile(path))
+        if self.filePath != '':
+            content = getContentFromFile(path)
+            self.description.setText(content)
+            if(content.strip() != ''):
+                self.btn_analyze.setEnabled(True)
+            else:
+                self.btn_analyze.setEnabled(False)
 
     def analyzeBtnClicked(self):
         app = App(filePath=self.filePath)
         entities = app.run()
         self.addEntitiesToList(entities)
-        pass
+        if(len(entities)>0):
+            self.btn_generate.setEnabled(True)
+        else:
+            self.btn_generate.setEnabled(False)
 
     def addEntitiesToList(self, entities):
         for entity in entities:
@@ -127,14 +139,25 @@ class Ui_MainWindow(object):
 
     def entityListItemClicked(self, item):
         attributes = item.getAttributes()
-        self.attributetable.setColumnCount(5)
+        self.attributetable.setColumnCount(6)
+        self.attributetable.setHorizontalHeaderLabels(['Name','PrimaryKey','DataType','NULL', 'Unique', 'INFO'])
         self.attributetable.setRowCount(len(attributes))
         for row, attr in enumerate(attributes):
-            self.attributetable.setItem(row, 0, QTableWidgetItem(str([x[0] for x in attr.name])))
-            self.attributetable.setItem(row, 1, QTableWidgetItem("NA"))
-            self.attributetable.setItem(row, 2, QTableWidgetItem("NA"))
-            self.attributetable.setItem(row, 3, QTableWidgetItem("NA"))
-            self.attributetable.setItem(row, 4, QTableWidgetItem("NA"))
+            self.attributetable.setItem(row, 0, QTableWidgetItem(attr.name()))
+            self.attributetable.setItem(row, 1, QTableWidgetItem(str(attr.isPrimaryKey)))
+            self.attributetable.setItem(row, 2, QTableWidgetItem(str(attr.dtype)))
+            self.attributetable.setItem(row, 3, QTableWidgetItem(str(attr.isNotNull)))
+            self.attributetable.setItem(row, 4, QTableWidgetItem(str(attr.isUnique)))
+            self.attributetable.setItem(row, 5, QTableWidgetItem(str(attr.data)))
+
+    def resetBtnClicked(self):
+        self.btn_analyze.setEnabled(False)
+        self.btn_generate.setEnabled(False)
+        self.entitylist.clear()
+        for i in range(self.attributetable.rowCount()):
+            self.attributetable.removeRow(0)
+        self.description.clear()
+
 
 
 if __name__ == "__main__":
