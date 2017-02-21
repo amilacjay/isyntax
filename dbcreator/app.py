@@ -20,7 +20,7 @@ class App:
         chunked_sentences = getChunkedSentences(tagged_sentences)
 
         ## extractors List in the order of execution
-        extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor]
+        extractorsList = [PossessionBasedExtractor, ElementExtractor, UniqueKeyExtractor]
 
         for extractor in extractorsList:
             extObject = extractor()
