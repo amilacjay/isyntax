@@ -17,7 +17,6 @@ def makeConnection(user,passwd,db):
 def createQuery(attList,tableList):
     if (attList):
         basciSQL = "SELECT "+', '.join(attList)+" FROM "+', '.join(tableList)+" ;"
-        print(basciSQL)
         return basciSQL
     else:
         basciSQL = "SELECT * FROM "+', '.join(tableList)+" ;"

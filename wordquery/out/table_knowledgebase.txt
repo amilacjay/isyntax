@@ -1,0 +1,1 @@
+['department', [Synset('department.n.01'), Synset('department.n.02'), Synset('department.n.03')]]['dependent', [Synset('dependant.n.01')]]['dept_locations', []]['employee', [Synset('employee.n.01')]]['project', [Synset('undertaking.n.01'), Synset('project.n.02')]]['works_on', []]
