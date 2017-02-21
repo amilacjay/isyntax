@@ -35,12 +35,12 @@ class App:
 
 ## Main Program Executing
 
+if __name__ == "__main__":
+    app = App(filePath='samples/sample1.txt')
+    entities = app.run()
 
-app = App(filePath='samples/sample1.txt')
-entities = app.run()
-
-for i, e in enumerate(entities):
-    print('Entity ', i)
-    print('Candidate Names: ', e.name)
-    print('Candidate Attributes', e.attributes)
-    print()
+    for i, e in enumerate(entities):
+        print('Entity ', i)
+        print('Candidate Names: ', e.name)
+        print('Candidate Attributes', e.attributes)
+        print()
