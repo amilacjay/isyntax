@@ -3,7 +3,7 @@ from dbcreator.models import *
 import nltk
 
 
-text = getContentFromFile('../samples/sample2.txt')
+text = getContentFromFile('../samples/sample2.txt.txt')
 
 
 ## primary data sets

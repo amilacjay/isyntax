@@ -7,3 +7,6 @@ Who are the ‘female’ employees?
 What is the SSN of the employee ‘John B. Smith’?
 What is the Dno of Department ‘Research’?
 What is the name and address of all employees who work for the ‘Research’ department?
+
+
+

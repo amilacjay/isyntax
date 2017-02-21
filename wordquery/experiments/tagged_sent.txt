@@ -4,6 +4,9 @@ Noun Phrases: ['address', 'employee ‘John B. Smith’']
 Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('birth', 'NN'), ('date', 'NN'), ('and', 'CC'), ('address', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
 Noun Phrases: ['birth date', 'address', 'employee ‘John B. Smith’']
 
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('address', 'NN'), ('and', 'CC'), ('birthday', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
+Noun Phrases: ['address', 'birthday', 'employee ‘John B. Smith’']
+
 Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('SSN', 'NNP'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
 Noun Phrases: ['SSN', 'employee ‘John B. Smith’']
 

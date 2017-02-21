@@ -1,0 +1,7 @@
+who are the employees?
+what are the departments?
+what are the department locations?
+what are the projects?
+who are the dependants?
+what are all EMPLOYEE Ssns?
+what are all combinations of EMPLOYEE Ssn and DEPARTMENT Dname?

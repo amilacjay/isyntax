@@ -1,8 +1,6 @@
 ('What', 'WP')
 ('is', 'VBZ')
 ('the', 'DT')
-('birthdate', 'NN')
-('and', 'CC')
 ('address', 'NN')
 ('of', 'IN')
 ('employee', 'NN')
