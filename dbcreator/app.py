@@ -41,5 +41,5 @@ if __name__ == "__main__":
 
     for i, e in enumerate(entities):
         print('Entity: ', e.name())
-        print('Candidate Attributes', e.attributes)
+        print('Candidate Attributes', [x.name() for x in e.attributes])
         print()
