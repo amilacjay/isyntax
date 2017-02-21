@@ -1,1 +1,0 @@
-[['address', 'project', 6], ['address', 'works_on', 7], ['address', 'department', 8], ['address', 'dependent', 8], ['address', 'employee', 8], ['address', 'dept_locations', 13]]

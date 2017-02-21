@@ -3,7 +3,7 @@
 ('the', 'DT')
 ('address', 'NN')
 ('and', 'CC')
-('salary', 'NN')
+('wage', 'NN')
 ('of', 'IN')
 ('employee', 'NN')
 ("'John", 'POS')

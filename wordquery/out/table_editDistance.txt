@@ -1,0 +1,3 @@
+[['address', 'project', 6], ['address', 'works_on', 7], ['address', 'department', 8], ['address', 'dependent', 8], ['address', 'employee', 8], ['address', 'dept_locations', 13]]
+[['wage', 'project', 6], ['wage', 'employee', 7], ['wage', 'works_on', 7], ['wage', 'department', 8], ['wage', 'dependent', 8], ['wage', 'dept_locations', 13]]
+[['employee', 'employee', 0], ['employee', 'project', 6], ['employee', 'dependent', 7], ['employee', 'department', 8], ['employee', 'works_on', 8], ['employee', 'dept_locations', 11]]

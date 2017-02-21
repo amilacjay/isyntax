@@ -94,10 +94,11 @@ def get_attribute_names():
 #
 
 def extract_tables(nouns):
-    table_file = open('out/tables1.txt', 'w')
+    table_file = open('out/table_editDistance.txt', 'w')
     table_list = get_Table_names()
-    print("Table list", table_list)
+    # print("Table list", table_list)
     for n in nouns:
+
         count = []
         temp = []
         for y in table_list:
@@ -105,17 +106,17 @@ def extract_tables(nouns):
             count.append([n, y, dist])
         # print(count)
         temp = sorted(count, key=itemgetter(2))
-        print(temp)
+        # print(temp)
         # print(temp[0], temp[1], temp[2])
         table_file.write(str(temp))
         table_file.write("\n")
-        return temp
+        # return temp
 
 
 def extract_attributes(nouns):
-    att_file = open('out/attributes1.txt', 'w')
+    att_file = open('out/attribute_editDistance.txt', 'w')
     attribute_list = get_attribute_names()
-    print("Attribute list", attribute_list)
+    # print("Attribute list", attribute_list)
     for n in nouns:
         count = []
         temp = []
@@ -124,30 +125,47 @@ def extract_attributes(nouns):
             count.append([n, y, dist])
         # print(count)
         temp = sorted(count, key=itemgetter(2))
-        print(temp)
+        # print(temp)
         att_file.write(str(temp))
         att_file.write("\n")
 
 
+table_knowledgebase_file = open('out/table_knowledgebase.txt', 'w')
+att_knowledgebase_file = open('out/attribute_knowledgebase.txt', 'w')
+
 
 def setSementicKB(type, list):
     knowledgeBase = []
+
     if type == 'tables':
         table_list = list
         for x in table_list:
             syns = wordnet.synsets(x, pos='n')
+            # table_knowledgebase_file.write("hello")
+            table_knowledgebase_file.write(str([x, syns]))
+            # table_knowledgebase_file.write("\n")
             knowledgeBase.append([x, syns])
     if type == 'att':
         att_list = list
         for x in att_list:
             syns = wordnet.synsets(x, pos='n')
+            att_knowledgebase_file.write(str([x, syns]))
+            att_knowledgebase_file.write("\n")
             knowledgeBase.append([x, syns])
-
+    # print("%%%%%%%%%%%%%%%%%%%%%%%%%%" , knowledgeBase)
     return knowledgeBase
 
+# def write_file(name , values):
+#     file= open('out/'+name+'.txt', 'w')
+#     print("#########################")
+#     file.write(str(values))
+#     print("#########################")
+#     file.close()
 
+table_synset_file = open('out/table_synset.txt', 'w')
 def tableIdentifier(knowledgeBase, nounList):
     list = []
+    temp = []
     # for a in knowledgeBase:
     # for x in a[1]:
     for n in nounList:
@@ -156,14 +174,17 @@ def tableIdentifier(knowledgeBase, nounList):
             for x in a[1]:
                 # print(syn)
                 sim = x.wup_similarity(syn[0])
-                print(n, syn[0], ":", x, "=", sim)
+                table_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
+                table_synset_file.write("\n")
+                # temp.append([n, syn[0], ":", x, "=", sim])
                 if sim >= 0.7:
-                    print("table found:", n)
-                    list.append(n)
+                    print("table found:", a[0])
+                    list.append(a[0])
                     return list
 
-        print("*******")
+        # write_file("table_synsets" ,temp )
 
+att_synset_file = open('out/attribute_synset.txt', 'w')
 def attributeIdentifier(knowledgeBase, nounList):
     list2 = []
     for n in nounList:
@@ -172,15 +193,16 @@ def attributeIdentifier(knowledgeBase, nounList):
             for x in a[1]:
                 # print(syn)
                 sim = x.wup_similarity(syn[0])
-                print(n, syn[0], ":", x, "=", sim)
+                att_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
+                att_synset_file.write("\n")
+                # print(n, syn[0], ":", x, "=", sim)
                 if sim >= 0.7:
-                    print("attribute found:", n)
-                    list2.append(n)
-        print("*******")
+                    print("attribute found:", a[0])
+                    list2.append(a[0])
+
     return list2
 
-        # print("*******")
-
+    # print("*******")
 
 # asd = setSementicKB('tables', ['department', 'dependent', 'employee'])
 # assw = tableIdentifier(asd, ['labourer'])
