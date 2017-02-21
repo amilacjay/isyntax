@@ -54,3 +54,25 @@ class UniqueKeyExtractor(SecondaryExtractor):
 
 
 
+class ElementExtractor(PrimaryExtractor):
+    def execute(self, tagged_sents, chunked_sents, target):
+
+        for sIndex, sent in enumerate(tagged_sents):
+
+            for index, element in enumerate(sent):
+                if element[1] == 'POS':
+
+                    posIndex = sent[index-1][2]
+                    candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > posIndex]
+                    attributes = []
+
+                    for chunk in candidateAttributeData:
+                        attr = Attribute(chunk)
+                        attributes.append(attr)
+
+
+                    entity = Entity([sent[index-1]])
+                    entity.setAttributes(attributes)
+                    target.append(entity)
+                    break
+
