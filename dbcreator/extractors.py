@@ -44,11 +44,11 @@ class UniqueKeyExtractor(SecondaryExtractor):
                 isUnique = False
                 tempData = []
                 for i, word in enumerate(attr.data):
-                    if(word[0].lower() in ['unique','distinquishable']):
+                    if(word[0].lower() in ['unique','distinguishable']):
                         isUnique = True
                     else:
                         tempData.append(word)
-                attr.data = tempData
+                # attr.data = tempData
                 attr.isUnique = isUnique
 
 
