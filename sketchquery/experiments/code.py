@@ -5,11 +5,18 @@ from sketchquery.model import *
 
 image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_COLOR)
 
-ratio, resized = optimalSize(image, sqr=550)
+ratio, resized = optimalSize(image, sqr=800)
+
+cv2.imwrite('1.png', resized)
 
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
+cv2.imwrite('2.png', gray)
+
 thresh = binaryImage(gray)
+
+cv2.imwrite('3.png', thresh)
+
 removed = thresh.copy()
 
 textPartsWithStats = textRegionsWithStats(thresh)
@@ -29,6 +36,34 @@ for i in range(len(textPartsWithStats)):
 
     isEnclosedByCircle, hull = enclosedByCircle(stat, conts)
 
+    if(isEnclosedByCircle):
+        cv2.drawContours(removed, [hull], 0, 0, cv2.FILLED)
+
+    ret, conts, hier = cv2.findContours(removed.copy(), mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+
+    x = cv2.cvtColor(removed.copy(), cv2.COLOR_GRAY2BGR)
+
+    for c in conts:
+        rect = cv2.minAreaRect(c)
+        box = cv2.boxPoints(rect)
+        box = np.int0(box)
+
+        # centroid of the min area rectangle
+        M = cv2.moments(box)
+        cX = int(M["m10"] / M["m00"])
+        cY = int(M["m01"] / M["m00"])
+        cv2.circle(x, (cX, cY), 7, (0, 0, 255), -1)
+
+        # centroid of the contour(arrow)
+        M2 = cv2.moments(c)
+        cX2 = int(M2["m10"] / M2["m00"])
+        cY2 = int(M2["m01"] / M2["m00"])
+        cv2.circle(x, (cX2, cY2), 7, (255, 0, 0), -1)
+
+        cv2.drawContours(x, [box], 0, (0, 255, 0), 2)
+
+    cv2.imwrite('14.png', x)
+
     if text.startswith('[') and text.endswith(']'):
         projectionFields = text.replace('[','').replace(']','').replace(' ','').split(',')
         table.setProjectionFields(projectionFields)
@@ -42,23 +77,6 @@ for i in range(len(textPartsWithStats)):
     else:
         uncategorized.append(textPart)
 
-
-# ret, conts, hier = cv2.findContours(removed, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
-# approx = [cv2.approxPolyDP(c, 3, True) for c in conts]
-
-circles = cv2.HoughCircles(gray, cv2.HOUGH_GRADIENT, 1.2, 20,param1=50,param2=30, minRadius=10)
-# print(circles)
-test = np.ones((removed.shape[0], removed.shape[1],3))*255
-
-for cir in circles[0]:
-    x, y, r = cir
-    cv2.circle(test, (x, y), r, (0, 255, 0), 4)
-
-
-# print(table.name)
-# print(table.projectionFields)
-# print(table.condition)
-# print(uncategorized)
 
 
 
