@@ -3,9 +3,10 @@ import numpy as np
 import math
 from sketchquery.core import *
 
+multishapes = '../../samples/elements/extra/multi-shapes.png'
+circular = '../../samples/elements/circle/hand-drawn-circles(open).png'
 
-
-image = cv2.imread('../../samples/elements/circle/hand-drawn-circles(open).png', cv2.IMREAD_COLOR)
+image = cv2.imread(circular, cv2.IMREAD_COLOR)
 
 image2 = np.ones(image.shape)*255
 

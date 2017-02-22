@@ -1,20 +1,18 @@
 import cv2
 import numpy as np
-import islib as isx
-from QueryModel import *
+from sketchquery.core import *
+from sketchquery.model import *
 
+image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_COLOR)
 
-
-image = cv2.imread('experiments/images/query1(opened).jpg', cv2.IMREAD_COLOR)
-
-ratio, resized = isx.optimalSize(image, sqr=550)
+ratio, resized = optimalSize(image, sqr=550)
 
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
-thresh = isx.binaryImage(gray)
+thresh = binaryImage(gray)
 removed = thresh.copy()
 
-textPartsWithStats = isx.textRegionsWithStats(thresh)
+textPartsWithStats = textRegionsWithStats(thresh)
 
 table = Table()
 uncategorized = []
@@ -22,14 +20,14 @@ uncategorized = []
 for i in range(len(textPartsWithStats)):
     textPart = textPartsWithStats[i][0]
     stat = textPartsWithStats[i][1]
-    text = isx.imageToText(textPart).strip()
+    text = imageToText(textPart).strip()
     cv2.imshow(str(i), textPart)
 
     removed[stat[1]:stat[1] + stat[3], stat[0]:stat[0] + stat[2]] = 0
 
     ret, conts, hier = cv2.findContours(removed.copy(), mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
 
-    isEnclosedByCircle, hull = isx.enclosedByCircle(stat, conts)
+    isEnclosedByCircle, hull = enclosedByCircle(stat, conts)
 
     if text.startswith('[') and text.endswith(']'):
         projectionFields = text.replace('[','').replace(']','').replace(' ','').split(',')
