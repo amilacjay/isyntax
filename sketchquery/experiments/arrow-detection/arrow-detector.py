@@ -1,8 +1,8 @@
 import cv2
 import numpy as np
 
-filename = 'arrow.jpg'
-img = cv2.imread('experiments/images/arrow.jpg')
+filename = '../../samples/elements/arrow/straight-arrow.jpg'
+img = cv2.imread(filename)
 gray = cv2.cvtColor(img,cv2.COLOR_BGR2GRAY)
 
 # find Harris corners

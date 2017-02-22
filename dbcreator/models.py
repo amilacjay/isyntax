@@ -33,7 +33,7 @@ class Entity(QListWidgetItem):
         words = []
         for chunk in self.data:
             words.append(chunk[0])
-        return (' '.join(words)).strip()
+        return ('_'.join(words)).strip()
 
 
 class Attribute:
@@ -49,7 +49,7 @@ class Attribute:
         for chunk in self.data:
             words.append(chunk[0])
 
-        return (' '.join(words)).strip()
+        return ('_'.join(words)).strip()
 
 
 

@@ -1,21 +1,21 @@
 import cv2
 import numpy as np
-import islib as isx
-from QueryModel import *
+from sketchquery.core import *
+from sketchquery.model import *
 
-image = cv2.imread('experiments/images/cond-arrow-table.jpg', cv2.IMREAD_COLOR)
+image = cv2.imread('../../samples/elements/arrow/arrow-shaft.jpg', cv2.IMREAD_COLOR)
 
 duplicate = image.copy()
 
-ratio, resized = isx.optimalSize(image, sqr=800)
+ratio, resized = optimalSize(image, sqr=800)
 
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
-thresh = isx.binaryImage(gray)
+thresh = binaryImage(gray)
 
 removed = thresh.copy()
 
-textPartsWithStats = isx.textRegionsWithStats(thresh)
+textPartsWithStats = textRegionsWithStats(thresh)
 
 table = Table()
 uncategorized = []
@@ -23,7 +23,7 @@ uncategorized = []
 for i in range(len(textPartsWithStats)):
     textPart = textPartsWithStats[i][0]
     textRegionStat = textPartsWithStats[i][1]
-    text = isx.imageToText(textPart).strip()
+    text = imageToText(textPart).strip()
     # cv2.imshow(str(i), textPart)
 
     textX1 = textRegionStat[0]

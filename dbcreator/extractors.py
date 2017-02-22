@@ -48,7 +48,7 @@ class UniqueKeyExtractor(SecondaryExtractor):
                         isUnique = True
                     else:
                         tempData.append(word)
-                # attr.data = tempData
+                attr.data = tempData
                 attr.isUnique = isUnique
 
 
