@@ -1,15 +1,15 @@
 import cv2
 import numpy as np
 import math
-import islib as isx
+from sketchquery.core import *
 
 
 
-image = cv2.imread('experiments/images/hand-drawn-circles(open).png', cv2.IMREAD_COLOR)
+image = cv2.imread('../../samples/elements/circle/hand-drawn-circles(open).png', cv2.IMREAD_COLOR)
 
 image2 = np.ones(image.shape)*255
 
-ratio, resized = isx.optimalSize(image, sqr=800)
+ratio, resized = optimalSize(image, sqr=800)
 
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
