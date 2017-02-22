@@ -8,9 +8,16 @@ image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_C
 
 ratio, resized = optimalSize(image, sqr=550)
 
+cv2.imwrite('1.png', resized)
+
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
+cv2.imwrite('2.png', gray)
+
 thresh = binaryImage(gray)
+
+cv2.imwrite('3.png', thresh)
+
 removed = thresh.copy()
 
 textPartsWithStats = textRegionsWithStats(thresh)
