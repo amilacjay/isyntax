@@ -75,6 +75,7 @@ class Ui_MainWindow(object):
         self.btn_analyze.clicked.connect(self.analyzeBtnClicked)
         self.entitylist.itemClicked.connect(self.entityListItemClicked)
         self.btn_reset.clicked.connect(self.resetBtnClicked)
+        self.btn_generate.clicked.connect(self.generateSqlClicked)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -116,12 +117,42 @@ class Ui_MainWindow(object):
 
     def analyzeBtnClicked(self):
         app = App(filePath=self.filePath)
-        entities = app.run()
-        self.addEntitiesToList(entities)
-        if (len(entities) > 0):
+        self.entities = app.run()
+        self.addEntitiesToList(self.entities)
+        if (len(self.entities) > 0):
             self.btn_generate.setEnabled(True)
         else:
             self.btn_generate.setEnabled(False)
+
+    def generateSqlClicked(self):
+
+        script = self.createSQLScript()
+
+        fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/'))-1]
+
+        output = open('../generated_sql/'+fileName.replace(".txt",".sql"), 'w')
+        print(script, file=output)
+        output.close()
+
+    def createSQLScript(self):
+        wholeSQL = ''
+        for entity in self.entities:
+            firstLine = "CREATE TABLE {} (".format(entity.name())
+            queryBody = '\n'
+            delimiter = ',\n'
+            lastLine = "\n)\n\n"
+
+            attributeList = entity.getAttributes()
+            for i, attribute in enumerate(attributeList):
+                uniqueKW = ' UNIQUE'
+                attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
+                if i != len(attributeList) - 1:
+                    attributeLine = attributeLine + delimiter
+                queryBody = queryBody + attributeLine
+
+            wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
+
+        return wholeSQL
 
     def addEntitiesToList(self, entities):
         for entity in entities:
