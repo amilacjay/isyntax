@@ -4,8 +4,19 @@ from wordquery.query_generator import *
 
 __author__ = 'ChaminiKD'
 
-# userInput = " What is the birthdate and address of employee 'John B Smith' "
-userInput = " What is the  address and  wage  of employee 'John B Smith' "
+s1 = " address of employees "
+s2 = " What is the  address and  wage  of employee 'John B Smith' "
+s3 = " who are the employees"
+s4 = " What is the  address and  wage  of employees "
+s5 = "wage of employees"
+s6 = "address of employees"
+s7 = "give me the birthdate of employees"
+s8 = "what are the projects?"
+s9= "who are the dependents"
+
+
+userInput = input("enter:")
+# userInput = s7
 
 value, S = getvalue(userInput)
 print("value:", value)
@@ -13,6 +24,9 @@ print("value:", value)
 
 tokens = getTokenz(userInput)
 print('Tokens:',tokens)
+
+# filtered = remove_stopWords(tokens)
+# print(filtered)
 
 postag_list = []
 postag_list = pos_tagging(tokens)
@@ -27,8 +41,8 @@ noun_list = chunk_nouns(postag_list)
 print("Extracted nouns:",noun_list)
 print(".........................................")
 
-tables = extract_tables(noun_list)
-attributes = extract_attributes(noun_list)
+# tables = extract_tables(noun_list)
+# attributes = extract_attributes(noun_list)
 
 table_list = get_Table_names()
 asd = setSementicKB('tables', table_list)
@@ -42,6 +56,7 @@ att = setSementicKB('att', att_list)
 
 identified_attribute = []
 identified_attribute = attributeIdentifier(att, noun_list)
+print(identified_attribute)
 print("Attributes found:", identified_attribute)
 
 sql = createQuery(identified_attribute, identified_table)
