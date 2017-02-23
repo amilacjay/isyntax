@@ -20,7 +20,7 @@ def createQuery(attList,tableList):
         return basciSQL
     else:
         basciSQL = "SELECT * FROM "+', '.join(tableList)+" ;"
-        print(basciSQL)
+        # print(basciSQL)
         return basciSQL
 
 # sql = createQuery(attList,tableList)
@@ -33,6 +33,8 @@ def getResult(connection,query):
             connection.commit()
             result = cursor.fetchall()
             return result
+    except:
+        print("Invalid")
     finally:
         connection.close()
 

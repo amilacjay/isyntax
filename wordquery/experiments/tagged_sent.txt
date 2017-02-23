@@ -1,27 +1,27 @@
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('address', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
-Noun Phrases: ['address', 'employee ‘John B. Smith’']
-
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('birth', 'NN'), ('date', 'NN'), ('and', 'CC'), ('address', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
-Noun Phrases: ['birth date', 'address', 'employee ‘John B. Smith’']
-
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('address', 'NN'), ('and', 'CC'), ('birthday', 'NN'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
-Noun Phrases: ['address', 'birthday', 'employee ‘John B. Smith’']
-
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('SSN', 'NNP'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
-Noun Phrases: ['SSN', 'employee ‘John B. Smith’']
-
-Tagged Sentence: [('Who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('‘male’', 'JJ'), ('employees', 'NNS'), ('?', '.')]
+Tagged Sentence: [('who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('employees', 'NNS'), ('?', '.')]
 Noun Phrases: ['employees']
 
-Tagged Sentence: [('Who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('‘female’', 'JJ'), ('employees', 'NNS'), ('?', '.')]
-Noun Phrases: ['employees']
+Tagged Sentence: [('who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('employees', 'NNS'), ('of', 'IN'), ('the', 'DT'), ('company', 'NN'), ('?', '.')]
+Noun Phrases: ['employees', 'company']
 
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('SSN', 'NNP'), ('of', 'IN'), ('the', 'DT'), ('employee', 'NN'), ('‘John', 'NNP'), ('B.', 'NNP'), ('Smith’', 'NNP'), ('?', '.')]
-Noun Phrases: ['SSN', 'employee ‘John B. Smith’']
+Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('departments', 'NNS'), ('?', '.')]
+Noun Phrases: ['departments']
 
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('Dno', 'NNP'), ('of', 'IN'), ('Department', 'NNP'), ('‘Research’', 'NNP'), ('?', '.')]
-Noun Phrases: ['Dno', 'Department ‘Research’']
+Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('department', 'NN'), ('locations', 'NNS'), ('?', '.')]
+Noun Phrases: ['department', 'locations']
 
-Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('and', 'CC'), ('address', 'NN'), ('of', 'IN'), ('all', 'DT'), ('employees', 'NNS'), ('who', 'WP'), ('work', 'VBP'), ('for', 'IN'), ('the', 'DT'), ('‘Research’', 'NNP'), ('department', 'NN'), ('?', '.')]
-Noun Phrases: ['name', 'address', 'employees', '‘Research’', 'department']
+Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('projects', 'NNS'), ('?', '.')]
+Noun Phrases: ['projects']
+
+Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('projects', 'NNS'), ('done', 'VBN'), ('by', 'IN'), ('the', 'DT'), ('company', 'NN'), ('?', '.')]
+Noun Phrases: ['projects', 'company']
+
+Tagged Sentence: [('who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('dependants', 'NNS'), ('?', '.')]
+Noun Phrases: ['dependants']
+
+Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('all', 'DT'), ('employee', 'NN'), ('Ssns', 'NNP'), ('?', '.')]
+Noun Phrases: ['employee']
+
+Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('all', 'DT'), ('combinations', 'NNS'), ('of', 'IN'), ('employee', 'NN'), ('Ssn', 'NNP'), ('and', 'CC'), ('employee', 'NN'), ('Dname', 'NNP'), ('?', '.')]
+Noun Phrases: ['combinations', 'employee', 'employee']
 

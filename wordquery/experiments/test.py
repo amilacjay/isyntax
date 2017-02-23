@@ -26,12 +26,12 @@ def getTaggedSentences(text):
     return sentenses
 
 
-text = getContentFromFile('sample2.txt')
+text = getContentFromFile('sample1.txt')
 
 tagged_sentences = getTaggedSentences(text)
 
 # grammar = "NP: {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}"
-grammar = "NP: {<NNS>*<NN>*<NNP>*}"
+grammar = "NP: {<NNS>*<NN>*}"
 
 cp = nltk.RegexpParser(grammar)
 

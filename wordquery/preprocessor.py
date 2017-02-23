@@ -17,7 +17,8 @@ def getvalue(S):
             return value, S
 
     else:
-        print("No value provided by the user")
+        return 0, S
+        # print("No value provided by the user")
 
 
 # tokenize
@@ -29,7 +30,7 @@ def getTokenz(S):
 # remove escape words
 def remove_stopWords(tokenz):
     filtered_words = [word for word in tokenz if word not in stopwords.words('english')]
-    escapeWords = ['what', 'who', 'whose', 'is', 'a', 'at', 'is', '.', ',', '(', ')']
+    escapeWords = ['what', 'who', 'whose', 'display', 'is', 'a', 'at', 'is', '.', ',', '(', ')']
     resultWords = [word for word in filtered_words if word.lower() not in escapeWords]
     return resultWords
 

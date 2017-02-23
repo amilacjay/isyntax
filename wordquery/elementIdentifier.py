@@ -97,8 +97,8 @@ def extract_tables(nouns):
     table_file = open('out/table_editDistance.txt', 'w')
     table_list = get_Table_names()
     # print("Table list", table_list)
+    list1 = []
     for n in nouns:
-
         count = []
         temp = []
         for y in table_list:
@@ -106,17 +106,20 @@ def extract_tables(nouns):
             count.append([n, y, dist])
         # print(count)
         temp = sorted(count, key=itemgetter(2))
+        list1.append(temp)
         # print(temp)
         # print(temp[0], temp[1], temp[2])
         table_file.write(str(temp))
         table_file.write("\n")
         # return temp
+    return list1
 
 
 def extract_attributes(nouns):
     att_file = open('out/attribute_editDistance.txt', 'w')
     attribute_list = get_attribute_names()
     # print("Attribute list", attribute_list)
+    list2 = []
     for n in nouns:
         count = []
         temp = []
@@ -126,8 +129,10 @@ def extract_attributes(nouns):
         # print(count)
         temp = sorted(count, key=itemgetter(2))
         # print(temp)
+        list2.append(temp)
         att_file.write(str(temp))
         att_file.write("\n")
+    return list2
 
 
 table_knowledgebase_file = open('out/table_knowledgebase.txt', 'w')
@@ -136,14 +141,13 @@ att_knowledgebase_file = open('out/attribute_knowledgebase.txt', 'w')
 
 def setSementicKB(type, list):
     knowledgeBase = []
-
     if type == 'tables':
         table_list = list
         for x in table_list:
             syns = wordnet.synsets(x, pos='n')
             # table_knowledgebase_file.write("hello")
             table_knowledgebase_file.write(str([x, syns]))
-            # table_knowledgebase_file.write("\n")
+            table_knowledgebase_file.write("\n")
             knowledgeBase.append([x, syns])
     if type == 'att':
         att_list = list
@@ -152,7 +156,7 @@ def setSementicKB(type, list):
             att_knowledgebase_file.write(str([x, syns]))
             att_knowledgebase_file.write("\n")
             knowledgeBase.append([x, syns])
-    # print("%%%%%%%%%%%%%%%%%%%%%%%%%%" , knowledgeBase)
+
     return knowledgeBase
 
 # def write_file(name , values):
@@ -164,45 +168,86 @@ def setSementicKB(type, list):
 
 table_synset_file = open('out/table_synset.txt', 'w')
 def tableIdentifier(knowledgeBase, nounList):
-    list = []
-    temp = []
-    # for a in knowledgeBase:
-    # for x in a[1]:
-    for n in nounList:
-        syn = wordnet.synsets(n, pos='n')
-        for a in knowledgeBase:
-            for x in a[1]:
-                # print(syn)
-                sim = x.wup_similarity(syn[0])
-                table_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
-                table_synset_file.write("\n")
-                # temp.append([n, syn[0], ":", x, "=", sim])
-                if sim >= 0.7:
-                    print("table found:", a[0])
-                    list.append(a[0])
-                    return list
-
-        # write_file("table_synsets" ,temp )
+    try:
+        list = []
+        temp = []
+        # for a in knowledgeBase:
+        # for x in a[1]:
+        for n in nounList:
+            syn = wordnet.synsets(n, pos='n')
+            for a in knowledgeBase:
+                for x in a[1]:
+                    # print(syn)
+                    sim = x.wup_similarity(syn[0])
+                    table_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
+                    table_synset_file.write("\n")
+                    # temp.append([n, syn[0], ":", x, "=", sim])
+                    if sim >= 0.7:
+                        #print("table found:", a[0])
+                        list.append(a[0])
+                        return list
+    except:
+        tab = find_tables(nounList)
+        return tab
 
 att_synset_file = open('out/attribute_synset.txt', 'w')
 def attributeIdentifier(knowledgeBase, nounList):
     list2 = []
-    for n in nounList:
-        syn = wordnet.synsets(n, pos='n')
-        for a in knowledgeBase:
-            for x in a[1]:
-                # print(syn)
-                sim = x.wup_similarity(syn[0])
-                att_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
-                att_synset_file.write("\n")
-                # print(n, syn[0], ":", x, "=", sim)
-                if sim >= 0.7:
-                    print("attribute found:", a[0])
-                    list2.append(a[0])
+    try:
+        for n in nounList:
+            syn = wordnet.synsets(n, pos='n')
+            for a in knowledgeBase:
+                for x in a[1]:
+                    # print(syn)
+                    sim = x.wup_similarity(syn[0])
+                    att_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
+                    att_synset_file.write("\n")
+                    # print(n, syn[0], ":", x, "=", sim)
+                    if sim >= 0.75:
+                        #print("attribute found:", a[0])
+                        list2.append(a[0])
+        if not list2:
+                    at = find_attributes(nounList)
+                    return at
 
-    return list2
+                    # else:
+                    #     at = find_attributes(nounList)
+                    #     return at
 
-    # print("*******")
+        print(list2)
+        return list2
+    except:
+        att = find_attributes(nounList)
+        return att
+
+
+def find_tables(noun_list):
+    list = extract_tables(noun_list)
+    tabList = []
+    for a in list:
+        # print(a)
+        for l in a :
+            if l[2] <= 4:
+                # print(l[1])
+                # print((a[0])[1])
+                tabList.append(l[1])
+    return set(tabList)
+
+def find_attributes(noun_list):
+    list = extract_attributes(noun_list)
+    attList = []
+    for a in list:
+        # print(a)
+        for l in a :
+            if l[2] <= 4:
+                # print(l[1])
+                # print((a[0])[1])
+                attList.append(l[1])
+    return set(attList)
+
+
+
+
 
 # asd = setSementicKB('tables', ['department', 'dependent', 'employee'])
 # assw = tableIdentifier(asd, ['labourer'])
