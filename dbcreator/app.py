@@ -20,7 +20,7 @@ class App:
         chunked_sentences = getChunkedSentences(tagged_sentences)
 
         ## extractors List in the order of execution
-        extractorsList = [PossessionBasedExtractor, PrimaryKeyExtractor]
+        extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor]
 
         for extractor in extractorsList:
             extObject = extractor()
@@ -40,7 +40,6 @@ if __name__ == "__main__":
     entities = app.run()
 
     for i, e in enumerate(entities):
-        print('Entity ', i)
-        print('Candidate Names: ', e.name)
-        print('Candidate Attributes', e.attributes)
+        print('Entity: ', e.name())
+        print('Candidate Attributes', [x.name() for x in e.attributes])
         print()

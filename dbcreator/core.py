@@ -10,26 +10,23 @@ def getContentFromFile(filename):
 
 
 def getTaggedSentences(text):
-
-    sentenses = sent_tokenize(text)
-    sentenses = [word_tokenize(sent) for sent in sentenses]
-    sentenses = [pos_tag(sent) for sent in sentenses]
+    sentences = sent_tokenize(text)
+    sentences = [word_tokenize(sent) for sent in sentences]
+    sentences = [pos_tag(sent) for sent in sentences]
 
     temp = []
 
-    for taggedSent in sentenses:
+    for taggedSent in sentences:
         t = []
         for index, taggedWord in enumerate(taggedSent):
             t.append((taggedWord[0], taggedWord[1], index))
 
         temp.append(t)
 
-    sentenses = temp
+    sentences = temp
 
-    return sentenses
+    return sentences
 
-def getEntitiesWithAttributes(taggedSents):
-    pass
 
 def extract_np(psent):
     for subtree in psent.subtrees():

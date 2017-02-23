@@ -41,13 +41,15 @@ def textRegionsWithStats(threshImg, minArea=10, maxArea=300):
         if comp[4] > maxArea or comp[4] < minArea:
             labels[labels == i] = 0
 
-    labels[labels > 0] = 1
+    labels[labels > 0] = 255
+
+    cv2.imwrite('4.png', labels)
 
     # dilating components and clustering texts
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
     dilatedText = cv2.morphologyEx(labels.astype(np.uint8), cv2.MORPH_DILATE, kernel)
 
-
+    cv2.imwrite('5.png', dilatedText)
 
     # finding text clusters
     ret = cv2.connectedComponentsWithStats(dilatedText)
