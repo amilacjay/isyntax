@@ -5,7 +5,7 @@ from sketchquery.model import *
 
 image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_COLOR)
 
-ratio, resized = optimalSize(image, sqr=550)
+ratio, resized = optimalSize(image, sqr=800)
 
 # cv2.imwrite('1.png', resized)
 
@@ -83,9 +83,9 @@ for i in range(len(textPartsWithStats)):
 
 
 
-query = 'SELECT {} FROM {} WHERE {}'.format(table.projectionFields, table.name, table.condition)
+query = 'SELECT {} FROM {} WHERE {}'.format(', '.join(table.projectionFields), table.name, table.condition)
 
-print(query.replace('[','').replace(']',''))
+print(query)
 
 cv2.imshow('gray', gray)
 cv2.imshow('thresh', thresh)
