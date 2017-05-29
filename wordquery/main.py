@@ -63,7 +63,7 @@ sql = createQuery(identified_attribute, identified_table)
 print(".........................................")
 print("Generated SQL  Query : ", sql)
 
-con = makeConnection('root', '', 'company')
+con = makeConnection('root', '1234', 'company')
 
 result = getResult(con, sql)
 print("Result :", result)
