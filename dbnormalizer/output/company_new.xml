@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<database dbname="company">
+<database dbname="company_new">
     <tables>
         <table tbname="department">
             <attributes>
-                <attribute attname="Dname">
+                <attribute attname="Department_name">
                     <dataType>varchar</dataType>
                     <maxLength>15</maxLength>
                     <columnKey>UNI</columnKey>
@@ -15,7 +15,7 @@
                         <data id="3">Research</data>
                     </values>
                 </attribute>
-                <attribute attname="Dnumber">
+                <attribute attname="Department_number">
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
@@ -27,7 +27,7 @@
                         <data id="3">4</data>
                     </values>
                 </attribute>
-                <attribute attname="Mgr_ssn">
+                <attribute attname="Manager_ssn">
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>MUL</columnKey>
@@ -39,7 +39,7 @@
                         <data id="3">987654321</data>
                     </values>
                 </attribute>
-                <attribute attname="Mgr_start_date">
+                <attribute attname="Manager_start_date">
                     <dataType>date</dataType>
                     <maxLength>None</maxLength>
                     <columnKey/>
@@ -48,14 +48,46 @@
                     <values>
                         <data id="1">1981-06-19</data>
                         <data id="2">1995-01-01</data>
-                        <data id="3">1995-05-22</data>
+                        <data id="3">1988-05-22</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="department_locations">
+            <attributes>
+                <attribute attname="Department_number">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">1</data>
+                        <data id="2">4</data>
+                        <data id="3">5</data>
+                        <data id="4">5</data>
+                        <data id="5">5</data>
+                    </values>
+                </attribute>
+                <attribute attname="Department_location">
+                    <dataType>varchar</dataType>
+                    <maxLength>15</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Houston</data>
+                        <data id="2">Stafford</data>
+                        <data id="3">Bellaire</data>
+                        <data id="4">Houston</data>
+                        <data id="5">Sugarland</data>
                     </values>
                 </attribute>
             </attributes>
         </table>
         <table tbname="dependent">
             <attributes>
-                <attribute attname="Essn">
+                <attribute attname="Employee_ssn">
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>PRI</columnKey>
@@ -103,7 +135,7 @@
                         <data id="7">M</data>
                     </values>
                 </attribute>
-                <attribute attname="Bdate">
+                <attribute attname="Birthdate">
                     <dataType>date</dataType>
                     <maxLength>None</maxLength>
                     <columnKey/>
@@ -137,89 +169,23 @@
                 </attribute>
             </attributes>
         </table>
-        <table tbname="dept_locations">
-            <attributes>
-                <attribute attname="Dnumber">
-                    <dataType>int</dataType>
-                    <maxLength>None</maxLength>
-                    <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
-                    <values>
-                        <data id="1">1</data>
-                        <data id="2">4</data>
-                        <data id="3">5</data>
-                        <data id="4">5</data>
-                        <data id="5">5</data>
-                    </values>
-                </attribute>
-                <attribute attname="Dlocation">
-                    <dataType>varchar</dataType>
-                    <maxLength>15</maxLength>
-                    <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
-                    <values>
-                        <data id="1">Houston</data>
-                        <data id="2">Stafford</data>
-                        <data id="3">Bellaire</data>
-                        <data id="4">Houston</data>
-                        <data id="5">Sugarland</data>
-                    </values>
-                </attribute>
-            </attributes>
-        </table>
         <table tbname="employee">
             <attributes>
-                <attribute attname="Fname">
+                <attribute attname="Name">
                     <dataType>varchar</dataType>
-                    <maxLength>15</maxLength>
+                    <maxLength>40</maxLength>
                     <columnKey/>
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">John</data>
-                        <data id="2">Franklin</data>
-                        <data id="3">Joyce</data>
-                        <data id="4">Ramesh</data>
-                        <data id="5">James</data>
-                        <data id="6">Jennifer</data>
-                        <data id="7">Ahmad</data>
-                        <data id="8">Alicia</data>
-                    </values>
-                </attribute>
-                <attribute attname="Minit">
-                    <dataType>char</dataType>
-                    <maxLength>1</maxLength>
-                    <columnKey/>
-                    <referencedTable/>
-                    <referencedColumn/>
-                    <values>
-                        <data id="1">B</data>
-                        <data id="2">T</data>
-                        <data id="3">A</data>
-                        <data id="4">K</data>
-                        <data id="5">E</data>
-                        <data id="6">S</data>
-                        <data id="7">V</data>
-                        <data id="8">J</data>
-                    </values>
-                </attribute>
-                <attribute attname="Lname">
-                    <dataType>varchar</dataType>
-                    <maxLength>15</maxLength>
-                    <columnKey/>
-                    <referencedTable/>
-                    <referencedColumn/>
-                    <values>
-                        <data id="1">Smith</data>
-                        <data id="2">Wong</data>
-                        <data id="3">English</data>
-                        <data id="4">Narayan</data>
-                        <data id="5">Borg</data>
-                        <data id="6">Wallace</data>
-                        <data id="7">Jabbar</data>
-                        <data id="8">Zelaya</data>
+                        <data id="1">John B Smith</data>
+                        <data id="2">Franklin T Wong</data>
+                        <data id="3">Joyce A English</data>
+                        <data id="4">Ramesh K Narayan</data>
+                        <data id="5">James E Borg</data>
+                        <data id="6">Jennifer S Wallace</data>
+                        <data id="7">Ahmad V Jabbar</data>
+                        <data id="8">Alicia J Zelaya</data>
                     </values>
                 </attribute>
                 <attribute attname="Ssn">
@@ -239,7 +205,7 @@
                         <data id="8">666884444</data>
                     </values>
                 </attribute>
-                <attribute attname="Bdate">
+                <attribute attname="Birthdate">
                     <dataType>date</dataType>
                     <maxLength>None</maxLength>
                     <columnKey/>
@@ -270,7 +236,7 @@
                         <data id="5">None</data>
                         <data id="6">None</data>
                         <data id="7">None</data>
-                        <data id="8">None</data>
+                        <data id="8"/>
                     </values>
                 </attribute>
                 <attribute attname="Sex">
@@ -307,7 +273,7 @@
                         <data id="8">25000.00</data>
                     </values>
                 </attribute>
-                <attribute attname="Super_ssn">
+                <attribute attname="Supervisor_ssn">
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>MUL</columnKey>
@@ -324,7 +290,7 @@
                         <data id="8">987654321</data>
                     </values>
                 </attribute>
-                <attribute attname="Dno">
+                <attribute attname="Department_number">
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>MUL</columnKey>
@@ -345,7 +311,7 @@
         </table>
         <table tbname="project">
             <attributes>
-                <attribute attname="Pname">
+                <attribute attname="Project_name">
                     <dataType>varchar</dataType>
                     <maxLength>15</maxLength>
                     <columnKey>UNI</columnKey>
@@ -360,7 +326,7 @@
                         <data id="6">Reorganization</data>
                     </values>
                 </attribute>
-                <attribute attname="Pnumber">
+                <attribute attname="Project_number">
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
@@ -375,7 +341,7 @@
                         <data id="6">3</data>
                     </values>
                 </attribute>
-                <attribute attname="Plocation">
+                <attribute attname="Project_location">
                     <dataType>varchar</dataType>
                     <maxLength>15</maxLength>
                     <columnKey/>
@@ -390,7 +356,7 @@
                         <data id="6">Stafford</data>
                     </values>
                 </attribute>
-                <attribute attname="Dnum">
+                <attribute attname="Department_number">
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>MUL</columnKey>
@@ -407,9 +373,9 @@
                 </attribute>
             </attributes>
         </table>
-        <table tbname="works_on">
+        <table tbname="workplace">
             <attributes>
-                <attribute attname="Essn">
+                <attribute attname="Employee_ssn">
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>PRI</columnKey>
@@ -433,7 +399,7 @@
                         <data id="15">999887777</data>
                     </values>
                 </attribute>
-                <attribute attname="Pno">
+                <attribute attname="Project_number">
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
@@ -464,8 +430,8 @@
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">32.5</data>
-                        <data id="2">7.5</data>
+                        <data id="1">32.0</data>
+                        <data id="2">7.0</data>
                         <data id="3">10.0</data>
                         <data id="4">10.0</data>
                         <data id="5">10.0</data>
@@ -478,7 +444,7 @@
                         <data id="12">35.0</data>
                         <data id="13">5.0</data>
                         <data id="14">10.0</data>
-                        <data id="15">30.0</data>
+                        <data id="15">10.0</data>
                     </values>
                 </attribute>
             </attributes>

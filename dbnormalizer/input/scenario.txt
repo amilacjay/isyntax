@@ -1,0 +1,1 @@
+department name depends on department number. employee name, employee address, sex and Salary depends on SSN.

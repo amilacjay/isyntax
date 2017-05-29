@@ -98,7 +98,7 @@ class Fetcher:
 
 # using existing database
 
-fet = Fetcher("root", "", "company")
+fet = Fetcher("root", "", "company_new")
 
 tre = fet.getSchema(fet.dbConn())
 fet.writeXML(tre)
