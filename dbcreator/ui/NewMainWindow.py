@@ -2,6 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox, QListWidgetItem
 from PyQt5.QtWidgets import QTableWidgetItem
+from dbcreator.database_connection import db_connection
 
 from dbcreator.app import App
 from dbcreator.core import getContentFromFile
@@ -10,7 +11,6 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.resize(911, 584)
-        MainWindow.setWindowIcon(QIcon("isyntax.png"))
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -50,16 +50,26 @@ class Ui_MainWindow(object):
         self.btn_analyze = QtWidgets.QPushButton(self.centralwidget)
         self.btn_analyze.setGeometry(QtCore.QRect(20, 210, 113, 32))
         self.btn_analyze.setObjectName("btn_analyze")
+        self.btn_analyze.setEnabled(False)
         self.btn_generate = QtWidgets.QPushButton(self.centralwidget)
         self.btn_generate.setGeometry(QtCore.QRect(140, 210, 113, 32))
         self.btn_generate.setObjectName("btn_generate")
-        self.pushButton_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.pushButton_3.setEnabled(False)
-        self.pushButton_3.setGeometry(QtCore.QRect(260, 210, 113, 32))
-        self.pushButton_3.setObjectName("pushButton_3")
+        self.btn_generate.setEnabled(False)
+        self.btn_execute = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_execute.setGeometry(QtCore.QRect(260, 210, 113, 32))
+        self.btn_execute.setObjectName("btn_execute")
+        self.btn_execute.setEnabled(False)
         self.btn_reset = QtWidgets.QPushButton(self.centralwidget)
         self.btn_reset.setGeometry(QtCore.QRect(280, 10, 113, 32))
         self.btn_reset.setObjectName("btn_reset")
+        self.checkBox = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox.setGeometry(QtCore.QRect(390, 200, 141, 31))
+        self.checkBox.setObjectName("checkBox")
+        self.checkBox.setEnabled(False)
+        self.checkBox_2 = QtWidgets.QCheckBox(self.centralwidget)
+        self.checkBox_2.setGeometry(QtCore.QRect(390, 230, 141, 31))
+        self.checkBox_2.setObjectName("checkBox_2")
+        self.checkBox_2.setEnabled(False)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 911, 21))
@@ -69,13 +79,14 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        #####
+        ###
         MainWindow.closeEvent = self.closeButtonClicked
         self.btn_browse.clicked.connect(self.browseBtnClicked)
         self.btn_analyze.clicked.connect(self.analyzeBtnClicked)
         self.entitylist.itemClicked.connect(self.entityListItemClicked)
         self.btn_reset.clicked.connect(self.resetBtnClicked)
         self.btn_generate.clicked.connect(self.generateSqlClicked)
+        self.btn_execute.clicked.connect(self.executeBtnClicked)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -89,8 +100,10 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Entities :"))
         self.btn_analyze.setText(_translate("MainWindow", "Analyze"))
         self.btn_generate.setText(_translate("MainWindow", "Generate SQL"))
-        self.pushButton_3.setText(_translate("MainWindow", "Execute"))
+        self.btn_execute.setText(_translate("MainWindow", "Execute"))
         self.btn_reset.setText(_translate("MainWindow", "Reset"))
+        self.checkBox.setText(_translate("MainWindow", "Generate Text File"))
+        self.checkBox_2.setText(_translate("MainWindow", "Generate Database"))
 
     ##functions
 
@@ -121,18 +134,43 @@ class Ui_MainWindow(object):
         self.addEntitiesToList(self.entities)
         if (len(self.entities) > 0):
             self.btn_generate.setEnabled(True)
+            self.checkBox.setEnabled(True)
+            self.checkBox_2.setEnabled(True)
         else:
             self.btn_generate.setEnabled(False)
 
+    # def generateSqlClicked(self):
+    #
+    #     script = self.createSQLScript()
+    #
+    #     fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/'))-1]
+    #
+    #     output = open('../generated_sql/'+fileName.replace(".txt",".sql"), 'w')
+    #     print(script, file=output)
+    #     output.close()
+
     def generateSqlClicked(self):
+        self.btn_execute.setEnabled(True)
+        if self.checkBox.isChecked():
+            # self.btn_execute.setEnabled(False)
 
+            script = self.createSQLScript()
+            fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/')) - 1]
+            output = open('../generated_sql/' + fileName.replace(".txt", ".sql"), 'w')
+            print(script, file=output)
+            output.close()
+        elif self.checkBox_2.isChecked():
+            # self.btn_execute.setEnabled(True)
+            self.executeBtnClicked()
+
+
+    def executeSql(self, sql):
+        db_connection.DbConnection.connectToDb(sql)
+
+    def executeBtnClicked(self):
         script = self.createSQLScript()
-
-        fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/'))-1]
-
-        output = open('../generated_sql/'+fileName.replace(".txt",".sql"), 'w')
-        print(script, file=output)
-        output.close()
+        script.replace('\n', ' ').replace('\r', '')
+        self.executeSql(script)
 
     def createSQLScript(self):
         wholeSQL = ''
@@ -178,6 +216,7 @@ class Ui_MainWindow(object):
         for i in range(self.attributetable.rowCount()):
             self.attributetable.removeRow(0)
         self.description.clear()
+
 
 if __name__ == "__main__":
     import sys
