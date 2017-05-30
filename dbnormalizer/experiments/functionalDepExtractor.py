@@ -4,51 +4,68 @@ import xml.etree.ElementTree
 
 # The symbols to remove
 signs = ['.', '+']
-tables = []
+
+# attribute list
 attributes = []
 
+# The keyword set
+keywords = ['depends']
 
+
+# Read the scenario file from inputs
 def readfile(name):
     scenario = open('..\input\\' + name, 'r')
     contents = scenario.read()
     return contents
 
 
+# Extract the file content
 def extractor(fileContent):
     removed = []
     sentences = sent_tokenize(fileContent)
-    for sent in sentences:
+    sentlist = get_sent(sentences, keywords)
+    for sent in sentlist:
         tokens = word_tokenize(sent)
         filtered = [word for word in tokens if word not in stopwords.words('english')]
-        print(filtered)
-        # for token in filtered:
-        #     att.append(token)
         filtered = remove(signs, filtered)
         removed.append(filtered)
-    tablereader(removed)
+    table_reader(removed)
+    print(removed)
     return removed
 
 
+# A function to extract the necessary sentences
+def get_sent(sentences, keywords):
+    vlist = []
+    for sent in sentences:
+        words = sent.split()
+        for key in keywords:
+            if key in words:
+                vlist.append(sent)
+    return vlist
+
+
+# Remove the given set of signs
 def remove(signList, tokens):
     temp = [word for word in tokens if word not in signList]
     return temp
 
 
 # identifying the reference table
-def tablereader(lists):
+def table_reader(lists):
     for singleList in lists:
         print(singleList)
 
 
 # get Table names from the XML
-def tablenames(file):
+def table_names(file):
     database = xml.etree.ElementTree.parse('..\output\\' + file).getroot()
-    for a in database.iter('table'):
-        tables.append(a)
-    return tables
+    for a in database.iter('attribute'):
+        attributes.append(a)
+        print(a.attrib)
+    return attributes
+
 
 content = readfile('scenario.txt')
-x = tablenames('company_new.xml')
-for a in x:
-    print(a.keys())
+x = table_names('company_new.xml')
 extractor(content)
