@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>760</width>
+    <height>534</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>NLP Interface for Databases</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="btnDBCreator">
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>170</y>
+      <width>201</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true"/>
+    </property>
+    <property name="text">
+     <string>Database Creator</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnDBNormalizer">
+    <property name="geometry">
+     <rect>
+      <x>290</x>
+      <y>340</y>
+      <width>181</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Database Normalizer</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnQueryBySketch">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>290</y>
+      <width>181</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Query by Sketches</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnQueryByText">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>290</y>
+      <width>181</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Query by Texts</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>771</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>771</width>
+      <height>511</height>
+     </size>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap>../../../../../../Desktop/background.jpg</pixmap>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>480</x>
+      <y>20</y>
+      <width>261</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="text">
+     <string>Natural Language Interface for Databases</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btnSettings">
+    <property name="geometry">
+     <rect>
+      <x>630</x>
+      <y>50</y>
+      <width>113</width>
+      <height>32</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Settings</string>
+    </property>
+   </widget>
+   <zorder>label</zorder>
+   <zorder>btnDBCreator</zorder>
+   <zorder>btnQueryBySketch</zorder>
+   <zorder>btnQueryByText</zorder>
+   <zorder>btnDBNormalizer</zorder>
+   <zorder>label_2</zorder>
+   <zorder>btnSettings</zorder>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>760</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
