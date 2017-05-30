@@ -22,9 +22,9 @@
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">5</data>
-                        <data id="2">1</data>
-                        <data id="3">4</data>
+                        <data id="1">1</data>
+                        <data id="2">4</data>
+                        <data id="3">5</data>
                     </values>
                 </attribute>
                 <attribute attname="Mgr_ssn">
@@ -46,9 +46,9 @@
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">1981-06-19</data>
+                        <data id="1">1995-05-22</data>
                         <data id="2">1995-01-01</data>
-                        <data id="3">1995-05-22</data>
+                        <data id="3">1981-06-19</data>
                     </values>
                 </attribute>
             </attributes>
@@ -95,12 +95,12 @@
                     <referencedColumn/>
                     <values>
                         <data id="1">F</data>
-                        <data id="2">F</data>
-                        <data id="3">M</data>
-                        <data id="4">F</data>
-                        <data id="5">F</data>
-                        <data id="6">M</data>
-                        <data id="7">M</data>
+                        <data id="2">M</data>
+                        <data id="3">F</data>
+                        <data id="4">M</data>
+                        <data id="5">M</data>
+                        <data id="6">F</data>
+                        <data id="7">F</data>
                     </values>
                 </attribute>
                 <attribute attname="Bdate">
@@ -110,13 +110,13 @@
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">1988-12-30</data>
-                        <data id="2">1967-05-05</data>
-                        <data id="3">1988-01-04</data>
-                        <data id="4">1986-04-05</data>
-                        <data id="5">1958-05-03</data>
-                        <data id="6">1983-10-25</data>
-                        <data id="7">1942-02-28</data>
+                        <data id="1">1986-04-05</data>
+                        <data id="2">1983-10-25</data>
+                        <data id="3">1958-05-03</data>
+                        <data id="4">1942-02-28</data>
+                        <data id="5">1988-01-04</data>
+                        <data id="6">1988-12-30</data>
+                        <data id="7">1967-05-05</data>
                     </values>
                 </attribute>
                 <attribute attname="Relationship">
@@ -127,11 +127,11 @@
                     <referencedColumn/>
                     <values>
                         <data id="1">DAUGHTER</data>
-                        <data id="2">SPOUSE</data>
-                        <data id="3">SON</data>
-                        <data id="4">DAUGHTER</data>
-                        <data id="5">SPOUSE</data>
-                        <data id="6">SON</data>
+                        <data id="2">SON</data>
+                        <data id="3">SPOUSE</data>
+                        <data id="4">SPOUSE</data>
+                        <data id="5">SON</data>
+                        <data id="6">DAUGHTER</data>
                         <data id="7">SPOUSE</data>
                     </values>
                 </attribute>
@@ -180,12 +180,12 @@
                     <values>
                         <data id="1">John</data>
                         <data id="2">Franklin</data>
-                        <data id="3">Joyce</data>
-                        <data id="4">Ramesh</data>
-                        <data id="5">James</data>
-                        <data id="6">Jennifer</data>
+                        <data id="3">Alicia</data>
+                        <data id="4">Jennifer</data>
+                        <data id="5">Ramesh</data>
+                        <data id="6">Joyce</data>
                         <data id="7">Ahmad</data>
-                        <data id="8">Alicia</data>
+                        <data id="8">James</data>
                     </values>
                 </attribute>
                 <attribute attname="Minit">
@@ -197,12 +197,12 @@
                     <values>
                         <data id="1">B</data>
                         <data id="2">T</data>
-                        <data id="3">A</data>
-                        <data id="4">K</data>
-                        <data id="5">E</data>
-                        <data id="6">S</data>
+                        <data id="3">J</data>
+                        <data id="4">S</data>
+                        <data id="5">K</data>
+                        <data id="6">A</data>
                         <data id="7">V</data>
-                        <data id="8">J</data>
+                        <data id="8">E</data>
                     </values>
                 </attribute>
                 <attribute attname="Lname">
@@ -214,12 +214,12 @@
                     <values>
                         <data id="1">Smith</data>
                         <data id="2">Wong</data>
-                        <data id="3">English</data>
-                        <data id="4">Narayan</data>
-                        <data id="5">Borg</data>
-                        <data id="6">Wallace</data>
+                        <data id="3">Zelaya</data>
+                        <data id="4">Wallace</data>
+                        <data id="5">Narayan</data>
+                        <data id="6">English</data>
                         <data id="7">Jabbar</data>
-                        <data id="8">Zelaya</data>
+                        <data id="8">Borg</data>
                     </values>
                 </attribute>
                 <attribute attname="Ssn">
@@ -229,14 +229,14 @@
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">888665555</data>
-                        <data id="2">987654321</data>
-                        <data id="3">987987987</data>
-                        <data id="4">999887777</data>
-                        <data id="5">123456789</data>
-                        <data id="6">333445555</data>
-                        <data id="7">453453453</data>
-                        <data id="8">666884444</data>
+                        <data id="1">123456789</data>
+                        <data id="2">333445555</data>
+                        <data id="3">453453453</data>
+                        <data id="4">666884444</data>
+                        <data id="5">888665555</data>
+                        <data id="6">987654321</data>
+                        <data id="7">987987987</data>
+                        <data id="8">999887777</data>
                     </values>
                 </attribute>
                 <attribute attname="Bdate">
@@ -248,12 +248,12 @@
                     <values>
                         <data id="1">1965-01-09</data>
                         <data id="2">1955-12-08</data>
-                        <data id="3">1972-07-31</data>
-                        <data id="4">1962-09-15</data>
-                        <data id="5">1937-11-10</data>
-                        <data id="6">1941-06-20</data>
+                        <data id="3">1968-07-19</data>
+                        <data id="4">1941-06-20</data>
+                        <data id="5">1962-09-15</data>
+                        <data id="6">1972-07-31</data>
                         <data id="7">1969-03-29</data>
-                        <data id="8">1968-07-19</data>
+                        <data id="8">1937-11-10</data>
                     </values>
                 </attribute>
                 <attribute attname="Address">
@@ -283,11 +283,11 @@
                         <data id="1">M</data>
                         <data id="2">M</data>
                         <data id="3">F</data>
-                        <data id="4">M</data>
+                        <data id="4">F</data>
                         <data id="5">M</data>
                         <data id="6">F</data>
                         <data id="7">M</data>
-                        <data id="8">F</data>
+                        <data id="8">M</data>
                     </values>
                 </attribute>
                 <attribute attname="Salary">
@@ -300,11 +300,11 @@
                         <data id="1">30000.00</data>
                         <data id="2">40000.00</data>
                         <data id="3">25000.00</data>
-                        <data id="4">38000.00</data>
-                        <data id="5">55000.00</data>
-                        <data id="6">43000.00</data>
+                        <data id="4">43000.00</data>
+                        <data id="5">38000.00</data>
+                        <data id="6">25000.00</data>
                         <data id="7">25000.00</data>
-                        <data id="8">25000.00</data>
+                        <data id="8">55000.00</data>
                     </values>
                 </attribute>
                 <attribute attname="Super_ssn">
@@ -367,12 +367,12 @@
                     <referencedTable/>
                     <referencedColumn/>
                     <values>
-                        <data id="1">20</data>
-                        <data id="2">10</data>
-                        <data id="3">30</data>
-                        <data id="4">1</data>
-                        <data id="5">2</data>
-                        <data id="6">3</data>
+                        <data id="1">1</data>
+                        <data id="2">2</data>
+                        <data id="3">3</data>
+                        <data id="4">10</data>
+                        <data id="5">20</data>
+                        <data id="6">30</data>
                     </values>
                 </attribute>
                 <attribute attname="Plocation">
@@ -417,19 +417,19 @@
                     <referencedColumn/>
                     <values>
                         <data id="1">123456789</data>
-                        <data id="2">453453453</data>
-                        <data id="3">123456789</data>
+                        <data id="2">123456789</data>
+                        <data id="3">333445555</data>
                         <data id="4">333445555</data>
-                        <data id="5">453453453</data>
+                        <data id="5">333445555</data>
                         <data id="6">333445555</data>
-                        <data id="7">666884444</data>
-                        <data id="8">333445555</data>
-                        <data id="9">987987987</data>
-                        <data id="10">999887777</data>
-                        <data id="11">333445555</data>
-                        <data id="12">987654321</data>
-                        <data id="13">987654321</data>
-                        <data id="14">987987987</data>
+                        <data id="7">453453453</data>
+                        <data id="8">453453453</data>
+                        <data id="9">666884444</data>
+                        <data id="10">987654321</data>
+                        <data id="11">987654321</data>
+                        <data id="12">987987987</data>
+                        <data id="13">987987987</data>
+                        <data id="14">999887777</data>
                         <data id="15">999887777</data>
                     </values>
                 </attribute>
@@ -466,19 +466,19 @@
                     <values>
                         <data id="1">32.5</data>
                         <data id="2">7.5</data>
-                        <data id="3">10.0</data>
-                        <data id="4">10.0</data>
-                        <data id="5">10.0</data>
+                        <data id="3">40.0</data>
+                        <data id="4">20.0</data>
+                        <data id="5">20.0</data>
                         <data id="6">10.0</data>
-                        <data id="7">20.0</data>
-                        <data id="8">20.0</data>
-                        <data id="9">40.0</data>
-                        <data id="10">15.0</data>
-                        <data id="11">20.0</data>
+                        <data id="7">10.0</data>
+                        <data id="8">10.0</data>
+                        <data id="9">10.0</data>
+                        <data id="10">30.0</data>
+                        <data id="11">10.0</data>
                         <data id="12">35.0</data>
                         <data id="13">5.0</data>
-                        <data id="14">10.0</data>
-                        <data id="15">30.0</data>
+                        <data id="14">20.0</data>
+                        <data id="15">15.0</data>
                     </values>
                 </attribute>
             </attributes>
