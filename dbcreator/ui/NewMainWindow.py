@@ -2,7 +2,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMessageBox, QListWidgetItem
 from PyQt5.QtWidgets import QTableWidgetItem
-from dbcreator.database_connection import db_connection
+from dbcreator.database_connection.db_connection import DbConnection
 
 from dbcreator.app import App
 from dbcreator.core import getContentFromFile
@@ -118,7 +118,7 @@ class Ui_MainWindow(object):
             event.ignore()
 
     def browseBtnClicked(self):
-        path, _ = QtWidgets.QFileDialog.getOpenFileName()
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../samples/', filter='*.txt')
         self.filePath = path
         if self.filePath != '':
             content = getContentFromFile(path)
@@ -150,35 +150,44 @@ class Ui_MainWindow(object):
     #     output.close()
 
     def generateSqlClicked(self):
-        self.btn_execute.setEnabled(True)
-        if self.checkBox.isChecked():
-            # self.btn_execute.setEnabled(False)
 
-            script = self.createSQLScript()
+        script = self.createSQLScript()
+
+        if self.checkBox.isChecked():
             fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/')) - 1]
             output = open('../generated_sql/' + fileName.replace(".txt", ".sql"), 'w')
             print(script, file=output)
             output.close()
-        elif self.checkBox_2.isChecked():
-            # self.btn_execute.setEnabled(True)
-            self.executeBtnClicked()
 
+        self.executableScript = script.replace('\n','').replace('\t','')
+        self.btn_execute.setEnabled(True)
 
-    def executeSql(self, sql):
-        db_connection.DbConnection.connectToDb(sql)
 
     def executeBtnClicked(self):
-        script = self.createSQLScript()
-        script.replace('\n', ' ').replace('\r', '')
-        self.executeSql(script)
+        try:
+            dbConn = DbConnection()
+            dbConn.connectToDb(self.executableScript)
+
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Database has been created!!")
+            msg.setDetailedText(self.executableScript)
+            msg.exec_()
+        except Exception as e:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Connection failed!")
+            msg.setDetailedText(e.args[1])
+            msg.exec_()
+
 
     def createSQLScript(self):
         wholeSQL = ''
         for entity in self.entities:
-            firstLine = "CREATE TABLE {} (".format(entity.name())
+            firstLine = "DROP TABLE IF EXISTS {} CASCADE; CREATE TABLE {} (".format(entity.name(), entity.name())
             queryBody = '\n'
             delimiter = ',\n'
-            lastLine = "\n)\n\n"
+            lastLine = "\n);\n\n"
 
             attributeList = entity.getAttributes()
             for i, attribute in enumerate(attributeList):

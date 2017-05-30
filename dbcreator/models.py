@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QListWidgetItem
 class DataType(Enum):
 
     def __str__(self):
+        if(self.name=='VARCHAR'):
+            return self.name+'(50)'
         return self.name
 
     VARCHAR = 0

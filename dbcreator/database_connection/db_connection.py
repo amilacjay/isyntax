@@ -1,10 +1,20 @@
 import pymysql
+from configparser import ConfigParser
 
 class DbConnection:
 
     def connectToDb(self, sql):
+        config = ConfigParser()
+        config.read('../../config.ini')
 
-        conn = pymysql.connect(host = "localhost", port = 3306, user = "root", passwd = "1234", db = "school")
+        hostName = config.get('Global', 'host')
+        portNo = config.get('Global', 'port')
+        username = config.get('Global', 'username')
+        password = config.get('Global', 'password')
+        database = config.get('Global', 'database')
+
+
+        conn = pymysql.connect(host = hostName, port = int(portNo), user = username, passwd = password, db = database)
 
         cursor = conn.cursor()
         cursor.execute(sql)
