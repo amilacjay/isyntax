@@ -2,31 +2,36 @@ import pymysql.cursors
 
 __author__ = 'ChaminiKD'
 
-def makeConnection(user,passwd,db):
+
+def makeConnection(user, passwd, db):
     connection = pymysql.connect(host='localhost',
-                                     user=user,
-                                     password=passwd,
-                                     db=db,
-                                     charset='utf8mb4',
-                                     cursorclass=pymysql.cursors.DictCursor)
+                                 user=user,
+                                 password=passwd,
+                                 db=db,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
     return connection
 
-# attList= ['lname','fname']
-# tableList = ['employee']
 
-def createQuery(attList,tableList):
-    if (attList):
-        basciSQL = "SELECT "+', '.join(attList)+" FROM "+', '.join(tableList)+" ;"
+# create the sql query
+def createQuery(attList, tableList, value, symbol, prv_attribute):
+    if value:
+        att_for_value = prv_attribute
+        print("attribute for value = ", att_for_value)
+        basciSQL = "SELECT " + ', '.join(attList) + " FROM " + ', '.join(tableList) + " WHERE " + att_for_value[
+            0] + symbol + value + ";"
+        return basciSQL
+    if attList:
+        basciSQL = "SELECT " + ', '.join(attList) + " FROM " + ', '.join(tableList) + " ;"
         return basciSQL
     else:
-        basciSQL = "SELECT * FROM "+', '.join(tableList)+" ;"
+        basciSQL = "SELECT * FROM " + ', '.join(tableList) + " ;"
         # print(basciSQL)
         return basciSQL
 
-# sql = createQuery(attList,tableList)
-# con = makeConnection('root','','company')
 
-def getResult(connection,query):
+# get the result
+def getResult(connection, query):
     try:
         with connection.cursor() as cursor:
             cursor.execute(query)
@@ -38,5 +43,4 @@ def getResult(connection,query):
     finally:
         connection.close()
 
-# asd = getResult(con,sql)
-# print(asd)
+
