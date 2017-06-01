@@ -6,6 +6,22 @@ from nltk.metrics import *
 
 __author__ = 'ChaminiKD'
 
+expression_list = [("equals", "="),("greater than", "<"), ("less than", ">"), ("greater than or equal", "<="),
+                   ("less than or equal", ">="),
+                   ("notequal", "<>"), ("greaterthan", "<"), ("lessthan", ">"), ("greater than or equal to", "<="),
+                   ("less than or equal to", ">="), ("like", "like"), ("equal", "="), ("order by", "order by"),
+                   ("equal to", "=")]
+
+
+def identify_expressions(remaining_sentence):
+    temp = []
+    for elm in expression_list:
+        for word in remaining_sentence:
+            if elm[0] == word:
+                temp.append(word)
+                symbol=(elm[1])
+    return temp , symbol
+
 
 # def sort_nouns(taggs):
 #     nouns = [word for word, pos in taggs if pos == 'NN']
@@ -35,14 +51,14 @@ def chunk_nouns(tags):
 
 # retrieve table names from company.xml
 def get_Table_names():
-    tree = ET.parse("company.xml")
+    tree = ET.parse("company_new.xml")
     tables = [el.attrib.get('tbname') for el in tree.findall('.//table')]
     return tables
 
 
 # retrieve attribute names from company.xml
 def get_attribute_names():
-    tree = ET.parse("company.xml")
+    tree = ET.parse("company_new.xml")
     attributes = [el.attrib.get('attname') for el in tree.findall('.//attribute')]
     return attributes
 
@@ -159,100 +175,102 @@ def setSementicKB(type, list):
 
     return knowledgeBase
 
-# def write_file(name , values):
-#     file= open('out/'+name+'.txt', 'w')
-#     print("#########################")
-#     file.write(str(values))
-#     print("#########################")
-#     file.close()
-
 table_synset_file = open('out/table_synset.txt', 'w')
+
+
 def tableIdentifier(knowledgeBase, nounList):
     try:
         list = []
         temp = []
+        n_list = []
         # for a in knowledgeBase:
         # for x in a[1]:
         for n in nounList:
             syn = wordnet.synsets(n, pos='n')
+            # print("syn", syn)
             for a in knowledgeBase:
                 for x in a[1]:
                     # print(syn)
                     sim = x.wup_similarity(syn[0])
-                    table_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
+                    table_synset_file.write(str([n, syn[0], ':', x, '=', sim]))
                     table_synset_file.write("\n")
                     # temp.append([n, syn[0], ":", x, "=", sim])
                     if sim >= 0.7:
-                        #print("table found:", a[0])
+                        # print("table found:", a[0])
                         list.append(a[0])
-                        return list
+                        n_list.append(n)
+                        return list, n_list
     except:
-        tab = find_tables(nounList)
-        return tab
+        tab, n_list = find_tables(nounList)
+        return tab, n_list
+
 
 att_synset_file = open('out/attribute_synset.txt', 'w')
+
+
 def attributeIdentifier(knowledgeBase, nounList):
     list2 = []
-    try:
-        for n in nounList:
+    new_list = []
+
+    for n in nounList:
+        try:
             syn = wordnet.synsets(n, pos='n')
             for a in knowledgeBase:
                 for x in a[1]:
                     # print(syn)
                     sim = x.wup_similarity(syn[0])
-                    att_synset_file.write(str([n, syn[0] , ':' , x , '=' , sim]))
+                    att_synset_file.write(str([n, syn[0], ':', x, '=', sim]))
                     att_synset_file.write("\n")
                     # print(n, syn[0], ":", x, "=", sim)
                     if sim >= 0.75:
-                        #print("attribute found:", a[0])
+                        # print("attribute found:", a[0])
                         list2.append(a[0])
-        if not list2:
-                    at = find_attributes(nounList)
-                    return at
+                        #new_list = nounList - n
+        except:
+            new_list = []
+            new_list.append(n)
+            print(new_list)
+            att = find_attributes(new_list)
+            # print("atttt",att)
+            # strs = repr(att)
+            # print("rrrrrrrrrrrrrrrrrr",strs)
+            list2.extend(att)
+            # list2.append(att)
+            print(":::::::::::",list2)
+    return list2
+    # if not list2:
+    #         at = find_attributes(nounList)
+    #         return at
 
-                    # else:
-                    #     at = find_attributes(nounList)
-                    #     return at
-
-        print(list2)
-        return list2
-    except:
-        att = find_attributes(nounList)
-        return att
+            # else:
+            #     at = find_attributes(nounList)
+            #     return at
 
 
 def find_tables(noun_list):
     list = extract_tables(noun_list)
     tabList = []
+    n_list = []
     for a in list:
         # print(a)
-        for l in a :
-            if l[2] <= 4:
+        for l in a:
+            if l[2] <= 3:
                 # print(l[1])
                 # print((a[0])[1])
                 tabList.append(l[1])
-    return set(tabList)
+                n_list.append(l[0])
+    return set(tabList), n_list
+
 
 def find_attributes(noun_list):
     list = extract_attributes(noun_list)
     attList = []
     for a in list:
         # print(a)
-        for l in a :
-            if l[2] <= 4:
+        for l in a:
+            if l[2] <= 3:
                 # print(l[1])
                 # print((a[0])[1])
                 attList.append(l[1])
     return set(attList)
 
-
-
-
-
-# asd = setSementicKB('tables', ['department', 'dependent', 'employee'])
-# assw = tableIdentifier(asd, ['labourer'])
-
-# print(asd)
-# for a in asd:
-#     for x in a[1]:
-#         print(x.name()+" = "+x.definition())

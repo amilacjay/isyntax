@@ -30,7 +30,7 @@ def getTokenz(S):
 # remove escape words
 def remove_stopWords(tokenz):
     filtered_words = [word for word in tokenz if word not in stopwords.words('english')]
-    escapeWords = ['what', 'who', 'whose', 'display', 'is', 'a', 'at', 'is', '.', ',', '(', ')']
+    escapeWords = ['what', 'who', 'whose', 'display', 'is', 'a', 'at', 'is', '.', ',', '(', ')', 'equal', 'equals']
     resultWords = [word for word in filtered_words if word.lower() not in escapeWords]
     return resultWords
 
