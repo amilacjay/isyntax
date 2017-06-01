@@ -1,4 +1,5 @@
-The university keeps track of each student's name, student number, Social Security number, current address and phone number, permanent address and phone number, birth date, sex, class, major department, minor department and degree program.
+The university keeps track of each student's name, student number, Social Security number, current address and phone number, permanent address and
+phone number, birth date, sex, class, major department, minor department and degree program.
 Some user applications need to refer to the city, state, and ZIP Code of the student's permanent address and to the student's last name.
 Both Social Security number and student number have unique values for each student.
 Each department is described by a name, department code, office number, office phone number, and college.
