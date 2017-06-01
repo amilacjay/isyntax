@@ -1,0 +1,1057 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database dbname="university">
+    <tables>
+        <table tbname="advisor">
+            <attributes>
+                <attribute attname="student_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>5</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">12345</data>
+                        <data id="2">44553</data>
+                        <data id="3">45678</data>
+                        <data id="4">00128</data>
+                        <data id="5">76543</data>
+                        <data id="6">23121</data>
+                        <data id="7">98988</data>
+                        <data id="8">76653</data>
+                        <data id="9">98765</data>
+                    </values>
+                </attribute>
+                <attribute attname="instructor_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>5</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">10101</data>
+                        <data id="2">22222</data>
+                        <data id="3">22222</data>
+                        <data id="4">45565</data>
+                        <data id="5">45565</data>
+                        <data id="6">76543</data>
+                        <data id="7">76766</data>
+                        <data id="8">98345</data>
+                        <data id="9">98345</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="classroom">
+            <attributes>
+                <attribute attname="building">
+                    <dataType>varchar</dataType>
+                    <maxLength>15</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Packard</data>
+                        <data id="2">Painter</data>
+                        <data id="3">Taylor</data>
+                        <data id="4">Watson</data>
+                        <data id="5">Watson</data>
+                    </values>
+                </attribute>
+                <attribute attname="room_number">
+                    <dataType>varchar</dataType>
+                    <maxLength>7</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">101</data>
+                        <data id="2">514</data>
+                        <data id="3">3128</data>
+                        <data id="4">100</data>
+                        <data id="5">120</data>
+                    </values>
+                </attribute>
+                <attribute attname="capacity">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">500</data>
+                        <data id="2">10</data>
+                        <data id="3">70</data>
+                        <data id="4">30</data>
+                        <data id="5">50</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="course">
+            <attributes>
+                <attribute attname="course_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">BIO-101</data>
+                        <data id="2">BIO-301</data>
+                        <data id="3">BIO-399</data>
+                        <data id="4">CS-101</data>
+                        <data id="5">CS-190</data>
+                        <data id="6">CS-315</data>
+                        <data id="7">CS-319</data>
+                        <data id="8">CS-347</data>
+                        <data id="9">EE-181</data>
+                        <data id="10">FIN-201</data>
+                        <data id="11">HIS-351</data>
+                        <data id="12">MU-199</data>
+                        <data id="13">PHY-101</data>
+                    </values>
+                </attribute>
+                <attribute attname="title">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Intro. to Biology</data>
+                        <data id="2">Genetics</data>
+                        <data id="3">Computational Biology</data>
+                        <data id="4">Intro. to Computer Science</data>
+                        <data id="5">Game Design</data>
+                        <data id="6">Robotics</data>
+                        <data id="7">Image Processing</data>
+                        <data id="8">Database System Concepts</data>
+                        <data id="9">Intro. to Digital Systems</data>
+                        <data id="10">Investment Banking</data>
+                        <data id="11">World History</data>
+                        <data id="12">Music Video Production</data>
+                        <data id="13">Physical Principles</data>
+                    </values>
+                </attribute>
+                <attribute attname="department_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>20</maxLength>
+                    <columnKey>MUL</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Biology</data>
+                        <data id="2">Biology</data>
+                        <data id="3">Biology</data>
+                        <data id="4">Computer Science</data>
+                        <data id="5">Computer Science</data>
+                        <data id="6">Computer Science</data>
+                        <data id="7">Computer Science</data>
+                        <data id="8">Computer Science</data>
+                        <data id="9">Electrical Eng</data>
+                        <data id="10">Finance</data>
+                        <data id="11">History</data>
+                        <data id="12">Music</data>
+                        <data id="13">Physics</data>
+                    </values>
+                </attribute>
+                <attribute attname="credits">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">4</data>
+                        <data id="2">4</data>
+                        <data id="3">3</data>
+                        <data id="4">4</data>
+                        <data id="5">4</data>
+                        <data id="6">3</data>
+                        <data id="7">3</data>
+                        <data id="8">3</data>
+                        <data id="9">3</data>
+                        <data id="10">3</data>
+                        <data id="11">3</data>
+                        <data id="12">3</data>
+                        <data id="13">4</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="instructor">
+            <attributes>
+                <attribute attname="instructor_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>5</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">76766</data>
+                        <data id="2">10101</data>
+                        <data id="3">45565</data>
+                        <data id="4">83821</data>
+                        <data id="5">98345</data>
+                        <data id="6">12121</data>
+                        <data id="7">76543</data>
+                        <data id="8">32343</data>
+                        <data id="9">58583</data>
+                        <data id="10">15151</data>
+                        <data id="11">22222</data>
+                        <data id="12">33456</data>
+                    </values>
+                </attribute>
+                <attribute attname="instructor_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>20</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Srinivasan</data>
+                        <data id="2">Wu</data>
+                        <data id="3">Mozart</data>
+                        <data id="4">Einstein</data>
+                        <data id="5">El Said</data>
+                        <data id="6">Gold</data>
+                        <data id="7">Katz</data>
+                        <data id="8">Califieri</data>
+                        <data id="9">Singh</data>
+                        <data id="10">Crick</data>
+                        <data id="11">Brandt</data>
+                        <data id="12">Kim</data>
+                    </values>
+                </attribute>
+                <attribute attname="department_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>20</maxLength>
+                    <columnKey>MUL</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Biology</data>
+                        <data id="2">Computer Science</data>
+                        <data id="3">Computer Science</data>
+                        <data id="4">Computer Science</data>
+                        <data id="5">Electrical Eng</data>
+                        <data id="6">Finance</data>
+                        <data id="7">Finance</data>
+                        <data id="8">History</data>
+                        <data id="9">History</data>
+                        <data id="10">Music</data>
+                        <data id="11">Physics</data>
+                        <data id="12">Physics</data>
+                    </values>
+                </attribute>
+                <attribute attname="salary">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">65000.00</data>
+                        <data id="2">90000.00</data>
+                        <data id="3">40000.00</data>
+                        <data id="4">95000.00</data>
+                        <data id="5">60000.00</data>
+                        <data id="6">87000.00</data>
+                        <data id="7">75000.00</data>
+                        <data id="8">62000.00</data>
+                        <data id="9">80000.00</data>
+                        <data id="10">72000.00</data>
+                        <data id="11">92000.00</data>
+                        <data id="12">80000.00</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="prerequisite">
+            <attributes>
+                <attribute attname="course_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">BIO-301</data>
+                        <data id="2">BIO-399</data>
+                        <data id="3">CS-190</data>
+                        <data id="4">CS-315</data>
+                        <data id="5">CS-319</data>
+                        <data id="6">CS-347</data>
+                        <data id="7">EE-181</data>
+                    </values>
+                </attribute>
+                <attribute attname="prerequisite_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">BIO-101</data>
+                        <data id="2">BIO-101</data>
+                        <data id="3">CS-101</data>
+                        <data id="4">CS-101</data>
+                        <data id="5">CS-101</data>
+                        <data id="6">CS-101</data>
+                        <data id="7">PHY-101</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="section">
+            <attributes>
+                <attribute attname="course_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">CS-319</data>
+                        <data id="2">PHY-101</data>
+                        <data id="3">CS-101</data>
+                        <data id="4">CS-101</data>
+                        <data id="5">FIN-201</data>
+                        <data id="6">MU-199</data>
+                        <data id="7">CS-315</data>
+                        <data id="8">CS-190</data>
+                        <data id="9">CS-190</data>
+                        <data id="10">CS-319</data>
+                        <data id="11">CS-347</data>
+                        <data id="12">EE-181</data>
+                        <data id="13">BIO-101</data>
+                        <data id="14">BIO-301</data>
+                        <data id="15">HIS-351</data>
+                    </values>
+                </attribute>
+                <attribute attname="section_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">1</data>
+                        <data id="2">1</data>
+                        <data id="3">1</data>
+                        <data id="4">1</data>
+                        <data id="5">1</data>
+                        <data id="6">1</data>
+                        <data id="7">1</data>
+                        <data id="8">1</data>
+                        <data id="9">2</data>
+                        <data id="10">2</data>
+                        <data id="11">1</data>
+                        <data id="12">1</data>
+                        <data id="13">1</data>
+                        <data id="14">1</data>
+                        <data id="15">1</data>
+                    </values>
+                </attribute>
+                <attribute attname="semester">
+                    <dataType>varchar</dataType>
+                    <maxLength>6</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Spring</data>
+                        <data id="2">Fall</data>
+                        <data id="3">Fall</data>
+                        <data id="4">Spring</data>
+                        <data id="5">Spring</data>
+                        <data id="6">Spring</data>
+                        <data id="7">Spring</data>
+                        <data id="8">Spring</data>
+                        <data id="9">Spring</data>
+                        <data id="10">Spring</data>
+                        <data id="11">Fall</data>
+                        <data id="12">Spring</data>
+                        <data id="13">Summer</data>
+                        <data id="14">Summer</data>
+                        <data id="15">Spring</data>
+                    </values>
+                </attribute>
+                <attribute attname="started_year">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">2010</data>
+                        <data id="2">2009</data>
+                        <data id="3">2009</data>
+                        <data id="4">2010</data>
+                        <data id="5">2010</data>
+                        <data id="6">2010</data>
+                        <data id="7">2010</data>
+                        <data id="8">2009</data>
+                        <data id="9">2009</data>
+                        <data id="10">2010</data>
+                        <data id="11">2009</data>
+                        <data id="12">2009</data>
+                        <data id="13">2009</data>
+                        <data id="14">2010</data>
+                        <data id="15">2010</data>
+                    </values>
+                </attribute>
+                <attribute attname="building">
+                    <dataType>varchar</dataType>
+                    <maxLength>15</maxLength>
+                    <columnKey>MUL</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Packard</data>
+                        <data id="2">Packard</data>
+                        <data id="3">Packard</data>
+                        <data id="4">Packard</data>
+                        <data id="5">Painter</data>
+                        <data id="6">Painter</data>
+                        <data id="7">Painter</data>
+                        <data id="8">Taylor</data>
+                        <data id="9">Taylor</data>
+                        <data id="10">Taylor</data>
+                        <data id="11">Taylor</data>
+                        <data id="12">Taylor</data>
+                        <data id="13">Watson</data>
+                        <data id="14">Watson</data>
+                        <data id="15">Watson</data>
+                    </values>
+                </attribute>
+                <attribute attname="room_number">
+                    <dataType>varchar</dataType>
+                    <maxLength>7</maxLength>
+                    <columnKey>MUL</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">100</data>
+                        <data id="2">100</data>
+                        <data id="3">101</data>
+                        <data id="4">101</data>
+                        <data id="5">101</data>
+                        <data id="6">101</data>
+                        <data id="7">120</data>
+                        <data id="8">3128</data>
+                        <data id="9">3128</data>
+                        <data id="10">3128</data>
+                        <data id="11">3128</data>
+                        <data id="12">3128</data>
+                        <data id="13">514</data>
+                        <data id="14">514</data>
+                        <data id="15">514</data>
+                    </values>
+                </attribute>
+                <attribute attname="time_slot">
+                    <dataType>varchar</dataType>
+                    <maxLength>4</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">B</data>
+                        <data id="2">A</data>
+                        <data id="3">H</data>
+                        <data id="4">F</data>
+                        <data id="5">E</data>
+                        <data id="6">A</data>
+                        <data id="7">D</data>
+                        <data id="8">B</data>
+                        <data id="9">C</data>
+                        <data id="10">A</data>
+                        <data id="11">C</data>
+                        <data id="12">B</data>
+                        <data id="13">C</data>
+                        <data id="14">D</data>
+                        <data id="15">A</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="student">
+            <attributes>
+                <attribute attname="ID">
+                    <dataType>varchar</dataType>
+                    <maxLength>5</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">98988</data>
+                        <data id="2">00128</data>
+                        <data id="3">12345</data>
+                        <data id="4">54321</data>
+                        <data id="5">76543</data>
+                        <data id="6">76653</data>
+                        <data id="7">98765</data>
+                        <data id="8">23121</data>
+                        <data id="9">19991</data>
+                        <data id="10">55739</data>
+                        <data id="11">44553</data>
+                        <data id="12">45678</data>
+                        <data id="13">70557</data>
+                    </values>
+                </attribute>
+                <attribute attname="student_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>20</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Zhang</data>
+                        <data id="2">Shankar</data>
+                        <data id="3">Brandt</data>
+                        <data id="4">Chavez</data>
+                        <data id="5">Peltier</data>
+                        <data id="6">Levy</data>
+                        <data id="7">Williams</data>
+                        <data id="8">Sanchez</data>
+                        <data id="9">Snow</data>
+                        <data id="10">Brown</data>
+                        <data id="11">Aoi</data>
+                        <data id="12">Bourikas</data>
+                        <data id="13">Tanaka</data>
+                    </values>
+                </attribute>
+                <attribute attname="depatment_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>20</maxLength>
+                    <columnKey>MUL</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Biology</data>
+                        <data id="2">Computer Science</data>
+                        <data id="3">Computer Science</data>
+                        <data id="4">Computer Science</data>
+                        <data id="5">Computer Science</data>
+                        <data id="6">Electrical Eng</data>
+                        <data id="7">Electrical Eng</data>
+                        <data id="8">Finance</data>
+                        <data id="9">History</data>
+                        <data id="10">Music</data>
+                        <data id="11">Physics</data>
+                        <data id="12">Physics</data>
+                        <data id="13">Physics</data>
+                    </values>
+                </attribute>
+                <attribute attname="total_credits">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">102</data>
+                        <data id="2">32</data>
+                        <data id="3">80</data>
+                        <data id="4">110</data>
+                        <data id="5">56</data>
+                        <data id="6">46</data>
+                        <data id="7">54</data>
+                        <data id="8">38</data>
+                        <data id="9">0</data>
+                        <data id="10">58</data>
+                        <data id="11">60</data>
+                        <data id="12">98</data>
+                        <data id="13">120</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="takes">
+            <attributes>
+                <attribute attname="ID">
+                    <dataType>varchar</dataType>
+                    <maxLength>5</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">98988</data>
+                        <data id="2">98988</data>
+                        <data id="3">00128</data>
+                        <data id="4">12345</data>
+                        <data id="5">45678</data>
+                        <data id="6">54321</data>
+                        <data id="7">76543</data>
+                        <data id="8">98765</data>
+                        <data id="9">45678</data>
+                        <data id="10">12345</data>
+                        <data id="11">54321</data>
+                        <data id="12">12345</data>
+                        <data id="13">98765</data>
+                        <data id="14">45678</data>
+                        <data id="15">76543</data>
+                        <data id="16">00128</data>
+                        <data id="17">12345</data>
+                        <data id="18">76653</data>
+                        <data id="19">23121</data>
+                        <data id="20">19991</data>
+                        <data id="21">55739</data>
+                        <data id="22">44553</data>
+                    </values>
+                </attribute>
+                <attribute attname="course_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">BIO-101</data>
+                        <data id="2">BIO-301</data>
+                        <data id="3">CS-101</data>
+                        <data id="4">CS-101</data>
+                        <data id="5">CS-101</data>
+                        <data id="6">CS-101</data>
+                        <data id="7">CS-101</data>
+                        <data id="8">CS-101</data>
+                        <data id="9">CS-101</data>
+                        <data id="10">CS-190</data>
+                        <data id="11">CS-190</data>
+                        <data id="12">CS-315</data>
+                        <data id="13">CS-315</data>
+                        <data id="14">CS-319</data>
+                        <data id="15">CS-319</data>
+                        <data id="16">CS-347</data>
+                        <data id="17">CS-347</data>
+                        <data id="18">EE-181</data>
+                        <data id="19">FIN-201</data>
+                        <data id="20">HIS-351</data>
+                        <data id="21">MU-199</data>
+                        <data id="22">PHY-101</data>
+                    </values>
+                </attribute>
+                <attribute attname="section_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">1</data>
+                        <data id="2">1</data>
+                        <data id="3">1</data>
+                        <data id="4">1</data>
+                        <data id="5">1</data>
+                        <data id="6">1</data>
+                        <data id="7">1</data>
+                        <data id="8">1</data>
+                        <data id="9">1</data>
+                        <data id="10">2</data>
+                        <data id="11">2</data>
+                        <data id="12">1</data>
+                        <data id="13">1</data>
+                        <data id="14">1</data>
+                        <data id="15">2</data>
+                        <data id="16">1</data>
+                        <data id="17">1</data>
+                        <data id="18">1</data>
+                        <data id="19">1</data>
+                        <data id="20">1</data>
+                        <data id="21">1</data>
+                        <data id="22">1</data>
+                    </values>
+                </attribute>
+                <attribute attname="semester">
+                    <dataType>varchar</dataType>
+                    <maxLength>6</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Summer</data>
+                        <data id="2">Summer</data>
+                        <data id="3">Fall</data>
+                        <data id="4">Fall</data>
+                        <data id="5">Fall</data>
+                        <data id="6">Fall</data>
+                        <data id="7">Fall</data>
+                        <data id="8">Fall</data>
+                        <data id="9">Spring</data>
+                        <data id="10">Spring</data>
+                        <data id="11">Spring</data>
+                        <data id="12">Spring</data>
+                        <data id="13">Spring</data>
+                        <data id="14">Spring</data>
+                        <data id="15">Spring</data>
+                        <data id="16">Fall</data>
+                        <data id="17">Fall</data>
+                        <data id="18">Spring</data>
+                        <data id="19">Spring</data>
+                        <data id="20">Spring</data>
+                        <data id="21">Spring</data>
+                        <data id="22">Fall</data>
+                    </values>
+                </attribute>
+                <attribute attname="taken_year">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">2009</data>
+                        <data id="2">2010</data>
+                        <data id="3">2009</data>
+                        <data id="4">2009</data>
+                        <data id="5">2009</data>
+                        <data id="6">2009</data>
+                        <data id="7">2009</data>
+                        <data id="8">2009</data>
+                        <data id="9">2010</data>
+                        <data id="10">2009</data>
+                        <data id="11">2009</data>
+                        <data id="12">2010</data>
+                        <data id="13">2010</data>
+                        <data id="14">2010</data>
+                        <data id="15">2010</data>
+                        <data id="16">2009</data>
+                        <data id="17">2009</data>
+                        <data id="18">2009</data>
+                        <data id="19">2010</data>
+                        <data id="20">2010</data>
+                        <data id="21">2010</data>
+                        <data id="22">2009</data>
+                    </values>
+                </attribute>
+                <attribute attname="grade">
+                    <dataType>varchar</dataType>
+                    <maxLength>2</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">A</data>
+                        <data id="2"/>
+                        <data id="3">C</data>
+                        <data id="4">A</data>
+                        <data id="5">A</data>
+                        <data id="6">A</data>
+                        <data id="7">B</data>
+                        <data id="8">C+</data>
+                        <data id="9">B-</data>
+                        <data id="10">F</data>
+                        <data id="11">B+</data>
+                        <data id="12">B</data>
+                        <data id="13">A-</data>
+                        <data id="14">B+</data>
+                        <data id="15">A-</data>
+                        <data id="16">A</data>
+                        <data id="17">A</data>
+                        <data id="18">C</data>
+                        <data id="19">C-</data>
+                        <data id="20">B</data>
+                        <data id="21">A</data>
+                        <data id="22">None</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="teaches">
+            <attributes>
+                <attribute attname="ID">
+                    <dataType>varchar</dataType>
+                    <maxLength>5</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">76766</data>
+                        <data id="2">76766</data>
+                        <data id="3">10101</data>
+                        <data id="4">45565</data>
+                        <data id="5">83821</data>
+                        <data id="6">83821</data>
+                        <data id="7">10101</data>
+                        <data id="8">45565</data>
+                        <data id="9">83821</data>
+                        <data id="10">10101</data>
+                        <data id="11">98345</data>
+                        <data id="12">12121</data>
+                        <data id="13">32343</data>
+                        <data id="14">15151</data>
+                        <data id="15">22222</data>
+                    </values>
+                </attribute>
+                <attribute attname="course_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">BIO-101</data>
+                        <data id="2">BIO-301</data>
+                        <data id="3">CS-101</data>
+                        <data id="4">CS-101</data>
+                        <data id="5">CS-190</data>
+                        <data id="6">CS-190</data>
+                        <data id="7">CS-315</data>
+                        <data id="8">CS-319</data>
+                        <data id="9">CS-319</data>
+                        <data id="10">CS-347</data>
+                        <data id="11">EE-181</data>
+                        <data id="12">FIN-201</data>
+                        <data id="13">HIS-351</data>
+                        <data id="14">MU-199</data>
+                        <data id="15">PHY-101</data>
+                    </values>
+                </attribute>
+                <attribute attname="section_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>8</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">1</data>
+                        <data id="2">1</data>
+                        <data id="3">1</data>
+                        <data id="4">1</data>
+                        <data id="5">1</data>
+                        <data id="6">2</data>
+                        <data id="7">1</data>
+                        <data id="8">1</data>
+                        <data id="9">2</data>
+                        <data id="10">1</data>
+                        <data id="11">1</data>
+                        <data id="12">1</data>
+                        <data id="13">1</data>
+                        <data id="14">1</data>
+                        <data id="15">1</data>
+                    </values>
+                </attribute>
+                <attribute attname="semester">
+                    <dataType>varchar</dataType>
+                    <maxLength>6</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Summer</data>
+                        <data id="2">Summer</data>
+                        <data id="3">Fall</data>
+                        <data id="4">Spring</data>
+                        <data id="5">Spring</data>
+                        <data id="6">Spring</data>
+                        <data id="7">Spring</data>
+                        <data id="8">Spring</data>
+                        <data id="9">Spring</data>
+                        <data id="10">Fall</data>
+                        <data id="11">Spring</data>
+                        <data id="12">Spring</data>
+                        <data id="13">Spring</data>
+                        <data id="14">Spring</data>
+                        <data id="15">Fall</data>
+                    </values>
+                </attribute>
+                <attribute attname="year_started">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">2009</data>
+                        <data id="2">2010</data>
+                        <data id="3">2009</data>
+                        <data id="4">2010</data>
+                        <data id="5">2009</data>
+                        <data id="6">2009</data>
+                        <data id="7">2010</data>
+                        <data id="8">2010</data>
+                        <data id="9">2010</data>
+                        <data id="10">2009</data>
+                        <data id="11">2009</data>
+                        <data id="12">2010</data>
+                        <data id="13">2010</data>
+                        <data id="14">2010</data>
+                        <data id="15">2009</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="timeslot">
+            <attributes>
+                <attribute attname="timeslot_id">
+                    <dataType>varchar</dataType>
+                    <maxLength>4</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">A</data>
+                        <data id="2">A</data>
+                        <data id="3">A</data>
+                        <data id="4">B</data>
+                        <data id="5">B</data>
+                        <data id="6">B</data>
+                        <data id="7">C</data>
+                        <data id="8">C</data>
+                        <data id="9">C</data>
+                        <data id="10">D</data>
+                        <data id="11">D</data>
+                        <data id="12">D</data>
+                        <data id="13">E</data>
+                        <data id="14">E</data>
+                        <data id="15">F</data>
+                        <data id="16">F</data>
+                        <data id="17">G</data>
+                        <data id="18">G</data>
+                        <data id="19">G</data>
+                        <data id="20">H</data>
+                    </values>
+                </attribute>
+                <attribute attname="calender_day">
+                    <dataType>varchar</dataType>
+                    <maxLength>1</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">F</data>
+                        <data id="2">M</data>
+                        <data id="3">W</data>
+                        <data id="4">F</data>
+                        <data id="5">M</data>
+                        <data id="6">W</data>
+                        <data id="7">F</data>
+                        <data id="8">M</data>
+                        <data id="9">W</data>
+                        <data id="10">F</data>
+                        <data id="11">M</data>
+                        <data id="12">W</data>
+                        <data id="13">R</data>
+                        <data id="14">T</data>
+                        <data id="15">R</data>
+                        <data id="16">T</data>
+                        <data id="17">F</data>
+                        <data id="18">M</data>
+                        <data id="19">W</data>
+                        <data id="20">W</data>
+                    </values>
+                </attribute>
+                <attribute attname="start_time">
+                    <dataType>time</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">8:00:00</data>
+                        <data id="2">8:00:00</data>
+                        <data id="3">8:00:00</data>
+                        <data id="4">9:00:00</data>
+                        <data id="5">9:00:00</data>
+                        <data id="6">9:00:00</data>
+                        <data id="7">11:00:00</data>
+                        <data id="8">11:00:00</data>
+                        <data id="9">11:00:00</data>
+                        <data id="10">13:00:00</data>
+                        <data id="11">13:00:00</data>
+                        <data id="12">13:00:00</data>
+                        <data id="13">10:30:00</data>
+                        <data id="14">10:30:00</data>
+                        <data id="15">14:30:00</data>
+                        <data id="16">14:30:00</data>
+                        <data id="17">16:00:00</data>
+                        <data id="18">16:00:00</data>
+                        <data id="19">16:00:00</data>
+                        <data id="20">10:00:00</data>
+                    </values>
+                </attribute>
+                <attribute attname="end_time">
+                    <dataType>time</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">8:50:00</data>
+                        <data id="2">8:50:00</data>
+                        <data id="3">8:50:00</data>
+                        <data id="4">9:50:00</data>
+                        <data id="5">9:50:00</data>
+                        <data id="6">9:50:00</data>
+                        <data id="7">11:00:50</data>
+                        <data id="8">11:00:50</data>
+                        <data id="9">11:00:50</data>
+                        <data id="10">13:00:50</data>
+                        <data id="11">13:00:50</data>
+                        <data id="12">13:00:50</data>
+                        <data id="13">11:45:00</data>
+                        <data id="14">11:45:00</data>
+                        <data id="15">15:45:00</data>
+                        <data id="16">15:45:00</data>
+                        <data id="17">16:50:00</data>
+                        <data id="18">16:50:00</data>
+                        <data id="19">16:50:00</data>
+                        <data id="20">12:30:00</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="university_department">
+            <attributes>
+                <attribute attname="department_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>20</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Biology</data>
+                        <data id="2">Computer Science</data>
+                        <data id="3">Electrical Eng</data>
+                        <data id="4">Finance</data>
+                        <data id="5">History</data>
+                        <data id="6">Music</data>
+                        <data id="7">Physics</data>
+                    </values>
+                </attribute>
+                <attribute attname="building">
+                    <dataType>varchar</dataType>
+                    <maxLength>15</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">Watson</data>
+                        <data id="2">Taylor</data>
+                        <data id="3">Taylor</data>
+                        <data id="4">Painter</data>
+                        <data id="5">Painter</data>
+                        <data id="6">Packard</data>
+                        <data id="7">Watson</data>
+                    </values>
+                </attribute>
+                <attribute attname="budget">
+                    <dataType>decimal</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values>
+                        <data id="1">90000.00</data>
+                        <data id="2">100000.00</data>
+                        <data id="3">85000.00</data>
+                        <data id="4">120000.00</data>
+                        <data id="5">50000.00</data>
+                        <data id="6">80000.00</data>
+                        <data id="7">70000.00</data>
+                    </values>
+                </attribute>
+            </attributes>
+        </table>
+    </tables>
+</database>
