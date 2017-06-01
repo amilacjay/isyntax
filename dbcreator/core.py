@@ -35,7 +35,12 @@ def extract_np(psent):
 
 
 def getChunkedSentences(taggedSents):
-    grammar = "NP: {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}"
+    # grammar = "NP: {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}"
+
+    grammar = r"""
+    NP: {<NN.*><IN><NN.*>}
+        {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}
+    """
 
     cp = RegexpParser(grammar)
 
@@ -50,3 +55,24 @@ def getChunkedSentences(taggedSents):
         chunkList.append([x for x in extract_gen])
 
     return chunkList
+
+
+def createSQLScript(entities):
+    wholeSQL = ''
+    for entity in entities:
+        firstLine = "DROP TABLE IF EXISTS {} CASCADE; CREATE TABLE {} (".format(entity.name(), entity.name())
+        queryBody = '\n'
+        delimiter = ',\n'
+        lastLine = "\n);\n\n"
+
+        attributeList = entity.getAttributes()
+        for i, attribute in enumerate(attributeList):
+            uniqueKW = ' UNIQUE'
+            attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
+            if i != len(attributeList) - 1:
+                attributeLine = attributeLine + delimiter
+            queryBody = queryBody + attributeLine
+
+        wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
+
+    return wholeSQL

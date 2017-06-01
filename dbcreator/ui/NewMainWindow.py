@@ -6,6 +6,8 @@ from dbcreator.database_connection.db_connection import DbConnection
 
 from dbcreator.app import App
 from dbcreator.core import getContentFromFile
+from dbcreator.core import createSQLScript
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -79,6 +81,13 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
+        # combobox = QtGui.QComboBox()
+        # combo_box_options = ["VARCHAR(50)", "INTEGER", "CHAR", "DOUBLE", "DATETIME"]
+        # for item in combo_box_options:
+        #     combobox.addItem(item)
+        # self.attributetable.setCellWidget(0, 2, QTableWidgetItem)
+
+
         ###
         MainWindow.closeEvent = self.closeButtonClicked
         self.btn_browse.clicked.connect(self.browseBtnClicked)
@@ -90,6 +99,7 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
@@ -117,6 +127,7 @@ class Ui_MainWindow(object):
         else:
             event.ignore()
 
+
     def browseBtnClicked(self):
         path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../samples/', filter='*.txt')
         self.filePath = path
@@ -128,10 +139,12 @@ class Ui_MainWindow(object):
             else:
                 self.btn_analyze.setEnabled(False)
 
+
     def analyzeBtnClicked(self):
         app = App(filePath=self.filePath)
         self.entities = app.run()
         self.addEntitiesToList(self.entities)
+
         if (len(self.entities) > 0):
             self.btn_generate.setEnabled(True)
             self.checkBox.setEnabled(True)
@@ -149,9 +162,33 @@ class Ui_MainWindow(object):
     #     print(script, file=output)
     #     output.close()
 
+    # def createSQLScript(self):
+    #     wholeSQL = ''
+    #     for entity in self.entities:
+    #         firstLine = "DROP TABLE IF EXISTS {} CASCADE; CREATE TABLE {} (".format(entity.name(), entity.name())
+    #         queryBody = '\n'
+    #         delimiter = ',\n'
+    #         lastLine = "\n);\n\n"
+    #
+    #         attributeList = entity.getAttributes()
+    #         for i, attribute in enumerate(attributeList):
+    #             uniqueKW = ' UNIQUE'
+    #             attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype,
+    #                                                uniqueKW if attribute.isUnique else '')
+    #             if i != len(attributeList) - 1:
+    #                 attributeLine = attributeLine + delimiter
+    #             queryBody = queryBody + attributeLine
+    #
+    #         wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
+    #
+    #     return wholeSQL
+
+
     def generateSqlClicked(self):
 
-        script = self.createSQLScript()
+        script = createSQLScript(self.entities)
+
+        # script = self.createSQLScript()
 
         if self.checkBox.isChecked():
             fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/')) - 1]
@@ -181,26 +218,6 @@ class Ui_MainWindow(object):
             msg.exec_()
 
 
-    def createSQLScript(self):
-        wholeSQL = ''
-        for entity in self.entities:
-            firstLine = "DROP TABLE IF EXISTS {} CASCADE; CREATE TABLE {} (".format(entity.name(), entity.name())
-            queryBody = '\n'
-            delimiter = ',\n'
-            lastLine = "\n);\n\n"
-
-            attributeList = entity.getAttributes()
-            for i, attribute in enumerate(attributeList):
-                uniqueKW = ' UNIQUE'
-                attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
-                if i != len(attributeList) - 1:
-                    attributeLine = attributeLine + delimiter
-                queryBody = queryBody + attributeLine
-
-            wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
-
-        return wholeSQL
-
     def addEntitiesToList(self, entities):
         for entity in entities:
             self.entitylist.addItem(entity)
@@ -217,6 +234,7 @@ class Ui_MainWindow(object):
             self.attributetable.setItem(row, 3, QTableWidgetItem(str(attr.isNotNull)))
             self.attributetable.setItem(row, 4, QTableWidgetItem(str(attr.isUnique)))
             self.attributetable.setItem(row, 5, QTableWidgetItem(str(attr.data)))
+
 
     def resetBtnClicked(self):
         self.btn_analyze.setEnabled(False)
