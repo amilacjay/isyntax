@@ -7,15 +7,15 @@ image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_C
 
 ratio, resized = optimalSize(image, sqr=800)
 
-cv2.imwrite('1.png', resized)
+# cv2.imwrite('1.png', resized)
 
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
-cv2.imwrite('2.png', gray)
+# cv2.imwrite('2.png', gray)
 
 thresh = binaryImage(gray)
 
-cv2.imwrite('3.png', thresh)
+# cv2.imwrite('3.png', thresh)
 
 removed = thresh.copy()
 
@@ -49,20 +49,23 @@ for i in range(len(textPartsWithStats)):
         box = np.int0(box)
 
         # centroid of the min area rectangle
-        M = cv2.moments(box)
-        cX = int(M["m10"] / M["m00"])
-        cY = int(M["m01"] / M["m00"])
-        cv2.circle(x, (cX, cY), 7, (0, 0, 255), -1)
+        try:
+            M = cv2.moments(box)
+            cX = int(M["m10"] / M["m00"])
+            cY = int(M["m01"] / M["m00"])
+            cv2.circle(x, (cX, cY), 7, (0, 0, 255), -1)
 
-        # centroid of the contour(arrow)
-        M2 = cv2.moments(c)
-        cX2 = int(M2["m10"] / M2["m00"])
-        cY2 = int(M2["m01"] / M2["m00"])
-        cv2.circle(x, (cX2, cY2), 7, (255, 0, 0), -1)
+            # centroid of the contour(arrow)
+            M2 = cv2.moments(c)
+            cX2 = int(M2["m10"] / M2["m00"])
+            cY2 = int(M2["m01"] / M2["m00"])
+            cv2.circle(x, (cX2, cY2), 7, (255, 0, 0), -1)
 
-        cv2.drawContours(x, [box], 0, (0, 255, 0), 2)
+            cv2.drawContours(x, [box], 0, (0, 255, 0), 2)
+        except:
+            pass
 
-    cv2.imwrite('14.png', x)
+    # cv2.imwrite('14.png', x)
 
     if text.startswith('[') and text.endswith(']'):
         projectionFields = text.replace('[','').replace(']','').replace(' ','').split(',')
@@ -80,9 +83,9 @@ for i in range(len(textPartsWithStats)):
 
 
 
-query = 'SELECT {} FROM {} WHERE {}'.format(table.projectionFields, table.name, table.condition)
+query = 'SELECT {} FROM {} WHERE {}'.format(', '.join(table.projectionFields), table.name, table.condition)
 
-print(query.replace('[','').replace(']',''))
+print(query)
 
 cv2.imshow('gray', gray)
 cv2.imshow('thresh', thresh)

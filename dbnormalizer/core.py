@@ -1,0 +1,8 @@
+
+
+def extractFDs(text):
+    pass
+
+
+
+

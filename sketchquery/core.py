@@ -90,6 +90,9 @@ def enclosedByCircle(textRegionStat, contours):
         # calculate the ratio, (perimeter)^2 / (area)
         area = cv2.contourArea(hull)
         arcLength = cv2.arcLength(hull, True)
+        if area == 0:
+            continue
+
         ratio = math.pow(arcLength, 2) / area
 
         # if it is perfect circle ratio value should be 12.566..

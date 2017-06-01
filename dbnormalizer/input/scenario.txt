@@ -1,0 +1,1 @@
+department name depends on department number. employee name, employee address, sex and Salary depends on SSN. SSN is the primary key of the table. JobID is teh primary key of the table.

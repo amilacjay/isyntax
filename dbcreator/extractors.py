@@ -9,7 +9,6 @@ class SecondaryExtractor:
     def execute(self, entities):
         pass
 
-
 class PossessionBasedExtractor(PrimaryExtractor):
     def execute(self, tagged_sents, chunked_sents, target):
 
@@ -49,7 +48,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     entity.setAttributes(attributes)
                     target.append(entity)
                     break
-
 
 class UniqueKeyExtractor(SecondaryExtractor):
     def execute(self, entities):
