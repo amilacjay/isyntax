@@ -30,7 +30,6 @@ def extractor(fileContent):
         filtered = remove(signs, filtered)
         removed.append(filtered)
     table_reader(removed)
-    print(removed)
     return removed
 
 
@@ -87,22 +86,22 @@ def restructure_keys(fds, attrib):
         for y in x:
             index = 0
             loop = 0
-            lhs = []
+            simplelist = []
             # s = [word for word in x if word.lower() not in [y.lower() for y in attrib]]
             for S in y:
-                if isattribute(S, attrib) == 0 and loop == 0:
+                if isattribute(S, attrib) == 0 and loop == 0 and (index + 1) < len(y):
                     temp = y[index] + '_' + y[index + 1]
                     if isattribute(temp, attrib) == -1:
-                        lhs.append(temp)
+                        simplelist.append(temp)
                     loop = loop + 1
                 elif loop == 1:
                     loop = loop - 1
                     index = index + 1
                     continue
                 elif isattribute(S, attrib) == -1 and loop == 0:
-                    lhs.append(S)
+                    simplelist.append(S)
                 index = index + 1
-            final.append(lhs)
+            final.append(simplelist)
     print("restructured", final)
 
 
@@ -116,6 +115,5 @@ def isattribute(word, attrib):
 
 content = readfile('scenario.txt')
 x = table_names('company_new.xml')
-print(x)
 s = get_functionaldep(extractor(content))
 restructure_keys(s, x)
