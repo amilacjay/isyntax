@@ -43,13 +43,13 @@ def textRegionsWithStats(threshImg, minArea=10, maxArea=300):
 
     labels[labels > 0] = 255
 
-    cv2.imwrite('4.png', labels)
+    # cv2.imwrite('4.png', labels)
 
     # dilating components and clustering texts
     kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (25, 25))
     dilatedText = cv2.morphologyEx(labels.astype(np.uint8), cv2.MORPH_DILATE, kernel)
 
-    cv2.imwrite('5.png', dilatedText)
+    # cv2.imwrite('5.png', dilatedText)
 
     # finding text clusters
     ret = cv2.connectedComponentsWithStats(dilatedText)
@@ -62,7 +62,7 @@ def textRegionsWithStats(threshImg, minArea=10, maxArea=300):
     textParts = []
 
     # loop through text clusters without background(0)
-    for i in range(1, ret[0], 1):
+    for i in range(1, noOfLabels, 1):
         comp = stats[i]
         crop = threshImg[comp[1]:comp[1] + comp[3], comp[0]:comp[0] + comp[2]]
         textParts.append((crop,comp))
@@ -112,3 +112,31 @@ def enclosedByCircle(textRegionStat, contours):
 
 
     return False, None
+
+
+def eucDist(point1, point2):
+    return math.sqrt(pow(point1[0]-point2[0], 2) + pow(point1[1]-point2[1], 2))
+
+def getPointsOfCircle(center, radius, shape):
+    mask = np.zeros(shape, np.uint8)
+    cv2.circle(mask, center, radius, 255)
+    where = np.argwhere(mask == 255)
+    return where
+
+
+def getCommonPoints(points1, points2):
+    commonPts = []
+    for pt1 in points1:
+        for pt2 in points2:
+            if pt1[0] == pt2[0] and pt1[1]==pt2[1]:
+                commonPts.append([[pt1[1], pt1[0]]])
+
+
+    return np.array(commonPts)
+
+
+def getCentroid(contour):
+    M = cv2.moments(contour)
+    cx = int(M['m10'] / M['m00'])
+    cy = int(M['m01'] / M['m00'])
+    return (cx, cy)

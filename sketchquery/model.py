@@ -1,3 +1,4 @@
+from enum import Enum
 class Table:
     def __init__(self):
         self.name = None
@@ -16,3 +17,11 @@ class Table:
 
     def setSortingFields(self, fields):
         self.sortingFields = fields
+
+
+class ELEMENT_TYPE(Enum):
+    TABLE = 0
+    JOINED_TABLE = 1
+    CONDITION = 2
+    COL_LIST = 3
+    VARIABLE = 4

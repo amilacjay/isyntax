@@ -33,7 +33,17 @@ for i in range(len(textPartsWithStats)):
 
     removed[stat[1]:stat[1] + stat[3], stat[0]:stat[0] + stat[2]] = 0
 
+
+
     ret, conts, hier = cv2.findContours(removed.copy(), mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+
+
+    x = resized.copy()
+    cv2.drawContours(x, conts, -1, (0,255,0), 3)
+
+    cv2.imshow(str(i), x)
+    cv2.waitKey(0)
+
 
     isEnclosedByCircle, hull = enclosedByCircle(stat, conts)
 
@@ -74,10 +84,10 @@ query = 'SELECT {} FROM {} WHERE {}'.format(table.projectionFields, table.name, 
 
 print(query.replace('[','').replace(']',''))
 
-cv2.imshow('gray', gray)
-cv2.imshow('thresh', thresh)
-cv2.imshow('removed', removed)
-# cv2.imshow('circled', experiments)
+# cv2.imshow('gray', gray)
+# cv2.imshow('thresh', thresh)
+# cv2.imshow('removed', removed)
+# # cv2.imshow('circled', experiments)
 
 cv2.waitKey(0)
 cv2.destroyAllWindows()
