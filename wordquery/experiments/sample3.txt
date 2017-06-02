@@ -1,0 +1,10 @@
+What is the  address and  wage  of employees ?
+What is the  address and  wage  of employees whose  name equal ' John B Smith' ?
+give me the birthdates of employees?
+what is the name of  employee whose wage equals ' 25000' ?
+what is the ssn of employee whose sex equals ' M' ?
+what is the name of employee whose wage lessthan '30000' ?
+what is the name of employee whose wage notequal '25000' ?
+what is the name of employee whose wage equals '30000' and departmentnumber equals ' 5' ?
+what is the name of employee whose wage equals '30000' or departmentnumber equals ' 5'?
+what is the supervisorssn of employee whose wage notequal ' 30000' ?
