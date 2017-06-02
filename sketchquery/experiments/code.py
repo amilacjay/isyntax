@@ -8,14 +8,16 @@ image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_C
 ratio, resized = optimalSize(image, sqr=800)
 
 # cv2.imwrite('1.png', resized)
+cv2.imshow('1', resized)
 
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 
 # cv2.imwrite('2.png', gray)
+# cv2.imshow('2', gray)
 
 thresh = binaryImage(gray)
-
 # cv2.imwrite('3.png', thresh)
+# cv2.imshow('3', resized)
 
 removed = thresh.copy()
 
@@ -28,7 +30,7 @@ for i in range(len(textPartsWithStats)):
     textPart = textPartsWithStats[i][0]
     stat = textPartsWithStats[i][1]
     text = imageToText(textPart).strip()
-    cv2.imshow(str(i), textPart)
+    cv2.imshow('T'+str(i), textPart)
 
     removed[stat[1]:stat[1] + stat[3], stat[0]:stat[0] + stat[2]] = 0
 
