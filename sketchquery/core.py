@@ -119,7 +119,8 @@ def eucDist(point1, point2):
 
 def getPointsOfCircle(center, radius, shape):
     mask = np.zeros(shape, np.uint8)
-    cv2.circle(mask, center, radius, 255)
+    cv2.circle(mask, center, radius, 255, 2)
+
     where = np.argwhere(mask == 255)
     return where
 
