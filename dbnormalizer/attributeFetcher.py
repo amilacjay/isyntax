@@ -58,9 +58,9 @@ class Fetcher:
                         columnKeyElement.text = str(att[attKeyList[1]])
                         cursor.execute("SELECT table_name,column_name,referenced_table_name,referenced_column_name "
                                        "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
-                                       "WHERE column_name = '" + str(att[attKeyList[1]]) + "' AND table_name = '" + str(
+                                       "WHERE column_name = '" + str(att[attKeyList[2]]).lower() + "' AND table_name = '" + str(
                             table[tablekeyList[
-                                0]]) + "' AND referenced_column_name IS NOT NULL AND constraint_name = '" + self.db + "';")
+                                0]]).lower() + "' AND referenced_column_name IS NOT NULL AND CONSTRAINT_SCHEMA = '" + self.db + "';")
                         foreigns = cursor.fetchall()
                         connection.commit()
 
