@@ -128,9 +128,9 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
 
                     compList.append(set([i,j]))
 
-            for attr in attrList:
-                if attr.name().contains('%'):
-                    ch = attr.name().split('%')
+            # for attr in attrList:
+            #     if attr.name().contains('%'):
+            #         ch = attr.name().split('%')
 
 
 
