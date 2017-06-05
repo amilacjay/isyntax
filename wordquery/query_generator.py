@@ -2,31 +2,51 @@ import pymysql.cursors
 
 __author__ = 'ChaminiKD'
 
-def makeConnection(user,passwd,db):
+
+def makeConnection(user, passwd, db):
     connection = pymysql.connect(host='localhost',
-                                     user=user,
-                                     password=passwd,
-                                     db=db,
-                                     charset='utf8mb4',
-                                     cursorclass=pymysql.cursors.DictCursor)
+                                 user=user,
+                                 password=passwd,
+                                 db=db,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
     return connection
 
-# attList= ['lname','fname']
-# tableList = ['employee']
 
-def createQuery(attList,tableList):
-    if (attList):
-        basciSQL = "SELECT "+', '.join(attList)+" FROM "+', '.join(tableList)+" ;"
+# create the sql query
+def createQuery(attList, tableList, value, symbol, prv_attribute, condition_list, operator):
+    if value and len(condition_list) >= 2:
+        basciSQL = "SELECT " + ', '.join(attList) + " FROM " + ', '.join(tableList) + " WHERE " + condition_list[
+            0][0] + condition_list[0][1] + value[0] + operator[0].upper() + " " + condition_list[1][0] + \
+                   condition_list[1][1] + value[1] + ";"
         return basciSQL
-    else:
-        basciSQL = "SELECT * FROM "+', '.join(tableList)+" ;"
+
+    if value and not attList :
+        att_for_value = prv_attribute
+        basciSQL = "SELECT * FROM " + ', '.join(tableList) + " WHERE " + att_for_value[
+            0] + symbol[0][0] + value[0] + ";"
+        return basciSQL
+
+    if value and attList:
+        att_for_value = prv_attribute
+        basciSQL = "SELECT " + ', '.join(attList) + " FROM " + ', '.join(tableList) + " WHERE " + att_for_value[
+            0] + symbol[0][0] + value[0] + ";"
+        return basciSQL
+
+    if attList:
+        basciSQL = "SELECT " + ', '.join(attList) + " FROM " + ', '.join(tableList) + " ;"
+        return basciSQL
+    if not attList :
+        basciSQL = "SELECT * FROM " + ', '.join(tableList) + " ;"
         # print(basciSQL)
         return basciSQL
+    else:
+        basciSQL = "none"
+        return basciSQL
 
-# sql = createQuery(attList,tableList)
-# con = makeConnection('root','','company')
 
-def getResult(connection,query):
+# get the result
+def getResult(connection, query):
     try:
         with connection.cursor() as cursor:
             cursor.execute(query)
@@ -37,6 +57,3 @@ def getResult(connection,query):
         print("Invalid")
     finally:
         connection.close()
-
-# asd = getResult(con,sql)
-# print(asd)
