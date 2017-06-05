@@ -26,7 +26,7 @@ def getTaggedSentences(text):
     return sentenses
 
 
-text = getContentFromFile('sample1.txt')
+text = getContentFromFile('sample3.txt')
 
 tagged_sentences = getTaggedSentences(text)
 

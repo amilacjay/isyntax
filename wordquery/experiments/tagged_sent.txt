@@ -1,27 +1,30 @@
-Tagged Sentence: [('who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('employees', 'NNS'), ('?', '.')]
-Noun Phrases: ['employees']
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('address', 'NN'), ('and', 'CC'), ('wage', 'NN'), ('of', 'IN'), ('employees', 'NNS'), ('?', '.')]
+Noun Phrases: ['address', 'wage', 'employees']
 
-Tagged Sentence: [('who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('employees', 'NNS'), ('of', 'IN'), ('the', 'DT'), ('company', 'NN'), ('?', '.')]
-Noun Phrases: ['employees', 'company']
+Tagged Sentence: [('What', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('address', 'NN'), ('and', 'CC'), ('wage', 'NN'), ('of', 'IN'), ('employees', 'NNS'), ('whose', 'WP$'), ('name', 'NN'), ('equal', 'JJ'), ("'", 'POS'), ('John', 'NNP'), ('B', 'NNP'), ('Smith', 'NNP'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['address', 'wage', 'employees', 'name']
 
-Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('departments', 'NNS'), ('?', '.')]
-Noun Phrases: ['departments']
+Tagged Sentence: [('give', 'VB'), ('me', 'PRP'), ('the', 'DT'), ('birthdates', 'NNS'), ('of', 'IN'), ('employees', 'NNS'), ('?', '.')]
+Noun Phrases: ['birthdates', 'employees']
 
-Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('department', 'NN'), ('locations', 'NNS'), ('?', '.')]
-Noun Phrases: ['department', 'locations']
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('wage', 'NN'), ('equals', 'NNS'), ("'", 'POS'), ('25000', 'CD'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['name', 'employee', 'wage', 'equals']
 
-Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('projects', 'NNS'), ('?', '.')]
-Noun Phrases: ['projects']
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('ssn', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('sex', 'NN'), ('equals', 'NNS'), ("'", 'POS'), ('M', 'NNP'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['ssn', 'employee', 'sex', 'equals']
 
-Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('the', 'DT'), ('projects', 'NNS'), ('done', 'VBN'), ('by', 'IN'), ('the', 'DT'), ('company', 'NN'), ('?', '.')]
-Noun Phrases: ['projects', 'company']
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('wage', 'NN'), ('lessthan', 'VBD'), ("'30000", 'CD'), ("'", "''"), ('?', '.')]
+Noun Phrases: ['name', 'employee', 'wage']
 
-Tagged Sentence: [('who', 'WP'), ('are', 'VBP'), ('the', 'DT'), ('dependants', 'NNS'), ('?', '.')]
-Noun Phrases: ['dependants']
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('wage', 'NN'), ('notequal', 'JJ'), ("'25000", 'CD'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['name', 'employee', 'wage']
 
-Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('all', 'DT'), ('employee', 'NN'), ('Ssns', 'NNP'), ('?', '.')]
-Noun Phrases: ['employee']
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('wage', 'NN'), ('equals', 'NNS'), ("'30000", 'POS'), ("'", 'POS'), ('and', 'CC'), ('departmentnumber', 'JJ'), ('equals', 'NNS'), ("'", 'POS'), ('5', 'CD'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['name', 'employee', 'wage', 'equals', 'equals']
 
-Tagged Sentence: [('what', 'WDT'), ('are', 'VBP'), ('all', 'DT'), ('combinations', 'NNS'), ('of', 'IN'), ('employee', 'NN'), ('Ssn', 'NNP'), ('and', 'CC'), ('employee', 'NN'), ('Dname', 'NNP'), ('?', '.')]
-Noun Phrases: ['combinations', 'employee', 'employee']
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('name', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('wage', 'NN'), ('equals', 'NNS'), ("'30000", 'CD'), ("'", "''"), ('or', 'CC'), ('departmentnumber', 'VB'), ('equals', 'NNS'), ("'", 'POS'), ('5', 'CD'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['name', 'employee', 'wage', 'equals', 'equals']
+
+Tagged Sentence: [('what', 'WP'), ('is', 'VBZ'), ('the', 'DT'), ('supervisorssn', 'NN'), ('of', 'IN'), ('employee', 'NN'), ('whose', 'WP$'), ('wage', 'NN'), ('notequal', 'JJ'), ("'", 'POS'), ('30000', 'CD'), ("'", 'POS'), ('?', '.')]
+Noun Phrases: ['supervisorssn', 'employee', 'wage']
 
