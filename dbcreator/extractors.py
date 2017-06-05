@@ -36,8 +36,13 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     target.append(entity)
                     break
 
-                if ((item[1] == 'PRP')):
-                    pass
+                # if (item[1] == 'PRP'):
+                #     pass
+
+                    # if (item[1] == 'IN'):
+                    #     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[1][1] == 'IN' or 'TO']
+                    #     candidateEntityNames.remove(item[1])
+                    #     print(candidateEntityNames)
 
 
                 elif item[1] == 'POS':
@@ -129,9 +134,8 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
                     compList.append(set([i,j]))
 
             for attr in attrList:
-                if attr.name().contains('%'):
-                    ch = attr.name().split('%')
-
+                if attr.name() == '%' or '$' or '#' or '*' or '@':
+                    attrList.remove(attr)
 
 
 class RemoveAttributesFromEntityList(SecondaryExtractor):
