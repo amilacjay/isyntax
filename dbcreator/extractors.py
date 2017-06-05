@@ -1,4 +1,5 @@
 from dbcreator.models import *
+from dbcreator.core import csv_reader
 
 class PrimaryExtractor:
     def execute(self, tagged_sents, chunked_sents, target):
@@ -35,6 +36,10 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     target.append(entity)
                     break
 
+                if ((item[1] == 'PRP')):
+                    pass
+
+
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
                     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > posIndex]
@@ -57,14 +62,17 @@ class UniqueKeyExtractor(SecondaryExtractor):
 
             for attr in entity.getAttributes():
                 isUnique = False
+                # isPrimaryKey = False
                 tempData = []
                 for i, word in enumerate(attr.data):
                     if(word[0].lower() in ['unique','distinguishable']):
                         isUnique = True
+                        # isPrimaryKey = True
                     else:
                         tempData.append(word)
                 attr.data = tempData
                 attr.isUnique = isUnique
+                # attr.isPrimaryKey = isPrimaryKey
 
 
 class IdentifyAttributeDataType(SecondaryExtractor):
@@ -72,7 +80,7 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
         intList = ['number', 'no', 'id', 'SSN']
         dateList = ['date', 'dob']
-        doubleList = ['temperature', 'price', 'distance']
+        doubleList = ['temperature', 'price', 'distance', 'weight']
 
         for entity in entities:
             attrList = entity.getAttributes()
@@ -80,8 +88,6 @@ class IdentifyAttributeDataType(SecondaryExtractor):
                 for item in intList:
                     if item.lower() in attr.name().lower():
                         attr.dtype = DataType.INTEGER
-                        attr.isUnique = True
-                        # attr.isPrimaryKey = True
                     if 'phone' in attr.name().lower():
                         attr.dtype = DataType.VARCHAR
                 for item in dateList:
@@ -94,6 +100,7 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
 class RemoveDuplicateEntities(SecondaryExtractor):
     def execute(self, entities):
+        pass
 
         compList = []
 
@@ -108,6 +115,7 @@ class RemoveDuplicateEntities(SecondaryExtractor):
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities):
+        pass
 
         compList = []
 
@@ -119,6 +127,11 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
                         attrList.remove(attr2)
 
                     compList.append(set([i,j]))
+
+            # for attr in attrList:
+            #     if attr.name().contains('%'):
+            #         ch = attr.name().split('%')
+
 
 
 class RemoveAttributesFromEntityList(SecondaryExtractor):
@@ -136,6 +149,20 @@ class RemoveAttributesFromEntityList(SecondaryExtractor):
             e = entities[i]
             # print(e.name())
             # entities.remove(e)
+
+
+class PrimaryKeyExtractor(SecondaryExtractor):
+    def execute(self, entities):
+        for entity in entities:
+            for attr in entity.getAttributes():
+                if attr in csv_reader('../knowledge_base/primary_keys.csv'):
+                    # attr.isPrimaryKey = True
+                    # attr.isUnique = True
+                     pass
+
+
+
+
 
 
 

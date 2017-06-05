@@ -3,22 +3,10 @@ import numpy as np
 from sketchquery.core import *
 from sketchquery.model import *
 
-image = cv2.imread('../samples/sketches/sketch_typed_opened_1.jpg', cv2.IMREAD_COLOR)
-
-ratio, resized = optimalSize(image, sqr=800)
-
-# cv2.imwrite('1.png', resized)
-cv2.imshow('1', resized)
-
+image = cv2.imread('../samples/sketches/joined-sketch.png', cv2.IMREAD_COLOR)
+ratio, resized = optimalSize(image, sqr=600)
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
-
-# cv2.imwrite('2.png', gray)
-# cv2.imshow('2', gray)
-
 thresh = binaryImage(gray)
-# cv2.imwrite('3.png', thresh)
-# cv2.imshow('3', resized)
-
 removed = thresh.copy()
 
 textPartsWithStats = textRegionsWithStats(thresh)

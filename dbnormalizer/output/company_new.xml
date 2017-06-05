@@ -31,8 +31,8 @@
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>employee</referencedTable>
+                    <referencedColumn>Ssn</referencedColumn>
                     <values>
                         <data id="1">333445555</data>
                         <data id="2">888665555</data>
@@ -59,8 +59,8 @@
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>department</referencedTable>
+                    <referencedColumn>Department_number</referencedColumn>
                     <values>
                         <data id="1">1</data>
                         <data id="2">4</data>
@@ -91,8 +91,8 @@
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>employee</referencedTable>
+                    <referencedColumn>Ssn</referencedColumn>
                     <values>
                         <data id="1">123456789</data>
                         <data id="2">123456789</data>
@@ -277,8 +277,8 @@
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>employee</referencedTable>
+                    <referencedColumn>Ssn</referencedColumn>
                     <values>
                         <data id="1">None</data>
                         <data id="2">333445555</data>
@@ -294,8 +294,8 @@
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>department</referencedTable>
+                    <referencedColumn>Department_number</referencedColumn>
                     <values>
                         <data id="1">1</data>
                         <data id="2">4</data>
@@ -360,8 +360,8 @@
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>department</referencedTable>
+                    <referencedColumn>Department_number</referencedColumn>
                     <values>
                         <data id="1">1</data>
                         <data id="2">4</data>
@@ -379,8 +379,8 @@
                     <dataType>char</dataType>
                     <maxLength>9</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>employee</referencedTable>
+                    <referencedColumn>Ssn</referencedColumn>
                     <values>
                         <data id="1">123456789</data>
                         <data id="2">453453453</data>
@@ -403,8 +403,8 @@
                     <dataType>int</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>project</referencedTable>
+                    <referencedColumn>Project_number</referencedColumn>
                     <values>
                         <data id="1">1</data>
                         <data id="2">1</data>

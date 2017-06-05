@@ -1,58 +1,54 @@
-CREATE TABLE student (
-	name VARCHAR,
-	student_number VARCHAR,
-	Social_Security_number VARCHAR,
-	current_address VARCHAR,
-	phone_number VARCHAR,
-	permanent_address VARCHAR,
-	phone_number VARCHAR,
-	birth_date VARCHAR,
-	sex VARCHAR,
-	class VARCHAR,
-	major_department VARCHAR,
-	minor_department VARCHAR,
-	degree_program VARCHAR
-)
+DROP TABLE IF EXISTS student CASCADE; CREATE TABLE student (
+	name VARCHAR(50),
+	student_number INTEGER UNIQUE,
+	Social_Security_number INTEGER UNIQUE,
+	current_address VARCHAR(50),
+	phone_number VARCHAR(50) UNIQUE,
+	permanent_address VARCHAR(50),
+	birth_date DATETIME,
+	sex VARCHAR(50),
+	class VARCHAR(50),
+	major_department VARCHAR(50),
+	minor_department INTEGER UNIQUE,
+	degree_program VARCHAR(50),
+	student VARCHAR(50),
+	last_name VARCHAR(50)
+);
 
-CREATE TABLE student (
-	permanent_address VARCHAR,
-	student VARCHAR,
-	last_name VARCHAR
-)
+DROP TABLE IF EXISTS student_number CASCADE; CREATE TABLE student_number (
+	values VARCHAR(50) UNIQUE,
+	student VARCHAR(50)
+);
 
-CREATE TABLE student_number (
-	values VARCHAR UNIQUE,
-	student VARCHAR
-)
+DROP TABLE IF EXISTS code CASCADE; CREATE TABLE code (
+	values VARCHAR(50) UNIQUE,
+	department VARCHAR(50)
+);
 
-CREATE TABLE code (
-	values VARCHAR UNIQUE,
-	department VARCHAR
-)
+DROP TABLE IF EXISTS course CASCADE; CREATE TABLE course (
+	course_name VARCHAR(50),
+	description VARCHAR(50),
+	course_number INTEGER UNIQUE,
+	number_of_semester INTEGER UNIQUE,
+	hours VARCHAR(50),
+	level VARCHAR(50),
+	offering_department VARCHAR(50),
+	distance DOUBLE
+);
 
-CREATE TABLE course (
-	course_name VARCHAR,
-	description VARCHAR,
-	course_number VARCHAR,
-	number VARCHAR,
-	semester_hours VARCHAR,
-	level VARCHAR,
-	department VARCHAR
-)
+DROP TABLE IF EXISTS section CASCADE; CREATE TABLE section (
+	instructor VARCHAR(50),
+	semester VARCHAR(50),
+	year VARCHAR(50),
+	course VARCHAR(50),
+	section_number INTEGER UNIQUE
+);
 
-CREATE TABLE section (
-	instructor VARCHAR,
-	semester VARCHAR,
-	year VARCHAR,
-	course VARCHAR,
-	section_number VARCHAR
-)
-
-CREATE TABLE grade_report (
-	student VARCHAR,
-	section VARCHAR,
-	letter_grade VARCHAR,
-	numeric_grade VARCHAR
-)
+DROP TABLE IF EXISTS grade_report CASCADE; CREATE TABLE grade_report (
+	student VARCHAR(50),
+	section VARCHAR(50),
+	letter_grade VARCHAR(50),
+	numeric_grade VARCHAR(50)
+);
 
 

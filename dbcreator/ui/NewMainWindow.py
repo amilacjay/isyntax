@@ -1,5 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtGui import QIcon
+from PyQt5.QtWidgets import QComboBox
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox, QListWidgetItem
 from PyQt5.QtWidgets import QTableWidgetItem
 from dbcreator.database_connection.db_connection import DbConnection
@@ -7,13 +9,19 @@ from dbcreator.database_connection.db_connection import DbConnection
 from dbcreator.app import App
 from dbcreator.core import getContentFromFile
 from dbcreator.core import createSQLScript
+from dbcreator.models import DataType
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(911, 584)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class Ui_MainWindow(QMainWindow):
+    def __init__(self):
+        super().__init__()
+
+        self.setupUi()
+
+    def setupUi(self):
+        self.setObjectName("MainWindow")
+        self.resize(911, 584)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
         self.label.setGeometry(QtCore.QRect(20, 20, 141, 16))
@@ -72,14 +80,15 @@ class Ui_MainWindow(object):
         self.checkBox_2.setGeometry(QtCore.QRect(390, 230, 141, 31))
         self.checkBox_2.setObjectName("checkBox_2")
         self.checkBox_2.setEnabled(False)
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 911, 21))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.setStatusBar(self.statusbar)
+
 
         # combobox = QtGui.QComboBox()
         # combo_box_options = ["VARCHAR(50)", "INTEGER", "CHAR", "DOUBLE", "DATETIME"]
@@ -89,7 +98,7 @@ class Ui_MainWindow(object):
 
 
         ###
-        MainWindow.closeEvent = self.closeButtonClicked
+        self.closeEvent = self.closeButtonClicked
         self.btn_browse.clicked.connect(self.browseBtnClicked)
         self.btn_analyze.clicked.connect(self.analyzeBtnClicked)
         self.entitylist.itemClicked.connect(self.entityListItemClicked)
@@ -97,8 +106,8 @@ class Ui_MainWindow(object):
         self.btn_generate.clicked.connect(self.generateSqlClicked)
         self.btn_execute.clicked.connect(self.executeBtnClicked)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi(self)
+        QtCore.QMetaObject.connectSlotsByName(self)
 
 
     def retranslateUi(self, MainWindow):
@@ -118,7 +127,7 @@ class Ui_MainWindow(object):
     ##functions
 
     def closeButtonClicked(self, event):
-        reply = QMessageBox.question(MainWindow, 'Message', "Are you sure to quit?",
+        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
                                      QMessageBox.Yes | QMessageBox.No,
                                      QMessageBox.No)
 
@@ -186,6 +195,7 @@ class Ui_MainWindow(object):
 
     def generateSqlClicked(self):
 
+
         script = createSQLScript(self.entities)
 
         # script = self.createSQLScript()
@@ -223,14 +233,23 @@ class Ui_MainWindow(object):
             self.entitylist.addItem(entity)
 
     def entityListItemClicked(self, item):
+        self.currentEntity = item
         attributes = item.getAttributes()
         self.attributetable.setColumnCount(6)
         self.attributetable.setHorizontalHeaderLabels(['Name', 'PrimaryKey', 'DataType', 'NULL', 'Unique', 'INFO'])
+
+
         self.attributetable.setRowCount(len(attributes))
         for row, attr in enumerate(attributes):
+            combo = QComboBox()
+            combo.currentTextChanged.connect(self.comboBoxChanged)
+            combo.addItems([str(d) for d in list(DataType)])
+
             self.attributetable.setItem(row, 0, QTableWidgetItem(attr.name()))
             self.attributetable.setItem(row, 1, QTableWidgetItem(str(attr.isPrimaryKey)))
-            self.attributetable.setItem(row, 2, QTableWidgetItem(str(attr.dtype)))
+            self.attributetable.setCellWidget(row, 2, combo)
+            combo.setCurrentText(str(attr.dtype))
+            combo.setProperty('attribute', attr)
             self.attributetable.setItem(row, 3, QTableWidgetItem(str(attr.isNotNull)))
             self.attributetable.setItem(row, 4, QTableWidgetItem(str(attr.isUnique)))
             self.attributetable.setItem(row, 5, QTableWidgetItem(str(attr.data)))
@@ -244,12 +263,17 @@ class Ui_MainWindow(object):
             self.attributetable.removeRow(0)
         self.description.clear()
 
+    def tableRowClicked(self, row, column):
+        print(row, column)
+
+    def comboBoxChanged(self, dType):
+        attr = self.sender().property('attribute')
+        if(attr !=None):
+            attr.dtype = DataType[str(dType)]
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
     ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    ui.show()
     sys.exit(app.exec_())
