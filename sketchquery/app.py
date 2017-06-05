@@ -4,11 +4,11 @@ from sketchquery.core import *
 from sketchquery.model import *
 
 rootPath = 'samples/sketches/'
-file = 'test.png'
+file = 'simple-and-join.png'
 fullPath = rootPath+file
 
 image = cv2.imread(fullPath, cv2.IMREAD_COLOR)
-atio, resized = optimalSize(image, sqr=300)
+atio, resized = optimalSize(image, sqr=600)
 gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
 thresh = binaryImage(gray)
 removed = thresh.copy()
@@ -33,7 +33,8 @@ ret, conts, hier = cv2.findContours(removed.copy(), mode=cv2.RETR_CCOMP, method=
 # cv2.drawContours(resized, conts, -1, (0, 255, 0), 2)
 
 # list of lists [text, category, stat, centroid, ptsOfCircle]
-tableList = []
+simpleTableList = []
+joinedTableList = []
 columnLists = []
 conditionLists = []
 variableList = []
@@ -57,22 +58,41 @@ for i, tas in enumerate(textAndStats):
             # cv2.drawContours(resized, conts, c, (0, 255, 0), 2)
             # cv2.imshow('Resized', resized)
             # cv2.waitKey(0)
+
             if(hier[0][c][2]==-1  and cv2.pointPolygonTest(cont, (stat[cv2.CC_STAT_LEFT], stat[cv2.CC_STAT_TOP]), False)==1):
 
-                center, radius = cv2.minEnclosingCircle(cont)
-                ptsInEncCircle = getPointsOfCircle((int(center[0]), int(center[1])), int(radius), resized.shape)
+                area = cv2.contourArea(cont)
+                arcLength = cv2.arcLength(cont, True)
+                ratio = math.pow(arcLength, 2) / area
+                cv2.drawContours(resized, [cont], -1, (0, 255, 0), 2)
                 centroid = getCentroid(cont)
+                print(ratio)
 
-                tableList.append([ELEMENT_TYPE.TABLE, text, stat, centroid, ptsInEncCircle])
-                parent = conts[hier[0][c][3]]
-                cv2.drawContours(removed, [parent], -1, 0, cv2.FILLED)
+                if (ratio <= 15):
+                    simpleTableList.append([ELEMENT_TYPE.TABLE, text, stat, centroid, -1])
+                    parent = conts[hier[0][c][3]]
+                    cv2.drawContours(removed, [parent], -1, 0, cv2.FILLED)
+
+                else:
+                    center, radius = cv2.minEnclosingCircle(cont)
+                    ptsInEncCircle = getPointsOfCircle((int(center[0]), int(center[1])), int(radius), resized.shape)
 
 
+                    joinedTableList.append([ELEMENT_TYPE.JOINED_TABLE, text, stat, centroid, ptsInEncCircle])
+                    parent = conts[hier[0][c][3]]
+                    cv2.drawContours(removed, [parent], -1, 0, cv2.FILLED)
+
+
+for s in simpleTableList:
+    print('Simple Table: ' + s[1])
+
+for j in joinedTableList:
+    print('Joined Table: ' + j[1])
 
 pairSet = []
 r = resized.copy()
-for i, iTable in enumerate(tableList):
-    for j, jTable in enumerate(tableList):
+for i, iTable in enumerate(joinedTableList):
+    for j, jTable in enumerate(joinedTableList):
         if (i != j and {i, j} not in pairSet):
             pairSet.append({i, j})
             pts = getCommonPoints(iTable[4], jTable[4])
@@ -86,7 +106,7 @@ for i, iTable in enumerate(tableList):
 ret, arrowConts, aHier = cv2.findContours(removed.copy(), mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
 
 cv2.drawContours(resized, arrowConts, -1, (0, 255, 0), 2)
-print(len(arrowConts))
+# print(len(arrowConts))
 for ac in arrowConts:
     rect = cv2.minAreaRect(ac)
     box = cv2.boxPoints(rect)  # cv2.boxPoints(rect) for OpenCV 3.x
@@ -100,7 +120,6 @@ for ac in arrowConts:
 cv2.imshow('resized', resized)
 # cv2.imshow('test', r)
 cv2.imshow('removed', removed)
-#
 #
 cv2.waitKey(0)
 cv2.destroyAllWindows()
