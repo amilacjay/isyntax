@@ -128,8 +128,10 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
 
                     compList.append(set([i,j]))
 
-            # for attr in attrList:
-            #     if attr.
+            for attr in attrList:
+                if attr.name().contains('%'):
+                    ch = attr.name().split('%')
+
 
 
 class RemoveAttributesFromEntityList(SecondaryExtractor):
