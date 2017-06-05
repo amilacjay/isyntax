@@ -27,6 +27,10 @@ def binaryImage(grayImg):
 
 def textRegionsWithStats(threshImg, minArea=10, maxArea=300):
 
+    imageArea = threshImg.shape[0]*threshImg.shape[1]
+    minArea = imageArea * 0.00004
+    maxArea = imageArea * 0.00125
+
     ret = cv2.connectedComponentsWithStats(threshImg)
 
     noOfLabels = ret[0]
