@@ -1,7 +1,7 @@
 from nltk import RegexpParser
 from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
-from dbcreator.models import *
+
 
 def getContentFromFile(filename):
     with open(filename) as f:
@@ -35,10 +35,9 @@ def extract_np(psent):
 
 
 def getChunkedSentences(taggedSents):
-    # grammar = "NP: {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}"
-
     grammar = r"""
     NP: {<NN.*><IN><NN.*>}
+        {<NN.*><TO><DT><NN.*>}
         {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}
     """
 
@@ -60,12 +59,14 @@ def getChunkedSentences(taggedSents):
 def createSQLScript(entities):
     wholeSQL = ''
     for entity in entities:
-        firstLine = "DROP TABLE IF EXISTS {} CASCADE; CREATE TABLE {} (".format(entity.name(), entity.name())
+        firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
         queryBody = '\n'
         delimiter = ',\n'
         lastLine = "\n);\n\n"
 
         attributeList = entity.getAttributes()
+        keys = [atr.name() for atr in attributeList if atr.isUnique == True]
+        primaryKeyLine = ',\n\tPRIMARY KEY('+ ','.join(keys) +')'
         for i, attribute in enumerate(attributeList):
             uniqueKW = ' UNIQUE'
             attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
@@ -73,6 +74,14 @@ def createSQLScript(entities):
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
 
-        wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
-
+        wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+    print(wholeSQL)
     return wholeSQL
+
+
+def csv_reader(filename):
+
+    with open(filename) as f:
+        content = f.readlines()
+    return [s.strip() for s in str(''.join(content)).split(',')]
+

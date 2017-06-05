@@ -1,6 +1,7 @@
 from enum import Enum
 from PyQt5.QtWidgets import QListWidgetItem
 
+
 class DataType(Enum):
 
     def __str__(self):

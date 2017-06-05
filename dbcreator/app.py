@@ -12,6 +12,7 @@ class App:
     def run(self):
 
         text = getContentFromFile(self.filePath)
+        csv_text = csv_reader(self.filePath)
 
         entityList = []
 
@@ -20,7 +21,8 @@ class App:
         chunked_sentences = getChunkedSentences(tagged_sentences)
 
         ## extractors List in the order of execution
-        extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes, RemoveAttributesFromEntityList, IdentifyAttributeDataType]
+        extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
+                          RemoveAttributesFromEntityList, IdentifyAttributeDataType, PrimaryKeyExtractor]
 
         for extractor in extractorsList:
             extObject = extractor()
