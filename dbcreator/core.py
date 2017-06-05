@@ -75,7 +75,7 @@ def createSQLScript(entities):
             queryBody = queryBody + attributeLine
 
         wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
-    print(wholeSQL)
+
     return wholeSQL
 
 
