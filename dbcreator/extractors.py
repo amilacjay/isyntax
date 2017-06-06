@@ -1,5 +1,5 @@
 from dbcreator.models import *
-from dbcreator.core import csv_reader
+
 
 class PrimaryExtractor:
     def execute(self, tagged_sents, chunked_sents, target):
@@ -19,11 +19,19 @@ class PossessionBasedExtractor(PrimaryExtractor):
             for index, item in enumerate(sent):
                 if ((item[0] == 'has' or item[0] == 'have')):
                     hIndex = item[2]
-                    candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2]<hIndex]
+                    candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < hIndex]
 
+                    # entList = []
+                    # for ent in candidateEntityNames:
+                    #     if ent[1] == 'IN':
+                    #         tIndex = ent[2]
+                    #         entList = [chunk for chunk in candidateEntityNames if chunk[0][2] > tIndex]
+                    #
+                    #
+                    # entityName = entList.pop()
                     entityName = candidateEntityNames.pop()
 
-                    candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2]>hIndex]
+                    candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > hIndex]
 
                     attributes = []
 
@@ -38,11 +46,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
 
                 # if (item[1] == 'PRP'):
                 #     pass
-
-                    # if (item[1] == 'IN'):
-                    #     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[1][1] == 'IN' or 'TO']
-                    #     candidateEntityNames.remove(item[1])
-                    #     print(candidateEntityNames)
 
 
                 elif item[1] == 'POS':
@@ -67,17 +70,17 @@ class UniqueKeyExtractor(SecondaryExtractor):
 
             for attr in entity.getAttributes():
                 isUnique = False
-                # isPrimaryKey = False
+                isPrimaryKey = False
                 tempData = []
                 for i, word in enumerate(attr.data):
-                    if(word[0].lower() in ['unique','distinguishable']):
+                    if(word[0].lower() in ['unique','distinguishable','distinct']):
                         isUnique = True
-                        # isPrimaryKey = True
+                        isPrimaryKey = True
                     else:
                         tempData.append(word)
                 attr.data = tempData
                 attr.isUnique = isUnique
-                # attr.isPrimaryKey = isPrimaryKey
+                attr.isPrimaryKey = isPrimaryKey
 
 
 class IdentifyAttributeDataType(SecondaryExtractor):
@@ -120,12 +123,10 @@ class RemoveDuplicateEntities(SecondaryExtractor):
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities):
-        pass
-
-        compList = []
 
         for entity in entities:
             attrList = entity.getAttributes()
+            compList = []
             for i, attr1 in enumerate(attrList):
                 for j, attr2 in enumerate(attrList):
                     if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
@@ -134,7 +135,7 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
                     compList.append(set([i,j]))
 
             for attr in attrList:
-                if attr.name() == '%' or '$' or '#' or '*' or '@':
+                if attr.name() == '%':
                     attrList.remove(attr)
 
 
@@ -155,14 +156,14 @@ class RemoveAttributesFromEntityList(SecondaryExtractor):
             # entities.remove(e)
 
 
-class PrimaryKeyExtractor(SecondaryExtractor):
-    def execute(self, entities):
-        for entity in entities:
-            for attr in entity.getAttributes():
-                if attr in csv_reader('../knowledge_base/primary_keys.csv'):
-                    # attr.isPrimaryKey = True
-                    # attr.isUnique = True
-                     pass
+# class PrimaryKeyExtractor(SecondaryExtractor):
+#     def execute(self, entities):
+#         for entity in entities:
+#             for attr in entity.getAttributes():
+#                 if attr in csv_reader('../knowledge_base/primary_keys.csv'):
+#                     # attr.isPrimaryKey = True
+#                     # attr.isUnique = True
+#                      pass
 
 
 

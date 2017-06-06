@@ -20,9 +20,10 @@ class App:
         tagged_sentences = getTaggedSentences(text)
         chunked_sentences = getChunkedSentences(tagged_sentences)
 
+
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          RemoveAttributesFromEntityList, IdentifyAttributeDataType, PrimaryKeyExtractor]
+                          RemoveAttributesFromEntityList, IdentifyAttributeDataType]
 
         for extractor in extractorsList:
             extObject = extractor()
