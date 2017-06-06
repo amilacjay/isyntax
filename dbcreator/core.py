@@ -75,13 +75,13 @@ def createSQLScript(entities):
             queryBody = queryBody + attributeLine
 
         wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
-    print(wholeSQL)
+
     return wholeSQL
 
 
-def csv_reader(filename):
-
-    with open(filename) as f:
-        content = f.readlines()
-    return [s.strip() for s in str(''.join(content)).split(',')]
+# def csv_reader(filename):
+#
+#     with open(filename) as f:
+#         content = f.readlines()
+#     return [s.strip() for s in str(''.join(content)).split(',')]
 
