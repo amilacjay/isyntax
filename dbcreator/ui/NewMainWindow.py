@@ -90,13 +90,6 @@ class Ui_MainWindow(QMainWindow):
         self.setStatusBar(self.statusbar)
 
 
-        # combobox = QtGui.QComboBox()
-        # combo_box_options = ["VARCHAR(50)", "INTEGER", "CHAR", "DOUBLE", "DATETIME"]
-        # for item in combo_box_options:
-        #     combobox.addItem(item)
-        # self.attributetable.setCellWidget(0, 2, QTableWidgetItem)
-
-
         ###
         self.closeEvent = self.closeButtonClicked
         self.btn_browse.clicked.connect(self.browseBtnClicked)
@@ -125,17 +118,6 @@ class Ui_MainWindow(QMainWindow):
         self.checkBox_2.setText(_translate("MainWindow", "Generate Database"))
 
     ##functions
-
-    def closeButtonClicked(self, event):
-        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
-                                     QMessageBox.Yes | QMessageBox.No,
-                                     QMessageBox.No)
-
-        if reply == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
-
 
     def browseBtnClicked(self):
         path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../samples/', filter='*.txt')
@@ -192,13 +174,10 @@ class Ui_MainWindow(QMainWindow):
     #
     #     return wholeSQL
 
-
     def generateSqlClicked(self):
 
 
         script = createSQLScript(self.entities)
-
-        # script = self.createSQLScript()
 
         if self.checkBox.isChecked():
             fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/')) - 1]
@@ -223,7 +202,7 @@ class Ui_MainWindow(QMainWindow):
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
-            msg.setText("Connection failed!")
+            msg.setText("SQL Syntax Error!!")
             msg.setDetailedText(e.args[1])
             msg.exec_()
 
@@ -231,6 +210,7 @@ class Ui_MainWindow(QMainWindow):
     def addEntitiesToList(self, entities):
         for entity in entities:
             self.entitylist.addItem(entity)
+
 
     def entityListItemClicked(self, item):
         self.currentEntity = item
@@ -241,19 +221,36 @@ class Ui_MainWindow(QMainWindow):
 
         self.attributetable.setRowCount(len(attributes))
         for row, attr in enumerate(attributes):
-            combo = QComboBox()
-            combo.currentTextChanged.connect(self.comboBoxChanged)
-            combo.addItems([str(d) for d in list(DataType)])
+            comboPk = QComboBox()
+            comboPk.currentTextChanged.connect(self.comboBoxChangedPk)
+            comboPk.addItems([str(d) for d in [True, False]])
+
+            comboDt = QComboBox()
+            comboDt.currentTextChanged.connect(self.comboBoxChangedDt)
+            comboDt.addItems([str(d) for d in list(DataType)])
+
+            comboNu = QComboBox()
+            comboNu.currentTextChanged.connect(self.comboBoxChangedNu)
+            comboNu.addItems([str(d) for d in [True, False]])
+
+            comboUq = QComboBox()
+            comboUq.currentTextChanged.connect(self.comboBoxChangedUq)
+            comboUq.addItems([str(d) for d in [True, False]])
 
             self.attributetable.setItem(row, 0, QTableWidgetItem(attr.name()))
-            self.attributetable.setItem(row, 1, QTableWidgetItem(str(attr.isPrimaryKey)))
-            self.attributetable.setCellWidget(row, 2, combo)
-            combo.setCurrentText(str(attr.dtype))
-            combo.setProperty('attribute', attr)
-            self.attributetable.setItem(row, 3, QTableWidgetItem(str(attr.isNotNull)))
-            self.attributetable.setItem(row, 4, QTableWidgetItem(str(attr.isUnique)))
+            self.attributetable.setCellWidget(row, 1, comboPk)
+            comboPk.setCurrentText(str(attr.isPrimaryKey))
+            comboPk.setProperty('attribute', attr)
+            self.attributetable.setCellWidget(row, 2, comboDt)
+            comboDt.setCurrentText(str(attr.dtype))
+            comboDt.setProperty('attribute', attr)
+            self.attributetable.setCellWidget(row, 3, comboNu)
+            comboNu.setCurrentText(str(attr.isNotNull))
+            comboNu.setProperty('attribute', attr)
+            self.attributetable.setCellWidget(row, 4, comboUq)
+            comboUq.setCurrentText(str(attr.isUnique))
+            comboUq.setProperty('attribute', attr)
             self.attributetable.setItem(row, 5, QTableWidgetItem(str(attr.data)))
-
 
     def resetBtnClicked(self):
         self.btn_analyze.setEnabled(False)
@@ -263,13 +260,44 @@ class Ui_MainWindow(QMainWindow):
             self.attributetable.removeRow(0)
         self.description.clear()
 
+
+    def closeButtonClicked(self, event):
+        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
+                                     QMessageBox.Yes | QMessageBox.No,
+                                     QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
+
+
     def tableRowClicked(self, row, column):
         print(row, column)
 
-    def comboBoxChanged(self, dType):
+
+    def comboBoxChangedPk(self, pk):
+        attr = self.sender().property('attribute')
+        if (attr != None):
+            attr.isPrimaryKey = pk
+
+    def comboBoxChangedDt(self, dType):
         attr = self.sender().property('attribute')
         if(attr !=None):
             attr.dtype = DataType[str(dType)]
+
+
+    def comboBoxChangedNu(self, nu):
+        attr = self.sender().property('attribute')
+        if (attr != None):
+            attr.isNotNull = nu
+
+
+    def comboBoxChangedUq(self, uq):
+        attr = self.sender().property('attribute')
+        if (attr != None):
+            attr.isUnique = uq
+
 
 if __name__ == "__main__":
     import sys
