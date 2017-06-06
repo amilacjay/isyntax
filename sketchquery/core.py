@@ -145,3 +145,31 @@ def getCentroid(contour):
     cx = int(M['m10'] / M['m00'])
     cy = int(M['m01'] / M['m00'])
     return (cx, cy)
+
+
+def toPoints(stat):
+    return [(stat[cv2.CC_STAT_LEFT], stat[cv2.CC_STAT_TOP]),
+            (stat[cv2.CC_STAT_LEFT]+stat[cv2.CC_STAT_WIDTH],
+             stat[cv2.CC_STAT_TOP]+stat[cv2.CC_STAT_HEIGHT])]
+
+
+def scale(cont, ratio):
+    cx, cy = getCentroid(cont)
+
+    newCont = []
+
+    for [[x, y]] in cont:
+        X = x
+        Y = y
+        if(x>cx):
+            X += abs(x-cx)*(ratio-1)
+        if(y>cy):
+            Y += abs(y-cy)*(ratio-1)
+        if(x<cx):
+            X -= abs(x-cx)*(ratio-1)
+        if(y<cy):
+            Y -= abs(y-cy)*(ratio-1)
+
+        newCont.append([[int(X), int(Y)]])
+
+    return np.array(newCont)
