@@ -1,3 +1,5 @@
+__author__ = 'ChaminiKD'
+
 import pymysql.cursors
 from xml.etree.ElementTree import Element, SubElement, ElementTree
 
@@ -87,9 +89,9 @@ class Fetcher:
 
     # Write to an XMl file
     def writeXML(self, tree):
-        tree.write("output/" + self.db + ".xml")
+        tree.write( self.db + ".xml")
         # adding the xml version line to the begging of the xml
-        with open("output/" + self.db + ".xml", 'r+') as f:
+        with open(self.db + ".xml", 'r+') as f:
             content = f.read()
             f.seek(0, 0)
             line = "<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
@@ -98,7 +100,8 @@ class Fetcher:
 
 # using existing database
 
-fet = Fetcher("root", "1234", "company")
+fet = Fetcher("root", "", "company_new")
 
 tre = fet.getSchema(fet.dbConn())
 fet.writeXML(tre)
+

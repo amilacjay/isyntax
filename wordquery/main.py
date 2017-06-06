@@ -2,6 +2,7 @@ from wordquery.elementIdentifier import *
 from wordquery.preprocessor import *
 from wordquery.query_generator import *
 from operator import sub
+from wordquery.table_fetcher import *
 
 __author__ = 'ChaminiKD'
 xml_file = 'company_new.xml'
@@ -32,9 +33,10 @@ s17 = "what is the name of employee whose wage equals '30000' and departmentnumb
 s18 = "what is the name of employee whose sex equals 'M' or departmentnumber equals '5' "  # w
 s19 = "what is the supervisorssn of employee whose wage notequal '30000'"  # w
 s20 = "what is the sex of employee whose wage lessthan '30000'"
+s21 = 'ssn of employees'
 
 # userInput = input("enter:")
-userInput = s2
+userInput = s21
 Input = add_space(userInput)
 print("Input :", Input)
 
@@ -52,21 +54,10 @@ else:
 tokens_of_remaining = getTokenz(S)
 print("tokens_of_remaining", tokens_of_remaining)
 
-# identify the condition attribute in the user input
-def get_codition_attribute(i):
-    # for x in identified_expression:
-    # exp_index = tokens_of_remaining.index(x)
-    exp_index = i[1]
-    # print(x, "is in ", exp_index)
-    previous_token = []
-    previous_token.append([tokens_of_remaining[exp_index - 1], i[0]])
-    return previous_token
-
 # tokenize the user input
 tokens = getTokenz(Input)
 
 # pos tag the user input
-postag_list = []
 postag_list = pos_tagging(tokens)
 print("Pos tags :", postag_list)
 
@@ -78,10 +69,15 @@ for tag in postag_list:
 postag_list = remove_escapeWords(postag_list)
 print("****After removing escape words :", postag_list)
 noun_list = chunk_nouns(postag_list)
-# print("After chunking : ", noun_list)
-# noun_list = noun_list[0].split(' ')
 print("Extracted nouns by cunking :", noun_list)
 print("...........................................................")
+
+# identify the condition attribute in the user input
+def get_codition_attribute(i):
+    exp_index = i[1]
+    previous_token = []
+    previous_token.append([tokens_of_remaining[exp_index - 1], i[0]])
+    return previous_token
 
 # find condition elements
 if value:
@@ -127,8 +123,7 @@ else:
 
 
 # find tables and attributes in user input
-identified_table = []
-n_list = []
+
 print("*****List of nouns          :", list_of_nouns)
 identified_table, n_list = tableIdentifier(asd, list_of_nouns)
 print("*****Table found            :", identified_table)
@@ -137,13 +132,13 @@ print("*****Table found            :", identified_table)
 new_nounList = list(set(n_list) ^ set(list_of_nouns))
 print("*****New Noun List, after removing table names : ", new_nounList)
 
-identified_attribute = []
 identified_attribute = attributeIdentifier(att, new_nounList)
 # print(identified_attribute)
 print("*****Attributes found       :", identified_attribute)
 
-# if len(condition_att_list) < 2:
-#     condition_att_list = ''
+table_extractor(identified_attribute)
+
+
 
 print("*****value                  :", value)
 print("*****symbol                 :", symbol)
