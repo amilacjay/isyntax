@@ -1,1 +1,13 @@
+The following is a university database.
+The database contains 7 entities.
+They are  classroom, instructor, section, student, department, time slots and course.
+department table have department name, building and budget attributes.
 room number and capacity depends on department name.
+course table have course id,  title and credits attributes.
+course id is a string with both alphanumeric characters.
+credits is an integer and title is a simple string.
+course title and credits depends on course id.
+instructor yable have instructor id, name and slary attributes.
+id is a 6 digit number.
+name is a string and salary is a double figure.
+Instructor name and salary depends on instructor id.

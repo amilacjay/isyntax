@@ -38,7 +38,6 @@ def createQuery(attList, tableList, value, symbol, prv_attribute, condition_list
         return basciSQL
     if not attList :
         basciSQL = "SELECT * FROM " + ', '.join(tableList) + " ;"
-        # print(basciSQL)
         return basciSQL
     else:
         basciSQL = "none"
