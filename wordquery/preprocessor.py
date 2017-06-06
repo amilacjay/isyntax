@@ -47,26 +47,8 @@ def add_space(token):
     return (token)
 
 
-operator_list = ["AND", "OR", "and", "or"]
 
 
-def find_operators(token):
-    ilist = []
-    index = 0
-    while index < len(token):
-        index = token.find("'", index)
-        if index == -1:
-            break
-        ilist.append(index)
-        index += 1
-    # print("PPPPPPPPPPPPPPPPPPP", ilist)
-    len_ilist = len(ilist)
-    # print("LLLLLLLLLL" , len_ilist)
-    substring = token[ilist[0]:ilist[len_ilist-1]]
-    print("sub string", substring)
-    tokens_of_substring = getTokenz(substring)
-    result = [word for word in tokens_of_substring if word.lower() in operator_list]
-    return result
 
 
 # extract the value from the user query
