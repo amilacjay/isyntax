@@ -12,7 +12,6 @@ class App:
     def run(self):
 
         text = getContentFromFile(self.filePath)
-        csv_text = csv_reader(self.filePath)
 
         entityList = []
 
