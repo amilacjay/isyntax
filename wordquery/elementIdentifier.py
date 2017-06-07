@@ -3,6 +3,7 @@ import xml.etree.ElementTree as ET
 import nltk
 from nltk.corpus import wordnet
 from nltk.metrics import *
+from wordquery.preprocessor import *
 
 __author__ = 'ChaminiKD'
 xml_file = 'company_new.xml'
@@ -12,6 +13,7 @@ expression_list = [("equals", "="), ("greater than", ">"), ("less than", "<"), (
                    ("less than or equal to", "<="), ("like", "like"), ("equal", "="), ("order by", "order by"),
                    ("equal to", "=")]
 
+operator_list = ["AND", "OR", "and", "or"]
 
 def identify_expressions(remaining_sentence):
     temp = []
@@ -30,6 +32,62 @@ def identify_expressions(remaining_sentence):
         indx = indx + 1
     return temp, symbol
 
+# identify the condition attribute in the user input
+def get_codition_attribute(i , tokens_of_remaining):
+    exp_index = i[1]
+    previous_token = []
+    previous_token.append([tokens_of_remaining[exp_index - 1], i[0]])
+    return previous_token
+
+def find_operators(token):
+    ilist = []
+    index = 0
+    while index < len(token):
+        index = token.find("'", index)
+        if index == -1:
+            break
+        ilist.append(index)
+        index += 1
+    # print("PPPPPPPPPPPPPPPPPPP", ilist)
+    len_ilist = len(ilist)
+    # print("LLLLLLLLLL" , len_ilist)
+    substring = token[ilist[0]:ilist[len_ilist-1]]
+    # print("sub string", substring)
+    tokens_of_substring = getTokenz(substring)
+    result = [word for word in tokens_of_substring if word.lower() in operator_list]
+    return result
+
+def find_condition_elements(tokens_of_remaining, att , noun_list , userInput):
+    # identified_expression = []
+    # symbol = []
+    identified_expression, symbol = identify_expressions(tokens_of_remaining)
+    print("identified expression in the user input =", identified_expression)
+    print("identified symbols in the user input =", symbol)
+    condition_att_list = []
+    privious_token_list = []
+    for i in identified_expression:
+        # prv_token = []
+        prv_token = get_codition_attribute(i , tokens_of_remaining)
+        print("previous token =", prv_token)
+        privious_token_list.append(prv_token[0][0])
+        # prv_attribute = []
+        prv_attribute = attributeIdentifier(att, prv_token[0])
+        print("previous attribute = ", prv_attribute)
+        condition_att_list.append([prv_attribute[0], i[2]])
+    print("condition attribute list", condition_att_list)
+
+    # remove condition attribute from noun list
+    list_of_nouns = [word for word in noun_list if word.lower() not in privious_token_list]
+    print("after removing the condition attributes **", list_of_nouns)
+
+    operator = find_operators(userInput)  # find AND , OR operetors
+    print("operators found :", operator)
+    # if operator:
+    #     operator = operator
+    # else:
+    #     operator = ''
+    print("..........................................................")
+    return symbol, prv_attribute, list_of_nouns, operator, condition_att_list
 
 def getContentFromFile(filename):
     with open(filename) as f:
@@ -112,7 +170,6 @@ def extract_attributes(nouns):
 
 table_synset_file = open('out/table_synset.txt', 'w')
 
-
 def tableIdentifier(knowledgeBase, nounList):
     try:
         list = []
@@ -137,7 +194,6 @@ def tableIdentifier(knowledgeBase, nounList):
 
 
 att_synset_file = open('out/attribute_synset.txt', 'w')
-
 
 def attributeIdentifier(knowledgeBase, nounList):
     list2 = []

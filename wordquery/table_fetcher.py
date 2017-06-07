@@ -36,6 +36,16 @@ def table_extractor(attribute_list):
                     a_list.append(l[0])
     print(a_list, '+++')
 
+def get_referenceTable():
+    xmlDoc = open(xml_file, 'r')
+    xmlDocData = xmlDoc.read()
+    xmlDocTree = etree.XML(xmlDocData)
 
-attribute_list = ['Department_number', 'Dependent_name']
-table_extractor(attribute_list)
+    for ingredient in xmlDocTree.iter('tables'):
+        for s in ingredient:
+            print(s.attrib)
+
+get_referenceTable()
+tab = ['employee']
+# attribute_list = ['Department_name', 'Name']
+# table_extractor(attribute_list)
