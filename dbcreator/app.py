@@ -18,17 +18,17 @@ class App:
         ## primary data sets
         tagged_sentences = getTaggedSentences(text)
         chunked_sentences = getChunkedSentences(tagged_sentences)
-
+        ne_chunked_sentences = getNamedEntities(tagged_sentences)
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          RemoveAttributesFromEntityList, IdentifyAttributeDataType]
+                          IdentifyAttributeDataType]
 
         for extractor in extractorsList:
             extObject = extractor()
 
             if isinstance(extObject, PrimaryExtractor):
-                extObject.execute(tagged_sents=tagged_sentences, chunked_sents=chunked_sentences, target=entityList)
+                extObject.execute(tagged_sents=tagged_sentences, chunked_sents=chunked_sentences, ne_chunked_sents = ne_chunked_sentences, target=entityList)
 
             elif isinstance(extObject, SecondaryExtractor):
                 extObject.execute(entities=entityList)
