@@ -6,12 +6,13 @@ import nltk
 from nltk.corpus import wordnet
 
 __author__ = 'ChaminiKD'
-xml_file = 'company_new.xml'
+
 # xml_file = 'company_new.xml'
 
 table_knowledgebase_file = open('out/table_knowledgebase.txt', 'w')
 att_knowledgebase_file = open('out/attribute_knowledgebase.txt', 'w')
 
+#create knowledgebase
 def setSementicKB(type, list):
     knowledgeBase = []
     if type == 'tables':
@@ -41,14 +42,10 @@ def add_space(token):
             break
         ilist.append(index)
         index += 1
-    # print("PPPPPPPPPPPPPPPPPPP", ilist)
+    print("PPPPPPPPPPPPPPPPPPP", ilist)
     for x in ilist:
         token = (token[:x + 1] + ' ' + token[x + 1:])
     return (token)
-
-
-
-
 
 
 # extract the value from the user query
