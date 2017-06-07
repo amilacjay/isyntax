@@ -49,7 +49,7 @@ def dependencyClosure(dm, dg, determinents, relation, fds):
         for j, dgJ in enumerate(dg):
             if(i != j and dg[i][j] != -1):
                 # print(determinents[i],' to ',determinents[j])
-                det = determinents[j].tolist()
+                det = np.array(determinents[j]).tolist()
                 # print(det)
                 skeys = [fd[1][0] for fd in fds if fd[0]==det]
                 skeyIndexes = [relation.index(sk) for sk in skeys]
@@ -85,13 +85,13 @@ def findOne(i, j, k, n, dc):
 #### examples
 
 
-relation = ['A', 'B', 'C']
-
-fds = [
-        [['A'],['B']],
-        [['B'],['A']],
-        [['B'],['C']]
-      ]
+# relation = ['A', 'B', 'C']
+#
+# fds = [
+#         [['A'],['B']],
+#         [['B'],['A']],
+#         [['B'],['C']]
+#       ]
 
 # relation = ['A', 'B', 'C', 'D', 'E']
 #
@@ -100,6 +100,25 @@ fds = [
 #         [['B', 'C'],['A']],
 #         [['D', 'E'],['A']]
 #       ]
+
+
+relation = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+
+fds = [
+    [['A'],['B']],
+    [['A'],['C']],
+    [['E'],['A']],
+    [['E'],['D']],
+    [['G'],['A']],
+    [['G'],['E']],
+    [['G'],['J']],
+    [['G'],['K']],
+    [['G','H'],['F']],
+    [['G','H'],['I']],
+    [['K'],['A']],
+    [['K'],['L']],
+    [['J'],['K']]
+]
 
 
 DM, determinents = dependencyMatrix(relation, fds)
