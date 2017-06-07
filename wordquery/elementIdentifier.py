@@ -28,6 +28,7 @@ def identify_expressions(remaining_sentence):
                 temp.append([word, indx, elm[1]])
                 symbol.append([elm[1], indx])
         indx = indx + 1
+
     return temp, symbol
 
 
