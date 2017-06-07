@@ -111,5 +111,4 @@ ref_tables = (list_table[index_selected])[0]
 create_query(ref_tables[0], tab[0], list_ref, values, val, con_att)
 # reference_col = ref_column(reference_list , list)
 
-# SELECT * from employee, department where
-# employee. Department_number=Department.department_number AND Department_name= ‘Headquarters’
+
