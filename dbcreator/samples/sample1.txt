@@ -1,4 +1,4 @@
-The company is organized into departments.
+The organization has organized into departments.
 Each department has a unique name, a unique number, and a particular employee who manages the department.
 We keep track of the start date when that employee began managing  the department.
 A department may have several locations.
