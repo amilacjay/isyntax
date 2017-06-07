@@ -2,10 +2,12 @@ from wordquery.elementIdentifier import *
 from wordquery.preprocessor import *
 from wordquery.query_generator import *
 from operator import sub
-from wordquery.table_fetcher import *
+# from wordquery.table_fetcher import *
 
 __author__ = 'ChaminiKD'
+
 xml_file = 'company_new.xml'
+
 # create the knowledgebase
 table_list = get_Table_names(xml_file)
 asd = setSementicKB('tables', table_list)
@@ -26,18 +28,19 @@ s10 = "what is the name of  employee whose wage equals '25000' "  # w
 s11 = "what is the ssn of employee whose sex equals 'M' "  # icorrect
 s12 = "what is the birthdate of employee whose name equals 'John B Smith' "  # not work
 s13 = "what is the name of employee whose wage greaterthan '30000' "  # w
-s14 = "what are the departmentnames of the departments" #w
-s15 = "what is the name of employee whose wage lessthan '30000'" #w
-s16 = "what is the name of employee whose wage notequal '30000'" #w
+s14 = "what are the departmentnames of the departments"  # w
+s15 = "what is the name of employee whose wage lessthan '30000'"  # w
+s16 = "what is the name of employee whose wage notequal '30000'"  # w
 s17 = "what is the name of employee whose wage equals '30000' and departmentnumber equals '5' "  # w
 s18 = "what is the name of employee whose sex equals 'M' or departmentnumber equals '5' "  # w
 s19 = "what is the supervisorssn of employee whose wage notequal '30000'"  # w
-s20 = "what is the sex of employee whose wage lessthan '30000'"
+s20 = "what is the sex of employee whose wage lessthan '30000'"  # not
 s21 = 'ssn of employees'
+s22 = "give me employee details whose departmentname equals 'headquarters' "
 
 # userInput = input("enter:")
-userInput = s21
-Input = add_space(userInput)
+userInput = s12
+Input = add_space(userInput)  # add space
 print("Input :", Input)
 
 value, S = getvalue(Input)
@@ -45,8 +48,12 @@ print("value:", value)
 print("remaining sentence", S)
 
 if value:
+    v_list = []
     for v in value:
-        v = v[:1] + v[2:]
+        v = v[:1] + v[2:]  # remove space
+        v_list.append(v)
+    print(v_list)
+    value = v_list
 else:
     value = ''
 
@@ -72,47 +79,12 @@ noun_list = chunk_nouns(postag_list)
 print("Extracted nouns by cunking :", noun_list)
 print("...........................................................")
 
-# identify the condition attribute in the user input
-def get_codition_attribute(i):
-    exp_index = i[1]
-    previous_token = []
-    previous_token.append([tokens_of_remaining[exp_index - 1], i[0]])
-    return previous_token
 
 # find condition elements
 if value:
-    identified_expression = []
-    symbol = []
-    identified_expression, symbol = identify_expressions(tokens_of_remaining)
-    print("identified expression in the user input =", identified_expression)
-    print("identified symbols in the user input =", symbol)
-    condition_att_list = []
-    privious_token_list = []
-    for i in identified_expression:
-        prv_token = []
-        prv_token = get_codition_attribute(i)
-        print("previous token =", prv_token)
-        privious_token_list.append(prv_token[0][0])
-        prv_attribute = []
-        prv_attribute = attributeIdentifier(att, prv_token[0])
-        print("previous attribute = ", prv_attribute)
-        condition_att_list.append([prv_attribute[0], i[2]])
-
-    print("condition attribute list", condition_att_list)
-    # print("GGGGGGGGGGGGGGg",privious_token_list)
-
-    # remove condition attribute
-    list_of_nouns = [word for word in noun_list if word.lower() not in privious_token_list]
-    print("after removing the condition attributes **", list_of_nouns)
-
-    operator = find_operators(userInput)
-    print("operators found :", operator)
-    if operator:
-        operator = operator
-    else:
-        operator = ''
-    print("..........................................................")
-
+    symbol, prv_attribute, list_of_nouns, operator, condition_att_list = find_condition_elements(tokens_of_remaining,
+                                                                                                 att, noun_list,
+                                                                                                 userInput, xml_file)
 else:
     value = ''
     symbol = ''
@@ -123,25 +95,20 @@ else:
 
 
 # find tables and attributes in user input
-
 print("*****List of nouns          :", list_of_nouns)
-identified_table, n_list = tableIdentifier(asd, list_of_nouns)
+identified_table, n_list = tableIdentifier(asd, list_of_nouns, xml_file)
 print("*****Table found            :", identified_table)
-# print("*****remove this table name from noun list :", n_list)
 
 new_nounList = list(set(n_list) ^ set(list_of_nouns))
 print("*****New Noun List, after removing table names : ", new_nounList)
 
-identified_attribute = attributeIdentifier(att, new_nounList)
-# print(identified_attribute)
+identified_attribute = attributeIdentifier(att, new_nounList, xml_file)
 print("*****Attributes found       :", identified_attribute)
 
-table_extractor(identified_attribute)
-
-
+# table_extractor(identified_attribute)
 
 print("*****value                  :", value)
-print("*****symbol                 :", symbol)
+print("*****symbol list            :", symbol)
 print("*****prv attribute          :", prv_attribute)
 print("*****conditon atribute list :", condition_att_list)
 

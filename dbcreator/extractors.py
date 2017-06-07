@@ -1,8 +1,9 @@
 from dbcreator.models import *
+from dbcreator.core import *
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
         pass
 
 
@@ -12,10 +13,13 @@ class SecondaryExtractor:
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
 
         for sIndex, sent in enumerate(tagged_sents):
-
+            print(ne_chunked_sents)
+            # ne_chunked_sent = ne_chunked_sents[sIndex]
+            # print(ne_chunked_sent)
+            print(sent)
             for index, item in enumerate(sent):
                 if ((item[0] == 'has' or item[0] == 'have')):
                     hIndex = item[2]
@@ -139,31 +143,29 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
                     attrList.remove(attr)
 
 
-class RemoveAttributesFromEntityList(SecondaryExtractor):
-    def execute(self, entities):
+# class RemoveAttributesFromEntityList(SecondaryExtractor):
+#     def execute(self, entities):
+#
+#         removingIndex = []
+#         for entity in entities:
+#             attrList = entity.getAttributes()
+#             for attr in attrList:
+#                 for i, ent in enumerate(entities):
+#                     if(attr.name() == ent.name()):
+#                         removingIndex.append(i)
+#
+#         for i in set(removingIndex):
+#             e = entities[i]
+#             # print(e.name())
+#             # entities.remove(e)
 
-        removingIndex = []
-        for entity in entities:
-            attrList = entity.getAttributes()
-            for attr in attrList:
-                for i, ent in enumerate(entities):
-                    if(attr.name() == ent.name()):
-                        removingIndex.append(i)
 
-        for i in set(removingIndex):
-            e = entities[i]
-            # print(e.name())
-            # entities.remove(e)
-
-
-# class PrimaryKeyExtractor(SecondaryExtractor):
+# class RemoveAttributesInEntityList(SecondaryExtractor):
 #     def execute(self, entities):
 #         for entity in entities:
 #             for attr in entity.getAttributes():
-#                 if attr in csv_reader('../knowledge_base/primary_keys.csv'):
-#                     # attr.isPrimaryKey = True
-#                     # attr.isUnique = True
-#                      pass
+#                 if attr in entities:
+#                     entities.remove(attr)
 
 
 

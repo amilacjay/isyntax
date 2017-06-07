@@ -1,6 +1,7 @@
 from nltk import RegexpParser
 from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
+from nltk import ne_chunk
 
 
 def getContentFromFile(filename):
@@ -32,6 +33,31 @@ def extract_np(psent):
     for subtree in psent.subtrees():
         if subtree.label() == 'NP':
             yield [(word, tag, index) for word, tag, index in subtree.leaves()]
+
+
+def extract_ne(tsent):
+    for t in tsent.subtrees():
+        if t.label() == 'NE':
+            yield [(word, tag) for word, tag in t.leaves()]
+
+
+def getNamedEntities(taggedSents):
+    neSents = ne_chunk(taggedSents, binary=True)
+
+    extract_ne_gen = extract_ne(neSents)
+    neList = []
+    neList.append([x for x in extract_ne_gen])
+    flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
+
+    return flattenedList
+
+
+# def removeNamedEntities(tSents):
+#     nEntities = getNamedEntities(tSents)
+#     flattenedList = [item for list_1 in nEntities for list_2 in list_1 for item in list_2]
+#     for item in flattenedList:
+#         if item in tSents:
+#             tSents.remove(item)
 
 
 def getChunkedSentences(taggedSents):

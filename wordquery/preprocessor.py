@@ -6,12 +6,13 @@ import nltk
 from nltk.corpus import wordnet
 
 __author__ = 'ChaminiKD'
-xml_file = 'company_new.xml'
+
 # xml_file = 'company_new.xml'
 
 table_knowledgebase_file = open('out/table_knowledgebase.txt', 'w')
 att_knowledgebase_file = open('out/attribute_knowledgebase.txt', 'w')
 
+#create knowledgebase
 def setSementicKB(type, list):
     knowledgeBase = []
     if type == 'tables':
@@ -41,32 +42,10 @@ def add_space(token):
             break
         ilist.append(index)
         index += 1
-    # print("PPPPPPPPPPPPPPPPPPP", ilist)
+    print("PPPPPPPPPPPPPPPPPPP", ilist)
     for x in ilist:
         token = (token[:x + 1] + ' ' + token[x + 1:])
     return (token)
-
-
-operator_list = ["AND", "OR", "and", "or"]
-
-
-def find_operators(token):
-    ilist = []
-    index = 0
-    while index < len(token):
-        index = token.find("'", index)
-        if index == -1:
-            break
-        ilist.append(index)
-        index += 1
-    # print("PPPPPPPPPPPPPPPPPPP", ilist)
-    len_ilist = len(ilist)
-    # print("LLLLLLLLLL" , len_ilist)
-    substring = token[ilist[0]:ilist[len_ilist-1]]
-    print("sub string", substring)
-    tokens_of_substring = getTokenz(substring)
-    result = [word for word in tokens_of_substring if word.lower() in operator_list]
-    return result
 
 
 # extract the value from the user query
