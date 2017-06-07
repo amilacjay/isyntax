@@ -18,10 +18,18 @@ class Table:
     def setSortingFields(self, fields):
         self.sortingFields = fields
 
+class Query:
+    def __init__(self):
+        self.tables = []
+        self.conditions = []
+        self.projection = []
+
 
 class ELEMENT_TYPE(Enum):
-    TABLE = 0
+    SIMPLE_TABLE = 0
     JOINED_TABLE = 1
     CONDITION = 2
     COL_LIST = 3
     VARIABLE = 4
+
+

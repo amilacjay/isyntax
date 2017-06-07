@@ -134,6 +134,7 @@ def getCommonPoints(points1, points2):
     for pt1 in points1:
         for pt2 in points2:
             if pt1[0] == pt2[0] and pt1[1]==pt2[1]:
+
                 commonPts.append([[pt1[1], pt1[0]]])
 
 
@@ -173,3 +174,10 @@ def scale(cont, ratio):
         newCont.append([[int(X), int(Y)]])
 
     return np.array(newCont)
+
+def getPointsOfRect(stat, shape):
+    mask = cv2.cvtColor(np.zeros(shape, dtype=np.uint8), cv2.COLOR_BGR2GRAY)
+    cv2.rectangle(mask, toPoints(stat)[0], toPoints(stat)[1], 255)
+    ret, conts, hier = cv2.findContours(mask, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+
+    return conts[0]
