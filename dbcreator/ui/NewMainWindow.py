@@ -18,6 +18,7 @@ class Ui_MainWindow(QMainWindow):
 
         self.setupUi()
 
+
     def setupUi(self):
         self.setObjectName("MainWindow")
         self.resize(911, 584)
@@ -143,40 +144,8 @@ class Ui_MainWindow(QMainWindow):
         else:
             self.btn_generate.setEnabled(False)
 
-    # def generateSqlClicked(self):
-    #
-    #     script = self.createSQLScript()
-    #
-    #     fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/'))-1]
-    #
-    #     output = open('../generated_sql/'+fileName.replace(".txt",".sql"), 'w')
-    #     print(script, file=output)
-    #     output.close()
-
-    # def createSQLScript(self):
-    #     wholeSQL = ''
-    #     for entity in self.entities:
-    #         firstLine = "DROP TABLE IF EXISTS {} CASCADE; CREATE TABLE {} (".format(entity.name(), entity.name())
-    #         queryBody = '\n'
-    #         delimiter = ',\n'
-    #         lastLine = "\n);\n\n"
-    #
-    #         attributeList = entity.getAttributes()
-    #         for i, attribute in enumerate(attributeList):
-    #             uniqueKW = ' UNIQUE'
-    #             attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype,
-    #                                                uniqueKW if attribute.isUnique else '')
-    #             if i != len(attributeList) - 1:
-    #                 attributeLine = attributeLine + delimiter
-    #             queryBody = queryBody + attributeLine
-    #
-    #         wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
-    #
-    #     return wholeSQL
 
     def generateSqlClicked(self):
-
-
         script = createSQLScript(self.entities)
 
         if self.checkBox.isChecked():
@@ -252,6 +221,7 @@ class Ui_MainWindow(QMainWindow):
             comboUq.setProperty('attribute', attr)
             self.attributetable.setItem(row, 5, QTableWidgetItem(str(attr.data)))
 
+
     def resetBtnClicked(self):
         self.btn_analyze.setEnabled(False)
         self.btn_generate.setEnabled(False)
@@ -262,14 +232,15 @@ class Ui_MainWindow(QMainWindow):
 
 
     def closeButtonClicked(self, event):
-        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
-                                     QMessageBox.Yes | QMessageBox.No,
-                                     QMessageBox.No)
-
-        if reply == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
+        pass
+        # reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
+        #                              QMessageBox.Yes | QMessageBox.No,
+        #                              QMessageBox.No)
+        #
+        # if reply == QMessageBox.Yes:
+        #     event.accept()
+        # else:
+        #     event.ignore()
 
 
     def tableRowClicked(self, row, column):
@@ -280,6 +251,7 @@ class Ui_MainWindow(QMainWindow):
         attr = self.sender().property('attribute')
         if (attr != None):
             attr.isPrimaryKey = pk
+
 
     def comboBoxChangedDt(self, dType):
         attr = self.sender().property('attribute')
