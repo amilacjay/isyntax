@@ -17,7 +17,7 @@ logger.addHandler(ch)
 
 
 rootPath = 'samples/sketches/'
-file = 'simplequery.png'
+file = 'two-queries.png'
 fullPath = rootPath+file
 
 logger.info("""
@@ -40,7 +40,7 @@ logger.info("""
 logger.info("reading image file : " + fullPath)
 image = cv2.imread(fullPath, cv2.IMREAD_COLOR)
 
-resizingSquare = 600
+resizingSquare = 700
 logger.info("resizing image into "+ str(resizingSquare) + " square")
 atio, resized = optimalSize(image, sqr=resizingSquare)
 
@@ -89,7 +89,7 @@ logger.info("iterating texts and identifying their category")
 for i, tas in enumerate(textAndStats):
     text = tas[0]
     stat = tas[1]
-    print(text)
+    # print(text)
 
     if text.startswith('[') and text.endswith(']'):
         logger.debug("an attribute list was identified: " + text)
@@ -112,7 +112,7 @@ for i, tas in enumerate(textAndStats):
         scaledUp = scale(pointsOfRect, 1.2)
         cv2.drawContours(resized, [scaledUp], -1, (255, 0, 0))
 
-        elements.append([2, text, pointsOfRect])
+        elements.append([2, text, scaledUp])
 
     elif text.startswith('$'):
         logger.debug("a variable was identified: " + text)
@@ -140,7 +140,8 @@ for i, tas in enumerate(textAndStats):
                 cv2.drawContours(resized, [cont], -1, (0, 255, 0), 1)
                 centroid = getCentroid(cont)
 
-                if (ratio <= 15):
+                print(ratio)
+                if (ratio <= 16):
                     logger.debug("categorized the table '{}' as SIMPLE_TABLE".format(text))
 
                     scaledUp = scale(cont, 1.2)
@@ -210,9 +211,9 @@ for ac in arrowConts:
     box = cv2.boxPoints(rect)
     box = np.int0(box)
 
-    rbox = scale(np.array([[b] for b in box]), 1.2)
+    rbox = scale(np.array([[b] for b in box]), 2)
 
-    table = other = None
+    table = other = '  '
 
     for el in elements:
             boundary = el[2]
@@ -225,6 +226,7 @@ for ac in arrowConts:
                     other = el
 
     for query in queryList:
+        print(table[1])
         if(table[1] in query.tables):
             if other != None:
                 if other[0] == 2:
@@ -237,7 +239,8 @@ for ac in arrowConts:
 
 
 
-for query in queryList:
+for i, query in enumerate(queryList):
+    print("Query : " + str(i+1))
     print('tables : ' + str(query.tables))
     print('condition : ' + str(query.conditions))
     print('projection : ' + str(query.projection))
