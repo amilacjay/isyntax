@@ -5,7 +5,9 @@ from operator import sub
 # from wordquery.table_fetcher import *
 
 __author__ = 'ChaminiKD'
+
 xml_file = 'company_new.xml'
+
 # create the knowledgebase
 table_list = get_Table_names(xml_file)
 asd = setSementicKB('tables', table_list)
@@ -32,13 +34,12 @@ s16 = "what is the name of employee whose wage notequal '30000'"  # w
 s17 = "what is the name of employee whose wage equals '30000' and departmentnumber equals '5' "  # w
 s18 = "what is the name of employee whose sex equals 'M' or departmentnumber equals '5' "  # w
 s19 = "what is the supervisorssn of employee whose wage notequal '30000'"  # w
-s20 = "what is the sex of employee whose wage lessthan '30000'"
+s20 = "what is the sex of employee whose wage lessthan '30000'"  # not
 s21 = 'ssn of employees'
 s22 = "give me employee details whose departmentname equals 'headquarters' "
 
-
 # userInput = input("enter:")
-userInput = s22
+userInput = s12
 Input = add_space(userInput)  # add space
 print("Input :", Input)
 
@@ -47,8 +48,12 @@ print("value:", value)
 print("remaining sentence", S)
 
 if value:
+    v_list = []
     for v in value:
         v = v[:1] + v[2:]  # remove space
+        v_list.append(v)
+    print(v_list)
+    value = v_list
 else:
     value = ''
 
@@ -77,8 +82,9 @@ print("...........................................................")
 
 # find condition elements
 if value:
-    symbol, prv_attribute, list_of_nouns, operator, condition_att_list = find_condition_elements(tokens_of_remaining ,
-                                                                                                 att , noun_list , userInput)
+    symbol, prv_attribute, list_of_nouns, operator, condition_att_list = find_condition_elements(tokens_of_remaining,
+                                                                                                 att, noun_list,
+                                                                                                 userInput, xml_file)
 else:
     value = ''
     symbol = ''
@@ -90,13 +96,13 @@ else:
 
 # find tables and attributes in user input
 print("*****List of nouns          :", list_of_nouns)
-identified_table, n_list = tableIdentifier(asd, list_of_nouns)
+identified_table, n_list = tableIdentifier(asd, list_of_nouns, xml_file)
 print("*****Table found            :", identified_table)
 
 new_nounList = list(set(n_list) ^ set(list_of_nouns))
 print("*****New Noun List, after removing table names : ", new_nounList)
 
-identified_attribute = attributeIdentifier(att, new_nounList)
+identified_attribute = attributeIdentifier(att, new_nounList, xml_file)
 print("*****Attributes found       :", identified_attribute)
 
 # table_extractor(identified_attribute)

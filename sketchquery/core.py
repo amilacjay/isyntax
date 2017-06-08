@@ -134,6 +134,7 @@ def getCommonPoints(points1, points2):
     for pt1 in points1:
         for pt2 in points2:
             if pt1[0] == pt2[0] and pt1[1]==pt2[1]:
+
                 commonPts.append([[pt1[1], pt1[0]]])
 
 
@@ -145,3 +146,38 @@ def getCentroid(contour):
     cx = int(M['m10'] / M['m00'])
     cy = int(M['m01'] / M['m00'])
     return (cx, cy)
+
+
+def toPoints(stat):
+    return [(stat[cv2.CC_STAT_LEFT], stat[cv2.CC_STAT_TOP]),
+            (stat[cv2.CC_STAT_LEFT]+stat[cv2.CC_STAT_WIDTH],
+             stat[cv2.CC_STAT_TOP]+stat[cv2.CC_STAT_HEIGHT])]
+
+
+def scale(cont, ratio):
+    cx, cy = getCentroid(cont)
+
+    newCont = []
+
+    for [[x, y]] in cont:
+        X = x
+        Y = y
+        if(x>cx):
+            X += abs(x-cx)*(ratio-1)
+        if(y>cy):
+            Y += abs(y-cy)*(ratio-1)
+        if(x<cx):
+            X -= abs(x-cx)*(ratio-1)
+        if(y<cy):
+            Y -= abs(y-cy)*(ratio-1)
+
+        newCont.append([[int(X), int(Y)]])
+
+    return np.array(newCont)
+
+def getPointsOfRect(stat, shape):
+    mask = cv2.cvtColor(np.zeros(shape, dtype=np.uint8), cv2.COLOR_BGR2GRAY)
+    cv2.rectangle(mask, toPoints(stat)[0], toPoints(stat)[1], 255)
+    ret, conts, hier = cv2.findContours(mask, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+
+    return conts[0]
