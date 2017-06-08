@@ -3,7 +3,7 @@ from dbcreator.core import *
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, target):
         pass
 
 
@@ -13,13 +13,13 @@ class SecondaryExtractor:
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, target):
 
         for sIndex, sent in enumerate(tagged_sents):
-            print(ne_chunked_sents)
+            # print(ne_chunked_sents)
             # ne_chunked_sent = ne_chunked_sents[sIndex]
             # print(ne_chunked_sent)
-            print(sent)
+            # print(sent)
             for index, item in enumerate(sent):
                 if ((item[0] == 'has' or item[0] == 'have')):
                     hIndex = item[2]
@@ -75,16 +75,19 @@ class UniqueKeyExtractor(SecondaryExtractor):
             for attr in entity.getAttributes():
                 isUnique = False
                 isPrimaryKey = False
+                isNotNull = False
                 tempData = []
                 for i, word in enumerate(attr.data):
                     if(word[0].lower() in ['unique','distinguishable','distinct']):
                         isUnique = True
                         isPrimaryKey = True
+                        isNotNull = True
                     else:
                         tempData.append(word)
                 attr.data = tempData
                 attr.isUnique = isUnique
                 attr.isPrimaryKey = isPrimaryKey
+                attr.isNotNull = isNotNull
 
 
 class IdentifyAttributeDataType(SecondaryExtractor):
@@ -92,7 +95,7 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
         intList = ['number', 'no', 'id', 'SSN']
         dateList = ['date', 'dob']
-        doubleList = ['temperature', 'price', 'distance', 'weight']
+        doubleList = ['temperature', 'price', 'distance', 'weight', 'fee']
 
         for entity in entities:
             attrList = entity.getAttributes()
@@ -112,35 +115,75 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
 class RemoveDuplicateEntities(SecondaryExtractor):
     def execute(self, entities):
-        pass
+        uniqueEntities = []
 
-        compList = []
+        for entity in entities:
+            check = True
+            for e in uniqueEntities:
+                if e.name() == entity.name():
+                    e.getAttributes().extend(entity.getAttributes())
+                    check = False
+                    break
 
-        for i, entity1 in enumerate(entities):
-            for j, entity2 in enumerate(entities):
-                if(i!=j and set([i,j]) not in compList and entity1.name() == entity2.name()):
-                    entity1.getAttributes().extend(entity2.getAttributes())
-                    entities.remove(entity2)
+            if check:
+                uniqueEntities.append(entity)
 
-                compList.append(set([i,j]))
+        entities[:] = uniqueEntities[:]
 
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities):
+        uniqueAttributes = []
 
         for entity in entities:
             attrList = entity.getAttributes()
-            compList = []
-            for i, attr1 in enumerate(attrList):
-                for j, attr2 in enumerate(attrList):
-                    if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
-                        attrList.remove(attr2)
-
-                    compList.append(set([i,j]))
-
             for attr in attrList:
-                if attr.name() == '%':
-                    attrList.remove(attr)
+                check = True
+                for a in uniqueAttributes:
+                    if a.name() == attr.name() or attr.name() == '%':
+                        check = False
+                        break
+
+            if check:
+                uniqueAttributes.append(attr)
+
+        attrList[:] = uniqueAttributes[:]
+
+            # compList = []
+            # for i, attr1 in enumerate(attrList):
+            #     for j, attr2 in enumerate(attrList):
+            #         if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
+            #             attrList.remove(attr2)
+            #
+            #         compList.append(set([i,j]))
+            #
+            # for attr in attrList:
+            #     if attr.name() == '%':
+            #         attrList.remove(attr)
+
+
+class RemoveNonPotentialEntities(SecondaryExtractor):
+    def execute(self, entities):
+        nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
+        filteredList = []
+
+        for entity in entities:
+            check = True
+            for item in nonPotentialList:
+                if entity.name().lower() == item.lower():
+                    check = False
+
+            if check:
+                filteredList.append(entity)
+
+        entities[:] = filteredList[:]
+
+
+class SuggestRelationshipTypes(PrimaryExtractor):
+    def execute(self, tagged_sents, chunked_sents, target):
+
+        pass
+
 
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
@@ -166,6 +209,7 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
 #             for attr in entity.getAttributes():
 #                 if attr in entities:
 #                     entities.remove(attr)
+
 
 
 
