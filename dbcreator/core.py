@@ -3,6 +3,8 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
 from nltk import ne_chunk
 
+from dbcreator.models import DataType
+
 
 def getContentFromFile(filename):
     with open(filename) as f:
@@ -62,11 +64,11 @@ def getNamedEntities(taggedSents):
 
 def getChunkedSentences(taggedSents):
     grammar = r"""
-    NP: {<NN.*><IN><NN.*>}
+    NP: {<NN.*><IN><NN.*><NN.*>}
         {<NN.*><TO><DT><NN.*>}
         {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}
     """
-
+#{<NN.*><IN><NN.*>}
     cp = RegexpParser(grammar)
 
     chunkList = []
@@ -86,6 +88,7 @@ def createSQLScript(entities):
     wholeSQL = ''
     for entity in entities:
         firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
+        # firstLine = "CREATE TABLE {} (".format(entity.name())
         queryBody = '\n'
         delimiter = ',\n'
         lastLine = "\n);\n\n"
@@ -93,9 +96,15 @@ def createSQLScript(entities):
         attributeList = entity.getAttributes()
         keys = [atr.name() for atr in attributeList if atr.isUnique == True]
         primaryKeyLine = ',\n\tPRIMARY KEY('+ ','.join(keys) +')'
+
         for i, attribute in enumerate(attributeList):
+            dTypeSize = '(50)'
             uniqueKW = ' UNIQUE'
-            attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
+            notnullKW = ' NOT NULL'
+
+            attributeLine = '\t{} {}{}{}{}'.format(attribute.name(), attribute.dtype, dTypeSize if attribute.dtype == DataType.VARCHAR else '' ,
+                                               uniqueKW if attribute.isUnique else '', notnullKW if attribute.isNotNull else '')
+
             if i != len(attributeList) - 1:
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
@@ -105,9 +114,8 @@ def createSQLScript(entities):
     return wholeSQL
 
 
-# def csv_reader(filename):
-#
-#     with open(filename) as f:
-#         content = f.readlines()
-#     return [s.strip() for s in str(''.join(content)).split(',')]
+def csv_reader(filename):
+    with open(filename) as f:
+        content = f.readlines()
+    return [s.strip() for s in str(''.join(content)).split(',')]
 
