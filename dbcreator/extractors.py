@@ -25,14 +25,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     hIndex = item[2]
                     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < hIndex]
 
-                    # entList = []
-                    # for ent in candidateEntityNames:
-                    #     if ent[1] == 'IN':
-                    #         tIndex = ent[2]
-                    #         entList = [chunk for chunk in candidateEntityNames if chunk[0][2] > tIndex]
-                    #
-                    #
-                    # entityName = entList.pop()
                     entityName = candidateEntityNames.pop()
 
                     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > hIndex]
@@ -60,7 +52,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     for chunk in candidateAttributeData:
                         attr = Attribute(chunk)
                         attributes.append(attr)
-
 
                     entity = Entity([sent[index-1]])
                     entity.setAttributes(attributes)
@@ -133,33 +124,34 @@ class RemoveDuplicateEntities(SecondaryExtractor):
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities):
-        uniqueAttributes = []
 
         for entity in entities:
             attrList = entity.getAttributes()
+            compList = []
+            for i, attr1 in enumerate(attrList):
+                for j, attr2 in enumerate(attrList):
+                    if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
+                        attrList.remove(attr2)
+
+                    compList.append(set([i,j]))
+
             for attr in attrList:
-                check = True
-                for a in uniqueAttributes:
-                    if a.name() == attr.name() or attr.name() == '%':
-                        check = False
-                        break
+                if attr.name() == '%':
+                    attrList.remove(attr)
 
-            if check:
-                uniqueAttributes.append(attr)
-
-        attrList[:] = uniqueAttributes[:]
-
-            # compList = []
-            # for i, attr1 in enumerate(attrList):
-            #     for j, attr2 in enumerate(attrList):
-            #         if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
-            #             attrList.remove(attr2)
-            #
-            #         compList.append(set([i,j]))
-            #
-            # for attr in attrList:
-            #     if attr.name() == '%':
-            #         attrList.remove(attr)
+        # uniqueAttributes = []
+        # for attr in attrList:
+        #         check = True
+        #         for a in uniqueAttributes:
+        #             print(a.name())
+        #             if a.name() == attr.name() or attr.name() == '%':
+        #                 check = False
+        #                 break
+        #
+        #     if check:
+        #         uniqueAttributes.append(attr)
+        #
+        # attrList[:] = uniqueAttributes[:]
 
 
 class RemoveNonPotentialEntities(SecondaryExtractor):
@@ -179,12 +171,23 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
         entities[:] = filteredList[:]
 
 
-class SuggestRelationshipTypes(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, target):
-
-        pass
-
-
+# class SuggestRelationshipTypes(SecondaryExtractor):
+#     def execute(self, entities):
+#
+#         removingList = []
+#
+#         for entity in entities:
+#             check = True
+#             attrList = entity.getAttributes()
+#             for attr in attrList:
+#                 if entity.name().lower() == attr.name().lower():
+#                     check = False
+#                     break
+#
+#             if check:
+#                 removingList.append(attr)
+#
+#         attrList[:] = removingList[:]
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
 #     def execute(self, entities):
