@@ -3,6 +3,8 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
 from nltk import ne_chunk
 
+from dbcreator.models import DataType
+
 
 def getContentFromFile(filename):
     with open(filename) as f:
@@ -35,21 +37,21 @@ def extract_np(psent):
             yield [(word, tag, index) for word, tag, index in subtree.leaves()]
 
 
-def extract_ne(tsent):
-    for t in tsent.subtrees():
-        if t.label() == 'NE':
-            yield [(word, tag) for word, tag in t.leaves()]
+# def extract_ne(tsent):
+#     for t in tsent.subtrees():
+#         if t.label() == 'NE':
+#             yield [(word, tag) for word, tag in t.leaves()]
 
 
-def getNamedEntities(taggedSents):
-    neSents = ne_chunk(taggedSents, binary=True)
-
-    extract_ne_gen = extract_ne(neSents)
-    neList = []
-    neList.append([x for x in extract_ne_gen])
-    flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
-
-    return flattenedList
+# def getNamedEntities(taggedSents):
+#     neSents = ne_chunk(taggedSents, binary=True)
+#
+#     extract_ne_gen = extract_ne(neSents)
+#     neList = []
+#     neList.append([x for x in extract_ne_gen])
+#     flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
+#
+#     return flattenedList
 
 
 # def removeNamedEntities(tSents):
@@ -62,7 +64,7 @@ def getNamedEntities(taggedSents):
 
 def getChunkedSentences(taggedSents):
     grammar = r"""
-    NP: {<NN.*><IN><NN.*>}
+    NP: {<NN.*><IN><NN.*><NN.*>}
         {<NN.*><TO><DT><NN.*>}
         {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}
     """
@@ -86,6 +88,7 @@ def createSQLScript(entities):
     wholeSQL = ''
     for entity in entities:
         firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
+        # firstLine = "CREATE TABLE {} (".format(entity.name())
         queryBody = '\n'
         delimiter = ',\n'
         lastLine = "\n);\n\n"
@@ -93,9 +96,15 @@ def createSQLScript(entities):
         attributeList = entity.getAttributes()
         keys = [atr.name() for atr in attributeList if atr.isUnique == True]
         primaryKeyLine = ',\n\tPRIMARY KEY('+ ','.join(keys) +')'
+
         for i, attribute in enumerate(attributeList):
+            dTypeSize = '(50)'
             uniqueKW = ' UNIQUE'
-            attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
+            notnullKW = ' NOT NULL'
+
+            attributeLine = '\t{} {}{}{}{}'.format(attribute.name(), attribute.dtype, dTypeSize if attribute.dtype == DataType.VARCHAR else '' ,
+                                               uniqueKW if attribute.isUnique else '', notnullKW if attribute.isNotNull else '')
+
             if i != len(attributeList) - 1:
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
@@ -105,9 +114,43 @@ def createSQLScript(entities):
     return wholeSQL
 
 
-# def csv_reader(filename):
+def csv_reader(filename):
+    with open(filename) as f:
+        content = f.readlines()
+    return [s.strip() for s in str(''.join(content)).split(',')]
+
+
+# def extract_relations(taggedSents):
+#     grammar = "NP: {<NN.*><NN.*><IN><NN.*>}"
 #
-#     with open(filename) as f:
-#         content = f.readlines()
-#     return [s.strip() for s in str(''.join(content)).split(',')]
+#     # { < NN. * > < VB. * > < VB. * > < TO > < DT > < NN. * >}
+#     # { < NN. * > < VB. * > * < IN > < DT > < NN. * >}
+#     #         {<NN.*><VB.*><JJ><NN.*>}
+#     # grammar = """r
+#     # NP: {<NN.*>(<NN.*>|<VB.*>)(<IN>|<JJ>|<VB.*>)<NN.*>}
+#     #     {<NN.*><VB.*>(<IN>|<VB.*>)<TO><DT><NN.*>}
+#     # """
+#
+#     cp = RegexpParser(grammar)
+#
+#     relationList = []
+#     for tSent in taggedSents:
+#         result = cp.parse(tSent)
+#
+#         extract_gen = extract_np(result)
+#
+#         relationList.append([x for x in extract_gen])
+#
+#         # for item in relationList:
+#         #     for index, re in enumerate(item):
+#         #         if re[2][1] == 'IN':
+#         #             hIndex = re[2][2]
+#         #             for i, chunk in enumerate(relationList[index]):
+#         #                 print(chunk[0][3])
+#         #                 if chunk[0][2] < hIndex:
+#         #                     relative_1 = chunk[0][0]
+#         #                     print(relative_1)
+#         #                 if chunk[0][2] > hIndex:
+#         #                     relative_2 = chunk[0][3]
+#         #                     print(relative_2)
 

@@ -3,7 +3,7 @@ from dbcreator.core import *
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, target):
         pass
 
 
@@ -13,26 +13,18 @@ class SecondaryExtractor:
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, target):
 
         for sIndex, sent in enumerate(tagged_sents):
-            print(ne_chunked_sents)
+            # print(ne_chunked_sents)
             # ne_chunked_sent = ne_chunked_sents[sIndex]
             # print(ne_chunked_sent)
-            print(sent)
+            # print(sent)
             for index, item in enumerate(sent):
                 if ((item[0] == 'has' or item[0] == 'have')):
                     hIndex = item[2]
                     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < hIndex]
 
-                    # entList = []
-                    # for ent in candidateEntityNames:
-                    #     if ent[1] == 'IN':
-                    #         tIndex = ent[2]
-                    #         entList = [chunk for chunk in candidateEntityNames if chunk[0][2] > tIndex]
-                    #
-                    #
-                    # entityName = entList.pop()
                     entityName = candidateEntityNames.pop()
 
                     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > hIndex]
@@ -61,7 +53,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         attr = Attribute(chunk)
                         attributes.append(attr)
 
-
                     entity = Entity([sent[index-1]])
                     entity.setAttributes(attributes)
                     target.append(entity)
@@ -75,16 +66,19 @@ class UniqueKeyExtractor(SecondaryExtractor):
             for attr in entity.getAttributes():
                 isUnique = False
                 isPrimaryKey = False
+                isNotNull = False
                 tempData = []
                 for i, word in enumerate(attr.data):
                     if(word[0].lower() in ['unique','distinguishable','distinct']):
                         isUnique = True
                         isPrimaryKey = True
+                        isNotNull = True
                     else:
                         tempData.append(word)
                 attr.data = tempData
                 attr.isUnique = isUnique
                 attr.isPrimaryKey = isPrimaryKey
+                attr.isNotNull = isNotNull
 
 
 class IdentifyAttributeDataType(SecondaryExtractor):
@@ -92,7 +86,7 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
         intList = ['number', 'no', 'id', 'SSN']
         dateList = ['date', 'dob']
-        doubleList = ['temperature', 'price', 'distance', 'weight']
+        doubleList = ['temperature', 'price', 'distance', 'weight', 'fee']
 
         for entity in entities:
             attrList = entity.getAttributes()
@@ -112,17 +106,20 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
 class RemoveDuplicateEntities(SecondaryExtractor):
     def execute(self, entities):
-        pass
+        uniqueEntities = []
 
-        compList = []
+        for entity in entities:
+            check = True
+            for e in uniqueEntities:
+                if e.name() == entity.name():
+                    e.getAttributes().extend(entity.getAttributes())
+                    check = False
+                    break
 
-        for i, entity1 in enumerate(entities):
-            for j, entity2 in enumerate(entities):
-                if(i!=j and set([i,j]) not in compList and entity1.name() == entity2.name()):
-                    entity1.getAttributes().extend(entity2.getAttributes())
-                    entities.remove(entity2)
+            if check:
+                uniqueEntities.append(entity)
 
-                compList.append(set([i,j]))
+        entities[:] = uniqueEntities[:]
 
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
@@ -142,6 +139,55 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
                 if attr.name() == '%':
                     attrList.remove(attr)
 
+        # uniqueAttributes = []
+        # for attr in attrList:
+        #         check = True
+        #         for a in uniqueAttributes:
+        #             print(a.name())
+        #             if a.name() == attr.name() or attr.name() == '%':
+        #                 check = False
+        #                 break
+        #
+        #     if check:
+        #         uniqueAttributes.append(attr)
+        #
+        # attrList[:] = uniqueAttributes[:]
+
+
+class RemoveNonPotentialEntities(SecondaryExtractor):
+    def execute(self, entities):
+        nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
+        filteredList = []
+
+        for entity in entities:
+            check = True
+            for item in nonPotentialList:
+                if entity.name().lower() == item.lower():
+                    check = False
+
+            if check:
+                filteredList.append(entity)
+
+        entities[:] = filteredList[:]
+
+
+# class SuggestRelationshipTypes(SecondaryExtractor):
+#     def execute(self, entities):
+#
+#         removingList = []
+#
+#         for entity in entities:
+#             check = True
+#             attrList = entity.getAttributes()
+#             for attr in attrList:
+#                 if entity.name().lower() == attr.name().lower():
+#                     check = False
+#                     break
+#
+#             if check:
+#                 removingList.append(attr)
+#
+#         attrList[:] = removingList[:]
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
 #     def execute(self, entities):
@@ -166,6 +212,7 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
 #             for attr in entity.getAttributes():
 #                 if attr in entities:
 #                     entities.remove(attr)
+
 
 
 
