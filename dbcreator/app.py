@@ -1,5 +1,3 @@
-from dbcreator.core import *
-from dbcreator.models import *
 from dbcreator.extractors import *
 
 
@@ -18,11 +16,13 @@ class App:
         ## primary data sets
         tagged_sentences = getTaggedSentences(text)
         chunked_sentences = getChunkedSentences(tagged_sentences)
+
         # ne_chunked_sentences = getNamedEntities(tagged_sentences)
+        # re = extract_relations(tagged_sentences)
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          IdentifyAttributeDataType, RemoveNonPotentialEntities]
+                          IdentifyAttributeDataType, RemoveNonPotentialEntities] #, SuggestRelationshipTypes
 
         for extractor in extractorsList:
             extObject = extractor()
