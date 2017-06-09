@@ -1,8 +1,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
-from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtWidgets import QMainWindow
-from PyQt5.QtWidgets import QMessageBox, QListWidgetItem
+from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QTableWidgetItem
 from dbcreator.database_connection.db_connection import DbConnection
 
@@ -185,7 +184,7 @@ class Ui_MainWindow(QMainWindow):
         self.currentEntity = item
         attributes = item.getAttributes()
         self.attributetable.setColumnCount(6)
-        self.attributetable.setHorizontalHeaderLabels(['Name', 'PrimaryKey', 'DataType', 'NULL', 'Unique', 'INFO'])
+        self.attributetable.setHorizontalHeaderLabels(['Name', 'Primary Key', 'Data Type', 'Not Null', 'Unique', 'INFO'])
 
 
         self.attributetable.setRowCount(len(attributes))
