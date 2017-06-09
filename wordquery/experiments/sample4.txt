@@ -1,0 +1,2 @@
+employee name whose departmentname equals 'headquarters'
+employees who works in 'headquarters'

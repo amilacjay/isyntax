@@ -40,11 +40,13 @@ def add_space(token):
         index = token.find("'", index)
         if index == -1:
             break
-        ilist.append(index)
+        else:
+            token = (token[:index+1] + ' ' + token[index+1:])
+            index+=1
         index += 1
     print("PPPPPPPPPPPPPPPPPPP", ilist)
-    for x in ilist:
-        token = (token[:x + 1] + ' ' + token[x + 1:])
+    # for x in ilist:
+    #     token = (token[:x + 1] + ' ' + token[x + 1:])
     return (token)
 
 
@@ -88,7 +90,7 @@ def remove_escapeWords(content):
     for x in content:
         filtered_words = [word for word in x if word not in stopwords.words('english')]
         escapeWords = ['what', 'who', 'whose', 'display', 'is', 'a', 'at', 'is', 'of', '.', ',', '(', ')', 'equal',
-                       'equals', 'greaterthan', '\'' , 'lessthan']
+                       'equals', 'greaterthan', '\'' , 'lessthan' , 'details']
         resultWords = [word for word in filtered_words if word.lower() not in escapeWords]
         if len(resultWords) > 1:
             contentnew.append(tuple(resultWords))
