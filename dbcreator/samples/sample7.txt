@@ -1,0 +1,10 @@
+Each musician that records at Notown has an SSN, a name, an address, and a phone number.
+Poorly paid musicians often share the same address.
+Each instrument used in songs recorded at Notown has a unique identification number, a name and a musical key.
+Each album recorded on the Notown label has a unique identification number, a title, a copyright date, a format and an album identifier.
+Each song recorded at Notown has a title and an author.
+Each musician may play several instruments, and a given instrument may be played by several musicians.
+Each album has a number of songs on it. But no song may appear on more than one album.
+Each song is performed by one or more musicians, and a musician may perform a number of songs.
+Each album has exactly one musician who acts as its producer.
+A musician may produce several albums.

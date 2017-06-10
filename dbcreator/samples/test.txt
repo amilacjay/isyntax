@@ -1,1 +1,1 @@
-A health provider company has multiple offices in many different states.
+Each pharmacy sells several drugs and has a price for each.
