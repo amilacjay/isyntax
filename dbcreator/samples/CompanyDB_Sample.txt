@@ -1,6 +1,6 @@
 Company is organized into departments.
 A department has a department name, department number and a manager who manages it.
-Company records manger's ssn and start date.
+Company records manager's ssn and start date.
 Department number has unique value for each department.
 Department may have several locations.
 Each department has employees who work in it.
