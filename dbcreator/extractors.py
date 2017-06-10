@@ -42,7 +42,7 @@ class PossessionBasedExtractor(PrimaryExtractor):
 
                     entity = Entity(entityName)
 
-                    isChecked = True
+                    isChecked = False
 
                     if(isChecked):
                         if (any(ne not in entity.name().replace('_', ' ').lower() for ne in ne_entites)):
@@ -159,14 +159,14 @@ class RemoveDuplicateEntities(SecondaryExtractor):
                     check = False
                     break
 
-                # if (entity.name().endswith('s')):
-                #     newEnt = entity.name().replace('s', '')
-                #     print(newEnt)
-                #     if (newEnt.lower() == entity.name().lower()):
+                if (entity.name().endswith('s')):
+                    newEnt = entity.name().replace('s', '')
+                    print(newEnt)
+                    if (newEnt.lower() == entity.name().lower()):
 
-                        # newEnt.getAttributes().extend(entity.getAttributes())
-                        # check = False
-                        # break
+                        newEnt.getAttributes().extend(entity.getAttributes())
+                        check = False
+                        break
 
             if check:
                 uniqueEntities.append(entity)
