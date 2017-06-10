@@ -152,6 +152,24 @@ class RemoveDuplicateEntities(SecondaryExtractor):
         entities[:] = uniqueEntities[:]
 
 
+        # uniqueAttributes = []
+        #
+        # for entity in entities:
+        #     check = True
+        #     attrList = entity.getAttributes()
+        #     for attr in attrList:
+        #         if attr.name().lower() == entity.name().lower():
+        #             check = False
+        #             uniqueAttributes.remove(attr)
+        #             print(attr.name())
+        #             break
+        #
+        #     if check:
+        #         uniqueAttributes.append(attr)
+        #
+        # attrList[:] = uniqueAttributes[:]
+
+
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities):
 
@@ -192,33 +210,13 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
         for entity in entities:
             check = True
             for item in nonPotentialList:
-                if entity.name().lower() == item.lower():
+                if (entity.name().lower() == item.lower()) or (item.lower() in entity.name()):
                     check = False
 
             if check:
                 filteredList.append(entity)
 
         entities[:] = filteredList[:]
-
-#
-# class FilterNPE(PrimaryExtractor):
-#     def execute(self, tagged_sents, chunked_sents, target):
-#         nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
-#         filteredList = []
-#
-#         for chunk in chunked_sents:
-#             for item in chunk:
-#                 for element in item:
-#                     check = True
-#                     for n in nonPotentialList:
-#                         if element[0] == n.lower():
-#                             check = False
-#
-#                     if check:
-#                         filteredList.append(item)
-#                         # print(filteredList)
-#
-#         chunked_sents[:] = filteredList[:]
 
 
 # class SuggestRelationshipTypes(SecondaryExtractor):
