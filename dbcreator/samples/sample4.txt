@@ -1,15 +1,12 @@
-The personnel involved in the league include players, coaches, managers, and umpires.
-Each is identified by a unique personnel id.
-They are also described by their first and last names along with the date and place of birth.
-Players are further described by other attributes such as their batting orientation and have a lifetime batting average (BA).
-Within the players group is a subset of players called pitchers.
-Pitchers have a lifetime ERA (earned run average) associated with them.
-Teams are uniquely identified by their names.
-Teams are also described by the city in which they are located and the division and league in which they play.
-Teams have one manager, a number of coaches, and a number of players.
-Games are played between two teams with one designated as the home team and the other the visiting team on a particular date.
-The score are recorded for each team.
-The team with the most runs is declared the winner of the game.
-With each finished game, a winning pitcher and a losing pitcher are recorded.
-In case there is a save awarded, the save pitcher is also recorded.
-With each finished game, the number of hits obtained by each player is also recorded.
+A "booking" is an event in which a certain band plays in a particular club on a particular date, starting at a certain time, ending at a certain time, and for a specific fee.
+A band can play more than once a day.
+For each booking, the club pays the talent agent, who keeps a five percent fee and then gives the rest to the band.
+Each band has at least two members.
+Each band has a desired fee.
+The agent notes a telephone number of just one band member, which is used as the band's contact number.
+The agent keeps track of just one instrument that each band member plays.
+Each nightclub has a name, an address, and a contact person.
+That contact person has a telephone number that the agent uses to contact the club.
+Each nightclub has a target maximum fee.
+The contact person will try to get the agent to accept that amount for a band's appearance.
+Some clubs will feed the band members for free, and others will not.

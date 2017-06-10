@@ -20,6 +20,7 @@ class Entity(QListWidgetItem):
         self.data = data
         super().setText(str(self.name()))
         self.attributes = []
+        self.relationships=[]
 
     def setAttributes(self, attributes):
         self.attributes = attributes
@@ -35,7 +36,6 @@ class Entity(QListWidgetItem):
         for chunk in self.data:
             words.append(chunk[0])
         return ('_'.join(words)).strip()
-
 
 class Attribute:
     def __init__(self, data):

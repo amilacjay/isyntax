@@ -1,12 +1,14 @@
-A "booking" is an event in which a certain band plays in a particular club on a particular date, starting at a certain time, ending at a certain time, and for a specific fee.
-A band can play more than once a day.
-For each booking, the club pays the talent agent, who keeps a five percent fee and then gives the rest to the band.
-Each band has at least two members.
-Each band has a desired fee.
-The agent notes a telephone number of just one band member, which is used as the band's contact number.
-The agent keeps track of just one instrument that each band member plays.
-Each nightclub has a name, an address, and a contact person.
-That contact person has a telephone number that the agent uses to contact the club.
-Each nightclub has a target maximum fee.
-The contact person will try to get the agent to accept that amount for a band's appearance.
-Some clubs will feed the band members for free, and others will not.
+A health provider company has multiple offices in many different states.
+Many doctors work for the company, and each doctor takes care of multiple patients.
+Some doctors just work in one office, and others work in different offices on different days.
+The database keeps information about each doctor, such as doctor's name, address, contact phones, area of specialization, and so on.
+Each patient can be assigned to one or more doctors.
+Specific patient information is also kept in the database.
+Patient's name, address, phones, health record number, date of birth, history of appointments, prescriptions, blood tests, diagnoses.
+Customers can schedule and cancel appointments and order prescription drugs either over the phone or using the company Web site.
+Some restrictions apply,for example, to see a specialist, the patient needs an approval from his/her primary physician;
+to order a prescription the patient should have at least one valid refill left, and so on.
+Patients should be able to access the database using a Web browser to order prescriptions and make appointments.
+This is all that patients may do in the database.
+Doctors and nurses can browse information about their patients, write and renew prescriptions, schedule blood tests and X-Rays, and so on.
+Administrative staff (receptionists, pharmacy assistants) can schedule appointments for patients, fill prescriptions, and run specific reports.

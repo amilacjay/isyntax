@@ -3,7 +3,7 @@ from dbcreator.core import *
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
         pass
 
 
@@ -13,15 +13,11 @@ class SecondaryExtractor:
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
 
         for sIndex, sent in enumerate(tagged_sents):
-            # print(ne_chunked_sents)
-            # ne_chunked_sent = ne_chunked_sents[sIndex]
-            # print(ne_chunked_sent)
-            # print(sent)
             for index, item in enumerate(sent):
-                if ((item[0] == 'has' or item[0] == 'have')):
+                if (item[0] == 'has' or item[0] == 'have'):
                     hIndex = item[2]
                     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < hIndex]
 
@@ -35,14 +31,39 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         attr = Attribute(chunk)
                         attributes.append(attr)
 
+                    ne_entites = []
+
+                    for x in ne_chunked_sents[sIndex]:
+                        ne = []
+                        for y in x:
+                            ne.append(y[0].lower())
+                        ne_entites.append(' '.join(ne))
+
+
                     entity = Entity(entityName)
-                    entity.setAttributes(attributes)
-                    target.append(entity)
-                    break
 
-                # if (item[1] == 'PRP'):
-                #     pass
+                    isChecked = False
 
+                    if(isChecked):
+                        if (any(ne not in entity.name().replace('_', ' ').lower() for ne in ne_entites)):
+                            target.append(entity)
+                            entity.setAttributes(attributes)
+                            break
+                    else:
+                        target.append(entity)
+                        entity.setAttributes(attributes)
+                        break
+
+                # elif (item[0] == 'uniquely'):
+                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][1] == 'NN']
+                #
+                #     for chunk in candidateAttributeData:
+                #         attr = Attribute(chunk)
+                #         attributes.append(attr)
+
+                        # attr.isUnique = True
+                        # attr.isPrimaryKey = True
+                        # attr.isNotNull = True
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -59,6 +80,28 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     break
 
 
+                # elif (item[1] == 'VBZ' or item[1] == 'VBP'):
+                #     itemIndex = item[2]
+                #
+                #     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < itemIndex]
+                #
+                #     entityName = candidateEntityNames.pop()
+                #
+                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > itemIndex]
+                #
+                #     attributes = []
+                #
+                #     for chunk in candidateAttributeData:
+                #         attr = Attribute(chunk)
+                #         attributes.append(attr)
+                #         print(attr.name())
+                #
+                #     entity = Entity(entityName)
+                #     entity.setAttributes(attributes)
+                #     target.append(entity)
+                #     break
+
+
 class UniqueKeyExtractor(SecondaryExtractor):
     def execute(self, entities):
         for entity in entities:
@@ -69,7 +112,7 @@ class UniqueKeyExtractor(SecondaryExtractor):
                 isNotNull = False
                 tempData = []
                 for i, word in enumerate(attr.data):
-                    if(word[0].lower() in ['unique','distinguishable','distinct']):
+                    if(word[0].lower() in ['unique','uniquely','distinguishable','distinguishes','distinct']):
                         isUnique = True
                         isPrimaryKey = True
                         isNotNull = True
@@ -111,7 +154,7 @@ class RemoveDuplicateEntities(SecondaryExtractor):
         for entity in entities:
             check = True
             for e in uniqueEntities:
-                if e.name() == entity.name():
+                if e.name().lower() == entity.name().lower():
                     e.getAttributes().extend(entity.getAttributes())
                     check = False
                     break
@@ -120,6 +163,24 @@ class RemoveDuplicateEntities(SecondaryExtractor):
                 uniqueEntities.append(entity)
 
         entities[:] = uniqueEntities[:]
+
+
+        # uniqueAttributes = []
+        #
+        # for entity in entities:
+        #     check = True
+        #     attrList = entity.getAttributes()
+        #     for attr in attrList:
+        #         if attr.name().lower() == entity.name().lower():
+        #             check = False
+        #             uniqueAttributes.remove(attr)
+        #             print(attr.name())
+        #             break
+        #
+        #     if check:
+        #         uniqueAttributes.append(attr)
+        #
+        # attrList[:] = uniqueAttributes[:]
 
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
@@ -162,7 +223,7 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
         for entity in entities:
             check = True
             for item in nonPotentialList:
-                if entity.name().lower() == item.lower():
+                if (entity.name().lower() == item.lower()) or (item.lower() in entity.name()):
                     check = False
 
             if check:
@@ -171,23 +232,16 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
         entities[:] = filteredList[:]
 
 
-# class SuggestRelationshipTypes(SecondaryExtractor):
-#     def execute(self, entities):
-#
-#         removingList = []
-#
-#         for entity in entities:
-#             check = True
-#             attrList = entity.getAttributes()
-#             for attr in attrList:
-#                 if entity.name().lower() == attr.name().lower():
-#                     check = False
-#                     break
-#
-#             if check:
-#                 removingList.append(attr)
-#
-#         attrList[:] = removingList[:]
+class SuggestRelationshipTypes(SecondaryExtractor):
+    def execute(self, entities):
+
+        for i, entity1 in enumerate(entities):
+            for j, entity2 in enumerate(entities):
+                if(i!=j):
+                    atrListE2 = entity2.getAttributes()
+                    for atr in atrListE2:
+                        if atr.name().lower() == entity1.name().lower():
+                            entity1.relationships.append((entity2, atr))
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
 #     def execute(self, entities):

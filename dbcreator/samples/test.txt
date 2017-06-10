@@ -1,6 +1,1 @@
-The Washington Monument has Departments, employees and courses, Departments have a unique name, a unique number, and a particular employee.
-We store each employee's name, Social Security Number, address, salary, sex, and Birth Date.
-Department has several projects.
-Employee works on projects.
-Employee is assigned to a project.
-Project is managed by a manager.
+Each pharmacy sells several drugs and has a price for each.

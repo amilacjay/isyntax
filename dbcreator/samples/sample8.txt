@@ -1,0 +1,13 @@
+Every airplane has a registration number, and each airplane is of a specific model.
+The airport accommodates a number of airplane models, and each model is identified by a model number and has a capacity and a weight.
+A number of technicians work at the airport. You need to store the name, SSN, address, phone number, and salary of each technician.
+Each technician is an expert on one or more plane model(s), and his or her expertise may overlap with that of other technicians.
+This information about technicians must also be recorded.
+Traffic controllers must have an annual medical examination. For each traffic controller, you must store the date of the most recent exam.
+All airport employees (including technicians) belong to a union. You must store the union membership number of each employee.
+You can assume that each employee is uniquely identified by a social security number.
+The airport has a number of tests that are used periodically to ensure that airplanes are still airworthy.
+Each test has a Federal Aviation Administration (FAA) test number, a name, and a maximum possible score.
+The FAA requires the airport to keep track of each time a given airplane is tested by a given technician using a given test.
+For each testing event, the information needed is the date, the number of hours the technician spent doing the test, and
+the score the airplane received on the test.
