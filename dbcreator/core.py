@@ -37,21 +37,32 @@ def extract_np(psent):
             yield [(word, tag, index) for word, tag, index in subtree.leaves()]
 
 
-# def extract_ne(tsent):
-#     for t in tsent.subtrees():
-#         if t.label() == 'NE':
-#             yield [(word, tag) for word, tag in t.leaves()]
+def extract_ne(tsent):
+    for t in tsent.subtrees():
+        if t.label() == 'NE':
+            yield [(word, tag) for word, tag in t.leaves()]
 
 
-# def getNamedEntities(taggedSents):
-#     neSents = ne_chunk(taggedSents, binary=True)
-#
-#     extract_ne_gen = extract_ne(neSents)
-#     neList = []
-#     neList.append([x for x in extract_ne_gen])
-#     flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
-#
-#     return flattenedList
+def getNamedEntities(text):
+    sentences = sent_tokenize(text)
+    sentences = [word_tokenize(sent) for sent in sentences]
+    sentences = [pos_tag(sent) for sent in sentences]
+
+    neTaggedSents = [ne_chunk(sent, binary=True) for sent in sentences]
+
+    neList = []
+    for x in neTaggedSents:
+        extract_ne_gen = extract_ne(x)
+        neList.append([x for x in extract_ne_gen])
+
+    return neList
+    #
+    # extract_ne_gen = extract_ne(neSents)
+    # neList = []
+    # neList.append([x for x in extract_ne_gen])
+    # flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
+    #
+    # return flattenedList
 
 
 # def removeNamedEntities(tSents):

@@ -3,7 +3,7 @@ from dbcreator.core import *
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
         pass
 
 
@@ -13,13 +13,9 @@ class SecondaryExtractor:
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
 
         for sIndex, sent in enumerate(tagged_sents):
-            # print(ne_chunked_sents)
-            # ne_chunked_sent = ne_chunked_sents[sIndex]
-            # print(ne_chunked_sent)
-            # print(sent)
             for index, item in enumerate(sent):
                 if (item[0] == 'has' or item[0] == 'have'):
                     hIndex = item[2]
@@ -35,11 +31,28 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         attr = Attribute(chunk)
                         attributes.append(attr)
 
-                    entity = Entity(entityName)
-                    entity.setAttributes(attributes)
-                    target.append(entity)
-                    break
+                    ne_entites = []
 
+                    for x in ne_chunked_sents[sIndex]:
+                        ne = []
+                        for y in x:
+                            ne.append(y[0].lower())
+                        ne_entites.append(' '.join(ne))
+
+
+                    entity = Entity(entityName)
+
+                    isChecked = True
+
+                    if(isChecked):
+                        if (any(ne not in entity.name().replace('_', ' ').lower() for ne in ne_entites)):
+                            target.append(entity)
+                            entity.setAttributes(attributes)
+                            break
+                    else:
+                        target.append(entity)
+                        entity.setAttributes(attributes)
+                        break
 
                 # elif (item[0] == 'uniquely'):
                 #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][1] == 'NN']
