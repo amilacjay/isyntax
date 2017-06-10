@@ -56,13 +56,6 @@ def getNamedEntities(text):
         neList.append([x for x in extract_ne_gen])
 
     return neList
-    #
-    # extract_ne_gen = extract_ne(neSents)
-    # neList = []
-    # neList.append([x for x in extract_ne_gen])
-    # flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
-    #
-    # return flattenedList
 
 
 # def removeNamedEntities(tSents):
