@@ -23,7 +23,12 @@ class App:
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          IdentifyAttributeDataType, RemoveNonPotentialEntities, SuggestRelationshipTypes] #, SuggestRelationshipTypes, FilterNPE
+                          IdentifyAttributeDataType, RemoveNonPotentialEntities] #, SuggestRelationshipTypes, FilterNPE
+
+        isRelationsChecked = True
+
+        if(isRelationsChecked):
+            extractorsList.append(SuggestRelationshipTypes)
 
         for extractor in extractorsList:
             extObject = extractor()
