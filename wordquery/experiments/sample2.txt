@@ -2,8 +2,12 @@ address of employees
 what are all employee Ssns?
 give me the birthdates of employees?
 What is the  address and  wage  of employees ?
-what are the departmentnames of the departments
 ssn of employees
+supervisorssn of emplooyees?
+salaries of employees ?
+managerssn of departments ?
+what are the departmentnames of the departments
+relationsips of dependants
 
 
 

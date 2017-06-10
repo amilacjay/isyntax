@@ -2,12 +2,12 @@ __author__ = 'ChaminiKD'
 
 import xml.etree.cElementTree as etree
 
-xml_file = "company_new.xml"
+# xml_file = "university.xml"
 
 
 # tab_att_list = []
 
-def table_extractor():
+def table_extractor(xml_file):
     xmlDoc = open(xml_file, 'r')
     xmlDocData = xmlDoc.read()
     xmlDocTree = etree.XML(xmlDocData)
@@ -28,7 +28,7 @@ list_ref = []
 PKeyList = []
 
 
-def get_referenceTable(tab, con_att):
+def get_referenceTable(tab, con_att , xml_file):
     xmlDoc = open(xml_file, 'r')
     xmlDocData = xmlDoc.read()
     xmlDocTree = etree.XML(xmlDocData)
@@ -45,9 +45,13 @@ def get_referenceTable(tab, con_att):
     refList = []
     for t in tab:
         for l in list_ref:
-            if l[0] == t:
+            if l[0] == t :
                 ref = l[1]
                 refList.append(ref)
+            if l[1] == t:
+                ref = l[0]
+                refList.append(ref)
+
     # print("reference tables :", refList)
     return refList
 
@@ -75,11 +79,10 @@ def check_reftable(attlist, reflist, con_attrib):
 
     for index in indexes:
         lower_attlist = [[x.lower() for x in (attlist[index])[1]]]  # convert to lower case
+        print(str(con_attrib[0]).lower(), lower_attlist[0])
         if str(con_attrib[0]).lower() in lower_attlist[0]:
+
             return index
-
-
-
 
 
 def get_primaryKey(table_name):
