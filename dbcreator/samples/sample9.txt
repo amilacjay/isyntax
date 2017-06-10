@@ -11,7 +11,6 @@ A drug could be sold at several pharmacies, and the price could vary from one ph
 Doctors prescribe drugs for patients.
 A doctor could prescribe one or more drugs for several patients, and a patient could obtain prescriptions from several doctors.
 Each prescription has a date and a quantity associated with it.
-
 A pharmaceutical company can contract with several pharmacies, and a pharmacy can contract with several pharmaceutical companies.
 For each contract, you have to store a start date, an end date, the text of the contract and a supervisor.
 There must always be a supervisor for each contract, but the contract supervisor can change over the lifetime of the contract.
