@@ -65,9 +65,9 @@ def extract_np(psent):
 def getChunkedSentences(taggedSents):
     grammar = r"""
     NP: {<NN.*><IN><NN.*><NN.*>?}
-        {<NN.*><IN><VB.*><NN.*>}
+        {<NN.*><IN>(<VB.*>|<DT>)<NN.*>}
         {<NN.*><TO><DT><NN.*>}
-        {((<JJ.*>|<RB.*>|<NN.*>)*|<VB.*>?)<NN.*>}
+        {((<JJ.*>|<RB.*>|<NN.*>)*|<VBG>?)<NN.*>}
     """
 
     cp = RegexpParser(grammar)
