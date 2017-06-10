@@ -141,10 +141,19 @@ class RemoveDuplicateEntities(SecondaryExtractor):
         for entity in entities:
             check = True
             for e in uniqueEntities:
-                if e.name().lower() == entity.name().lower():
+                if (e.name().lower() == entity.name().lower()):
                     e.getAttributes().extend(entity.getAttributes())
                     check = False
                     break
+
+                # if (entity.name().endswith('s')):
+                #     newEnt = entity.name().replace('s', '')
+                #     print(newEnt)
+                #     if (newEnt.lower() == entity.name().lower()):
+
+                        # newEnt.getAttributes().extend(entity.getAttributes())
+                        # check = False
+                        # break
 
             if check:
                 uniqueEntities.append(entity)
@@ -254,12 +263,6 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
 #             # entities.remove(e)
 
 
-# class RemoveAttributesInEntityList(SecondaryExtractor):
-#     def execute(self, entities):
-#         for entity in entities:
-#             for attr in entity.getAttributes():
-#                 if attr in entities:
-#                     entities.remove(attr)
 
 
 
