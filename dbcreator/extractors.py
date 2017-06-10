@@ -21,7 +21,7 @@ class PossessionBasedExtractor(PrimaryExtractor):
             # print(ne_chunked_sent)
             # print(sent)
             for index, item in enumerate(sent):
-                if ((item[0] == 'has' or item[0] == 'have')):
+                if (item[0] == 'has' or item[0] == 'have'):
                     hIndex = item[2]
                     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < hIndex]
 
@@ -40,9 +40,17 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     target.append(entity)
                     break
 
-                # if (item[1] == 'PRP'):
-                #     pass
 
+                # elif (item[0] == 'uniquely'):
+                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][1] == 'NN']
+                #
+                #     for chunk in candidateAttributeData:
+                #         attr = Attribute(chunk)
+                #         attributes.append(attr)
+
+                        # attr.isUnique = True
+                        # attr.isPrimaryKey = True
+                        # attr.isNotNull = True
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -59,6 +67,28 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     break
 
 
+                # elif (item[1] == 'VBZ' or item[1] == 'VBP'):
+                #     itemIndex = item[2]
+                #
+                #     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < itemIndex]
+                #
+                #     entityName = candidateEntityNames.pop()
+                #
+                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > itemIndex]
+                #
+                #     attributes = []
+                #
+                #     for chunk in candidateAttributeData:
+                #         attr = Attribute(chunk)
+                #         attributes.append(attr)
+                #         print(attr.name())
+                #
+                #     entity = Entity(entityName)
+                #     entity.setAttributes(attributes)
+                #     target.append(entity)
+                #     break
+
+
 class UniqueKeyExtractor(SecondaryExtractor):
     def execute(self, entities):
         for entity in entities:
@@ -69,7 +99,7 @@ class UniqueKeyExtractor(SecondaryExtractor):
                 isNotNull = False
                 tempData = []
                 for i, word in enumerate(attr.data):
-                    if(word[0].lower() in ['unique','distinguishable','distinct']):
+                    if(word[0].lower() in ['unique','uniquely','distinguishable','distinguishes','distinct']):
                         isUnique = True
                         isPrimaryKey = True
                         isNotNull = True
@@ -111,7 +141,7 @@ class RemoveDuplicateEntities(SecondaryExtractor):
         for entity in entities:
             check = True
             for e in uniqueEntities:
-                if e.name() == entity.name():
+                if e.name().lower() == entity.name().lower():
                     e.getAttributes().extend(entity.getAttributes())
                     check = False
                     break
@@ -169,6 +199,26 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
                 filteredList.append(entity)
 
         entities[:] = filteredList[:]
+
+#
+# class FilterNPE(PrimaryExtractor):
+#     def execute(self, tagged_sents, chunked_sents, target):
+#         nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
+#         filteredList = []
+#
+#         for chunk in chunked_sents:
+#             for item in chunk:
+#                 for element in item:
+#                     check = True
+#                     for n in nonPotentialList:
+#                         if element[0] == n.lower():
+#                             check = False
+#
+#                     if check:
+#                         filteredList.append(item)
+#                         # print(filteredList)
+#
+#         chunked_sents[:] = filteredList[:]
 
 
 # class SuggestRelationshipTypes(SecondaryExtractor):
