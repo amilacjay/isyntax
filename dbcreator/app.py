@@ -24,6 +24,11 @@ class App:
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
                           IdentifyAttributeDataType, RemoveNonPotentialEntities] #, SuggestRelationshipTypes
 
+        isRelationsChecked = True
+
+        if(isRelationsChecked):
+            extractorsList.append(SuggestRelationshipTypes)
+
         for extractor in extractorsList:
             extObject = extractor()
 
@@ -32,6 +37,10 @@ class App:
 
             elif isinstance(extObject, SecondaryExtractor):
                 extObject.execute(entities=entityList)
+
+        for e in entityList:
+            for r in e.relationships:
+                print(r[0].name(), r[1].name())
 
         return entityList
 

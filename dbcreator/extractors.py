@@ -241,23 +241,16 @@ class RemoveNonPotentialEntities(SecondaryExtractor):
         entities[:] = filteredList[:]
 
 
-# class SuggestRelationshipTypes(SecondaryExtractor):
-#     def execute(self, entities):
-#
-#         removingList = []
-#
-#         for entity in entities:
-#             check = True
-#             attrList = entity.getAttributes()
-#             for attr in attrList:
-#                 if entity.name().lower() == attr.name().lower():
-#                     check = False
-#                     break
-#
-#             if check:
-#                 removingList.append(attr)
-#
-#         attrList[:] = removingList[:]
+class SuggestRelationshipTypes(SecondaryExtractor):
+    def execute(self, entities):
+
+        for i, entity1 in enumerate(entities):
+            for j, entity2 in enumerate(entities):
+                if(i!=j):
+                    atrListE2 = entity2.getAttributes()
+                    for atr in atrListE2:
+                        if atr.name().lower() == entity1.name().lower():
+                            entity1.relationships.append((entity2, atr))
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
 #     def execute(self, entities):
