@@ -64,9 +64,10 @@ def extract_np(psent):
 
 def getChunkedSentences(taggedSents):
     grammar = r"""
-    NP: {<NN.*><IN><NN.*><NN.*>}
+    NP: {<NN.*><IN><NN.*><NN.*>?}
+        {<NN.*><IN><VB.*><NN.*>}
         {<NN.*><TO><DT><NN.*>}
-        {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}
+        {((<JJ.*>|<RB.*>|<NN.*>)*|<VB.*>?)<NN.*>}
     """
 
     cp = RegexpParser(grammar)
@@ -118,6 +119,7 @@ def csv_reader(filename):
     with open(filename) as f:
         content = f.readlines()
     return [s.strip() for s in str(''.join(content)).split(',')]
+
 
 
 # def extract_relations(taggedSents):
