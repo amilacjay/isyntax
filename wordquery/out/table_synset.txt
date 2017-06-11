@@ -1,0 +1,1 @@
+['name', Synset('name.n.01'), ':', Synset('department.n.01'), '=', 0.26666666666666666]
