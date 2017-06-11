@@ -3,13 +3,11 @@ from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QTableWidgetItem
-from PyQt5.QtCore import QSize
 
 from dbcreator.database_connection.db_connection import DbConnection
 from dbcreator.app import App
 from dbcreator.core import *
 from dbcreator.models import *
-from dbcreator.extractors import *
 
 
 class Ui_MainWindow(QMainWindow):
@@ -20,7 +18,7 @@ class Ui_MainWindow(QMainWindow):
 
     def setupUi(self):
         self.setObjectName("MainWindow")
-        self.resize(943, 702)
+        self.resize(943, 690)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.label = QtWidgets.QLabel(self.centralwidget)
@@ -104,10 +102,6 @@ class Ui_MainWindow(QMainWindow):
         self.chk_relation.setEnabled(False)
         self.chk_relation.setGeometry(QtCore.QRect(230, 530, 141, 31))
         self.chk_relation.setObjectName("chk_relation")
-        # self.btn_add = QtWidgets.QPushButton(self.centralwidget)
-        # self.btn_add.setEnabled(False)
-        # self.btn_add.setGeometry(QtCore.QRect(20, 540, 71, 23))
-        # self.btn_add.setObjectName("btn_add")
         self.btn_remove = QtWidgets.QPushButton(self.centralwidget)
         self.btn_remove.setEnabled(False)
         self.btn_remove.setGeometry(QtCore.QRect(20, 540, 71, 23)) #100, 540, 71, 23
@@ -120,6 +114,7 @@ class Ui_MainWindow(QMainWindow):
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
+        self.frameGeometry()
 
         ###
         self.closeEvent = self.closeButtonClicked
@@ -155,7 +150,6 @@ class Ui_MainWindow(QMainWindow):
         self.chk_NE.setText(_translate("MainWindow", "Remove Named Entities"))
         self.chk_nonpotential.setText(_translate("MainWindow", "Remove Non Potential Entities"))
         self.chk_relation.setText(_translate("MainWindow", "Show Relationships"))
-        # self.btn_add.setText(_translate("MainWindow", "Add"))
         self.btn_remove.setText(_translate("MainWindow", "Remove"))
 
 
@@ -176,23 +170,19 @@ class Ui_MainWindow(QMainWindow):
 
     def analyzeBtnClicked(self):
         app = App(filePath=self.filePath)
-        self.entities = app.run(isNEChecked=self.chk_NE.isChecked())
+        self.entities = app.run(isNEChecked=self.chk_NE.isChecked(), isNPEChecked=self.chk_nonpotential.isChecked())
         self.addEntitiesToList(self.entities)
 
         if (len(self.entities) > 0):
             self.btn_generate.setEnabled(True)
             self.chk_generate.setEnabled(True)
-            self.chk_nonpotential.setEnabled(True)
             self.chk_relation.setEnabled(True)
-            # self.btn_add.setEnabled(True)
             self.btn_remove.setEnabled(True)
         else:
             self.btn_generate.setEnabled(False)
-            self.chk_generate.setEnabled(True)
-            self.chk_nonpotential.setEnabled(True)
-            self.chk_relation.setEnabled(True)
-            # self.btn_add.setEnabled(True)
-            self.btn_remove.setEnabled(True)
+            self.chk_generate.setEnabled(False)
+            self.chk_relation.setEnabled(False)
+            self.btn_remove.setEnabled(False)
 
 
     def generateSqlClicked(self):
@@ -239,7 +229,6 @@ class Ui_MainWindow(QMainWindow):
         self.attributetable.setColumnCount(6)
         self.attributetable.setHorizontalHeaderLabels(['Name', 'Primary Key', 'Data Type', 'Not Null', 'Unique', 'INFO'])
 
-
         self.attributetable.setRowCount(len(attributes))
         for row, attr in enumerate(attributes):
             comboPk = QComboBox()
@@ -272,6 +261,12 @@ class Ui_MainWindow(QMainWindow):
             comboUq.setCurrentText(str(attr.isUnique))
             comboUq.setProperty('attribute', attr)
             self.attributetable.setItem(row, 5, QTableWidgetItem(str(attr.data)))
+
+        if(self.chk_relation.isChecked()):
+            relationshiplist = []
+            for relationship in item.relationships:
+                relationshiplist.append('REFERENCES '+relationship[0].name() + ' (' + relationship[1].name() + ')')
+            self.relationships.setText('\n'.join(relationshiplist))
 
 
     def resetBtnClicked(self):
@@ -331,7 +326,6 @@ class Ui_MainWindow(QMainWindow):
         if self.chk_relation.isChecked():
             self.lbl_relation.setEnabled(True)
             self.relationships.setEnabled(True)
-            # relations =
         else:
             self.lbl_relation.setEnabled(False)
             self.relationships.setEnabled(False)
