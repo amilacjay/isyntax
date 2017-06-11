@@ -7,6 +7,8 @@ from wordquery.preprocessor import *
 
 __author__ = 'ChaminiKD'
 
+rootPath = '../out/'
+
 # xml_file = 'company_new.xml'
 expression_list = [("equals", "="), ("greater than", ">"), ("less than", "<"), ("greater than or equal", ">="),
                    ("less than or equal", "<="),
@@ -129,7 +131,7 @@ def get_attribute_names(xmlfile):
 
 # calculate edit distance
 def extract_tables(nouns, xml_file):
-    table_file = open('out/table_editDistance.txt', 'w')
+    table_file = open(rootPath + 'table_editDistance.txt', 'w')
     table_list = get_Table_names(xml_file)
     list1 = []
     for n in nouns:
@@ -148,7 +150,7 @@ def extract_tables(nouns, xml_file):
 
 # calculate edit distance
 def extract_attributes(nouns, xml_file):
-    att_file = open('out/attribute_editDistance.txt', 'w')
+    att_file = open(rootPath + 'attribute_editDistance.txt', 'w')
     attribute_list = get_attribute_names(xml_file)
     list2 = []
     for n in nouns:
@@ -189,7 +191,7 @@ def find_attributes(noun_list, xml_file):
     return set(attList)
 
 
-table_synset_file = open('../out/table_synset.txt', 'w')
+table_synset_file = open(rootPath+ 'table_synset.txt', 'w')
 
 
 def tableIdentifier(knowledgeBase, nounList, xml_file):
@@ -222,7 +224,7 @@ def tableIdentifier(knowledgeBase, nounList, xml_file):
         return tab, n_list
 
 
-att_synset_file = open('../out/attribute_synset.txt', 'w')
+att_synset_file = open(rootPath + 'attribute_synset.txt', 'w')
 
 
 def attributeIdentifier(knowledgeBase, nounList, xml_file):

@@ -9,8 +9,10 @@ __author__ = 'ChaminiKD'
 
 # xml_file = 'company_new.xml'
 
-table_knowledgebase_file = open('../out/table_knowledgebase.txt', 'w')
-att_knowledgebase_file = open('../out/attribute_knowledgebase.txt', 'w')
+rootPath = '../out/'
+
+table_knowledgebase_file = open(rootPath + 'table_knowledgebase.txt', 'w')
+att_knowledgebase_file = open(rootPath + 'attribute_knowledgebase.txt', 'w')
 
 #create knowledgebase
 def setSementicKB(type, list):
