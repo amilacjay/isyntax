@@ -8,14 +8,20 @@
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pymysql
+from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
+from sketchquery.app import *
 
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(720, 582)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class SketchQueryWindow(QMainWindow):
+    def __init__(self, parent=None):
+        QMainWindow.__init__(self, parent)
+        self.setupUi()
+
+    def setupUi(self):
+        self.setObjectName("MainWindow")
+        self.resize(720, 582)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.enableSaving = QtWidgets.QCheckBox(self.centralwidget)
         self.enableSaving.setGeometry(QtCore.QRect(30, 90, 211, 20))
@@ -39,10 +45,10 @@ class Ui_MainWindow(object):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.lineEdit = QtWidgets.QLineEdit(self.layoutWidget)
-        self.lineEdit.setEnabled(False)
-        self.lineEdit.setObjectName("lineEdit")
-        self.horizontalLayout.addWidget(self.lineEdit)
+        self.txtFile = QtWidgets.QLineEdit(self.layoutWidget)
+        self.txtFile.setEnabled(False)
+        self.txtFile.setObjectName("txtFile")
+        self.horizontalLayout.addWidget(self.txtFile)
         self.btnBrowse = QtWidgets.QPushButton(self.layoutWidget)
         self.btnBrowse.setObjectName("btnBrowse")
         self.horizontalLayout.addWidget(self.btnBrowse)
@@ -86,26 +92,29 @@ class Ui_MainWindow(object):
         self.btnTestConn = QtWidgets.QPushButton(self.centralwidget)
         self.btnTestConn.setGeometry(QtCore.QRect(30, 500, 151, 32))
         self.btnTestConn.setObjectName("btnTestConn")
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 720, 22))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
 
         try:
             self.btnTestConn.clicked.connect(self.testConn)
         except Exception as e:
             print(e)
 
-    def retranslateUi(self, MainWindow):
+        self.btnBrowse.clicked.connect(self.browseBtnClicked)
+        self.btnGenerateSQL.clicked.connect(self.generateSQLClicked)
+
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
+        self.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.enableSaving.setText(_translate("MainWindow", "Generate Intermediate Results"))
         self.enablePrev.setText(_translate("MainWindow", "Preview Intermediate Results"))
         self.btnGenerateSQL.setText(_translate("MainWindow", "Generate SQL"))
@@ -124,6 +133,21 @@ class Ui_MainWindow(object):
         self.txtPort.setText(_translate("MainWindow", "3306"))
         self.txtUsername.setText(_translate("MainWindow", "root"))
         self.btnTestConn.setText(_translate("MainWindow", "Test Connection"))
+
+    def browseBtnClicked(self):
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../samples/', filter='*.png;*.jpg')
+        self.filePath = path
+        self.txtFile.setText(self.filePath)
+
+
+    def generateSQLClicked(self):
+        if(self.filePath != None):
+            sketchQueryApp = SketchQueryApp(self.filePath)
+            queryList = sketchQueryApp.run()
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Information)
+            msg.setText("Please select an image file!")
 
 
     def testConn(self):
@@ -153,9 +177,7 @@ class Ui_MainWindow(object):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    window = SketchQueryWindow()
+    window.show()
     sys.exit(app.exec_())
 
