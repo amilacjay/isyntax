@@ -111,7 +111,7 @@ class WordQueryWindow(QMainWindow):
 
     def generateSQL(self):
         wordQueryApp = App(self.lineEdit.text())
-        sql, self.xmlFile = wordQueryApp.run('../out/')
+        sql, self.xmlFile = wordQueryApp.run('wordquery/out/')
 
         self.txtSqlCmd.setPlainText(sql)
 

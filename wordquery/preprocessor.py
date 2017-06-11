@@ -9,7 +9,7 @@ __author__ = 'ChaminiKD'
 
 # xml_file = 'company_new.xml'
 
-rootPath = '../out/'
+rootPath = 'wordquery/out/'
 
 table_knowledgebase_file = open(rootPath + 'table_knowledgebase.txt', 'w')
 att_knowledgebase_file = open(rootPath + 'attribute_knowledgebase.txt', 'w')
