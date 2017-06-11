@@ -22,7 +22,7 @@ class App:
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          IdentifyAttributeDataType, RemoveNonPotentialEntities, GetSingularizedEntities]
+                          IdentifyAttributeDataType, RemoveNonPotentialEntities]
 
         isRelationsChecked = True
 
