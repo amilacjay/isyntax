@@ -1,41 +1,30 @@
+# -*- coding: utf-8 -*-
 
-
-
-from PyQt5 import QtCore, QtGui, QtWidgets
+# Form implementation generated from reading ui file 'main.ui'
+#
+# Created by: PyQt5 UI code generator 5.7.1
+#
+# WARNING! All changes made in this file will be lost!
 import pymysql
+from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
-from sketchquery.app import *
-from sketchquery.ui.results import ResultDialog
+from dbnormalizer.experiments.tableNormalizer import *
 
 
-class SketchQueryWindow(QMainWindow):
+class DBNormalizerWindow(QMainWindow):
+
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
-        self.filePath = None
         self.setupUi()
 
     def setupUi(self):
         self.setObjectName("MainWindow")
-        self.resize(720, 582)
+        self.resize(716, 580)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
-        self.intermediateImages = QtWidgets.QCheckBox(self.centralwidget)
-        self.intermediateImages.setGeometry(QtCore.QRect(30, 90, 211, 20))
-        self.intermediateImages.setObjectName("intermediateImages")
-        self.detailedImage = QtWidgets.QCheckBox(self.centralwidget)
-        self.detailedImage.setGeometry(QtCore.QRect(30, 120, 211, 20))
-        self.detailedImage.setObjectName("detailedImage")
-        self.detailedImage.setChecked(True)
-        self.txtSqlCmd = QtWidgets.QPlainTextEdit(self.centralwidget)
-        self.txtSqlCmd.setEnabled(True)
-        self.txtSqlCmd.setGeometry(QtCore.QRect(30, 200, 661, 101))
-        self.txtSqlCmd.setObjectName("txtSqlCmd")
-        self.btnGenerateSQL = QtWidgets.QPushButton(self.centralwidget)
-        self.btnGenerateSQL.setGeometry(QtCore.QRect(30, 160, 113, 32))
-        self.btnGenerateSQL.setObjectName("btnGenerateSQL")
         self.btnExecute = QtWidgets.QPushButton(self.centralwidget)
-        self.btnExecute.setGeometry(QtCore.QRect(572, 500, 121, 32))
+        self.btnExecute.setGeometry(QtCore.QRect(190, 260, 151, 32))
         self.btnExecute.setObjectName("btnExecute")
         self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
         self.layoutWidget.setGeometry(QtCore.QRect(30, 30, 661, 33))
@@ -43,18 +32,15 @@ class SketchQueryWindow(QMainWindow):
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
         self.horizontalLayout.setContentsMargins(0, 0, 0, 0)
         self.horizontalLayout.setObjectName("horizontalLayout")
-        self.txtFile = QtWidgets.QLineEdit(self.layoutWidget)
-        self.txtFile.setEnabled(False)
-        self.txtFile.setObjectName("txtFile")
-        self.horizontalLayout.addWidget(self.txtFile)
+        self.txtFilePath = QtWidgets.QLineEdit(self.layoutWidget)
+        self.txtFilePath.setEnabled(False)
+        self.txtFilePath.setObjectName("txtFilePath")
+        self.horizontalLayout.addWidget(self.txtFilePath)
         self.btnBrowse = QtWidgets.QPushButton(self.layoutWidget)
         self.btnBrowse.setObjectName("btnBrowse")
         self.horizontalLayout.addWidget(self.btnBrowse)
-        self.btnPrev = QtWidgets.QPushButton(self.layoutWidget)
-        self.btnPrev.setObjectName("btnPrev")
-        self.horizontalLayout.addWidget(self.btnPrev)
         self.groupBox = QtWidgets.QGroupBox(self.centralwidget)
-        self.groupBox.setGeometry(QtCore.QRect(30, 310, 311, 181))
+        self.groupBox.setGeometry(QtCore.QRect(30, 70, 311, 181))
         self.groupBox.setObjectName("groupBox")
         self.txtHost = QtWidgets.QLineEdit(self.groupBox)
         self.txtHost.setGeometry(QtCore.QRect(140, 30, 151, 21))
@@ -88,13 +74,18 @@ class SketchQueryWindow(QMainWindow):
         self.txtUsername.setGeometry(QtCore.QRect(140, 120, 151, 21))
         self.txtUsername.setObjectName("txtUsername")
         self.btnTestConn = QtWidgets.QPushButton(self.centralwidget)
-        self.btnTestConn.setGeometry(QtCore.QRect(30, 500, 151, 32))
+        self.btnTestConn.setGeometry(QtCore.QRect(30, 260, 151, 32))
         self.btnTestConn.setObjectName("btnTestConn")
+        self.label_6 = QtWidgets.QLabel(self.centralwidget)
+        self.label_6.setGeometry(QtCore.QRect(30, 10, 171, 16))
+        self.label_6.setObjectName("label_6")
+        self.textEdit = QtWidgets.QTextEdit(self.centralwidget)
+        self.textEdit.setGeometry(QtCore.QRect(30, 340, 661, 201))
+        self.textEdit.setObjectName("textEdit")
+        self.label_7 = QtWidgets.QLabel(self.centralwidget)
+        self.label_7.setGeometry(QtCore.QRect(30, 310, 231, 16))
+        self.label_7.setObjectName("label_7")
         self.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(self)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 720, 22))
-        self.menubar.setObjectName("menubar")
-        self.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
@@ -102,68 +93,37 @@ class SketchQueryWindow(QMainWindow):
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
-        try:
-            self.btnTestConn.clicked.connect(self.testConn)
-        except Exception as e:
-            print(e)
-
         self.btnBrowse.clicked.connect(self.browseBtnClicked)
-        self.btnGenerateSQL.clicked.connect(self.generateSQLClicked)
-        self.btnExecute.clicked.connect(self.executeSQL)
+        self.btnExecute.clicked.connect(self.executeBtnClicked)
+        self.btnTestConn.clicked.connect(self.testConn)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        self.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.intermediateImages.setText(_translate("MainWindow", "Generate Intermediate Images"))
-        self.detailedImage.setText(_translate("MainWindow", "Generate Detailed Image"))
-        self.btnGenerateSQL.setText(_translate("MainWindow", "Generate SQL"))
+        self.setWindowTitle(_translate("MainWindow", "Database Normalizer"))
         self.btnExecute.setText(_translate("MainWindow", "Execute"))
-        self.btnBrowse.setText(_translate("MainWindow", "Browse Sketch"))
-        self.btnPrev.setText(_translate("MainWindow", "Preview "))
+        self.btnBrowse.setText(_translate("MainWindow", "Browse "))
         self.groupBox.setTitle(_translate("MainWindow", "Database Properties"))
         self.txtHost.setText(_translate("MainWindow", "localhost"))
         self.label_4.setText(_translate("MainWindow", "Port:"))
         self.label_3.setText(_translate("MainWindow", "Password:"))
         self.label.setText(_translate("MainWindow", "Database:"))
         self.txtPassword.setText(_translate("MainWindow", "1234"))
-        self.txtDB.setText(_translate("MainWindow", "hotel"))
+        self.txtDB.setText(_translate("MainWindow", "school"))
         self.label_2.setText(_translate("MainWindow", "Username:"))
         self.label_5.setText(_translate("MainWindow", "Host:"))
         self.txtPort.setText(_translate("MainWindow", "3306"))
         self.txtUsername.setText(_translate("MainWindow", "root"))
         self.btnTestConn.setText(_translate("MainWindow", "Test Connection"))
+        self.label_6.setText(_translate("MainWindow", "Functional Dependency File:"))
+        self.label_7.setText(_translate("MainWindow", "SQL Script for Normalized Database:"))
 
     def browseBtnClicked(self):
-        path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../samples/', filter='*.png;*.jpg')
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../input/', filter='*.txt')
         self.filePath = path
-        self.txtFile.setText(self.filePath)
+        self.txtFilePath.setText(self.filePath)
 
-
-    def generateSQLClicked(self):
-        if(self.filePath != None):
-            sketchQueryApp = SketchQueryApp(self.filePath, self.detailedImage.isChecked(), self.intermediateImages.isChecked())
-            sql = sketchQueryApp.run()
-            self.txtSqlCmd.setPlainText(sql)
-
-        else:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Information)
-            msg.setText("Please select an image file!")
-            msg.exec_()
-
-    def executeSQL(self):
-        conn = pymysql.connect(host=self.txtHost.text(),
-                               port=int(self.txtPort.text()),
-                               user=self.txtUsername.text(),
-                               passwd=self.txtPassword.text(),
-                               db=self.txtDB.text())
-        cur = conn.cursor()
-        cur.execute(self.txtSqlCmd.toPlainText())
-        data = cur.fetchall()
-        columns = [col[0] for col in cur.description]
-        resultDialog = ResultDialog(self, data=data, columns=columns)
-        resultDialog.show()
-
+    def executeBtnClicked(self):
+        start_normalizer(file_name=self.filePath, xml_file=self.txtDB.text() + '.xml')
 
     def testConn(self):
         try:
@@ -190,10 +150,11 @@ class SketchQueryWindow(QMainWindow):
             msg.setDetailedText(e.args[1])
             msg.exec_()
 
+
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    window = SketchQueryWindow()
+    window = DBNormalizerWindow()
     window.show()
     sys.exit(app.exec_())
 

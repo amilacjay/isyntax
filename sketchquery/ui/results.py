@@ -7,31 +7,48 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QTableWidgetItem
 
-class Ui_resultsetWindow(object):
-    def setupUi(self, resultsetWindow):
-        resultsetWindow.setObjectName("resultsetWindow")
-        resultsetWindow.resize(530, 360)
-        self.centralwidget = QtWidgets.QWidget(resultsetWindow)
-        self.centralwidget.setObjectName("centralwidget")
-        self.tblResult = QtWidgets.QTableWidget(self.centralwidget)
-        self.tblResult.setGeometry(QtCore.QRect(10, 10, 511, 301))
-        self.tblResult.setObjectName("tblResult")
-        self.tblResult.setColumnCount(0)
-        self.tblResult.setRowCount(0)
-        resultsetWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(resultsetWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 530, 22))
-        self.menubar.setObjectName("menubar")
-        resultsetWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(resultsetWindow)
-        self.statusbar.setObjectName("statusbar")
-        resultsetWindow.setStatusBar(self.statusbar)
 
-        self.retranslateUi(resultsetWindow)
-        QtCore.QMetaObject.connectSlotsByName(resultsetWindow)
+class ResultDialog(QMainWindow):
+    def __init__(self, parent=None, data=None, columns=None):
+        QMainWindow.__init__(self, parent)
+        self.data = data
+        self.columns = columns
+        self.setupUi()
 
-    def retranslateUi(self, resultsetWindow):
+
+    def setupUi(self):
+        self.setObjectName("resultDialog")
+        self.resize(572, 363)
+        self.results = QtWidgets.QTableWidget(self)
+        self.results.setGeometry(QtCore.QRect(10, 20, 551, 321))
+        self.results.setObjectName("results")
+        self.results.setColumnCount(0)
+        self.results.setRowCount(0)
+
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
+
+        if(self.columns != None):
+            self.results.setColumnCount(len(self.columns))
+            self.results.setHorizontalHeaderLabels(self.columns)
+            self.results.setRowCount(len(self.data))
+
+            for r, row in enumerate(self.data):
+                for c, col in enumerate(row):
+                    self.results.setItem(r, c, QTableWidgetItem(col))
+
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        resultsetWindow.setWindowTitle(_translate("resultsetWindow", "Results"))
+        self.setWindowTitle(_translate("resultDialog", "Results"))
+
+
+if __name__ == "__main__":
+    import sys
+    app = QtWidgets.QApplication(sys.argv)
+    resultDialog = ResultDialog()
+    resultDialog.show()
+    sys.exit(app.exec_())
 
