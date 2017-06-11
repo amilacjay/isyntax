@@ -1,4 +1,5 @@
 import xml
+from inflection import singularize
 
 from nltk import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
@@ -7,27 +8,33 @@ from nltk.stem.porter import *
 #sent = "what are the department location"
 sent = "what are the department names of the departments"
 
-stemmer = PorterStemmer()
+# stemmer = PorterStemmer()
+#
+#from pattern.en import  singularize
+from nltk.stem.lancaster import LancasterStemmer
+st = LancasterStemmer()
 
-from pattern.en import pluralize, singularize
 
 def extractor(sent):
-    tokens = []
+    # tokens = []
     removed = []
     sentences = sent_tokenize(sent)
     for sent in sentences:
         tokens = word_tokenize(sent)
         filtered = [word for word in tokens if word not in stopwords.words('english')]
         # removed.append(filtered)
-    print(filtered)
+    #print(filtered)
     for w in filtered:
-        st = stemmer.stem(w)
-        print(singularize(w))
+
+        stm = singularize(w)
+        #print(stm)
+        # st = stemmer.stem(w)
+        # print(singularize(w))
         # print(st)
-        tokens.append(st)
+        removed.append(stm)
     # singles = [stemmer.stem(r) for r in removed]
 
-    return tokens
+    return removed
 
 
 def table_names(file):
@@ -71,6 +78,9 @@ def isattribute(word, attrib):
 
 
 tokens = extractor(sent)
-asd = table_names("company_new.xml")
 print("tokens: ", tokens)
+
+asd = table_names("company_new.xml")
+print(asd)
+
 restructure_keys(tokens, asd)

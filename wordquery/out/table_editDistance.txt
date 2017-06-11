@@ -1,2 +1,2 @@
-[['birthdate', 'workplace', 6], ['birthdate', 'project', 7], ['birthdate', 'department', 8], ['birthdate', 'dependent', 8], ['birthdate', 'employee', 8], ['birthdate', 'department_locations', 16]]
+[['name', 'project', 6], ['name', 'department', 7], ['name', 'employee', 7], ['name', 'workplace', 7], ['name', 'dependent', 8], ['name', 'department_locations', 17]]
 [['employee', 'employee', 0], ['employee', 'project', 6], ['employee', 'dependent', 7], ['employee', 'workplace', 7], ['employee', 'department', 8], ['employee', 'department_locations', 16]]
