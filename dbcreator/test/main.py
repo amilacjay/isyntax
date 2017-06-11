@@ -5,7 +5,7 @@ from nltk import *
 
 # text = "The company is organized into departments. Each department has a unique name, a unique number, and a particular employee who manages the department. We keep track of the start date when that employee began managing  the department.A department may have several locations.A department controls a number of projects, each of which has a unique name, a unique number, and a single location.We store each employee's name, Social Security Number, address, salary, sex, and Birth Date."
 
-text = 'Each pharmacy selling drugs and has a price for each.'
+text = 'name of the electronic file'
 
 wt = word_tokenize(text)
 pt = pos_tag(wt)
