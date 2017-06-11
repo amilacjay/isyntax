@@ -1,6 +1,7 @@
 from dbcreator.models import *
 from dbcreator.core import *
-from nltk import WordNetLemmatizer as wn
+from nltk import WordNetLemmatizer
+
 
 
 class PrimaryExtractor:
@@ -55,16 +56,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         entity.setAttributes(attributes)
                         break
 
-                # elif (item[0] == 'uniquely'):
-                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][1] == 'NN']
-                #
-                #     for chunk in candidateAttributeData:
-                #         attr = Attribute(chunk)
-                #         attributes.append(attr)
-
-                        # attr.isUnique = True
-                        # attr.isPrimaryKey = True
-                        # attr.isNotNull = True
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -79,6 +70,11 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     entity.setAttributes(attributes)
                     target.append(entity)
                     break
+
+
+                elif item[1] == 'PRP':
+                    pass
+
 
 
 class UniqueKeyExtractor(SecondaryExtractor):
@@ -130,23 +126,22 @@ class RemoveDuplicateEntities(SecondaryExtractor):
     def execute(self, entities):
         uniqueEntities = []
 
+        wn = WordNetLemmatizer()
+
+
         for entity in entities:
+            ent = entity.name().lower()
+            entLemma = wn.lemmatize(ent)
+
             check = True
             for e in uniqueEntities:
-                if (e.name().lower() == entity.name().lower()):
+                uq = e.name().lower()
+                uqLemma = wn.lemmatize(uq)
+
+                if uqLemma == entLemma:
                     e.getAttributes().extend(entity.getAttributes())
                     check = False
                     break
-
-                # elif (entity.name().endswith('s')):
-                #     print(entity.name())
-                #     newEnt = entity.name().replace('s', '')
-                #     print(newEnt)
-                    # if (newEnt.lower() == entity.name().lower()):
-                    #
-                    #     newEnt.getAttributes().extend(entity.getAttributes())
-                    #     check = False
-                    #     break
 
             if check:
                 uniqueEntities.append(entity)
@@ -232,6 +227,8 @@ class SuggestRelationshipTypes(SecondaryExtractor):
                         if atr.name().lower() == entity1.name().lower():
                             entity1.relationships.append((entity2, atr))
 
+
+
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
 #     def execute(self, entities):
 #
@@ -248,20 +245,9 @@ class SuggestRelationshipTypes(SecondaryExtractor):
 #             # print(e.name())
 #             # entities.remove(e)
 
-class GetSingularizedEntities(SecondaryExtractor):
-    def execute(self, entities):
 
-        for entity in entities:
-            lemma = wn.lemmatize(entity, 'n')
-            print(lemma)
-            plural = True if entity is not lemma else False
-            return plural, lemma
 
-        isPlural = True
 
-        for nn in entities:
-            isp, lemma = isPlural(nn)
-            print(nn, lemma, isp)
 
 
 
