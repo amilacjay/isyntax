@@ -7,7 +7,7 @@ class App:
         self.filePath = filePath
 
 
-    def run(self, isNEChecked):
+    def run(self, isNEChecked, isNPEChecked):
 
         text = getContentFromFile(self.filePath)
 
@@ -16,18 +16,13 @@ class App:
         ## primary data sets
         tagged_sentences = getTaggedSentences(text)
         chunked_sentences = getChunkedSentences(tagged_sentences)
-
         ne_chunked_sentences = getNamedEntities(text)
-        # re = extract_relations(tagged_sentences)
+
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          IdentifyAttributeDataType, RemoveNonPotentialEntities]
+                          IdentifyAttributeDataType, RemoveNonPotentialEntities, SuggestRelationshipTypes]
 
-        isRelationsChecked = True
-
-        if(isRelationsChecked):
-            extractorsList.append(SuggestRelationshipTypes)
 
         for extractor in extractorsList:
             extObject = extractor()
@@ -36,13 +31,11 @@ class App:
                 extObject.execute(tagged_sents=tagged_sentences, chunked_sents=chunked_sentences, ne_chunked_sents=ne_chunked_sentences, target=entityList, isNEExcluded = isNEChecked)
 
             elif isinstance(extObject, SecondaryExtractor):
-                extObject.execute(entities=entityList)
+                extObject.execute(entities=entityList, isNPEExcluded = isNPEChecked)
 
-        for e in entityList:
-            for r in e.relationships:
-                print(r[0].name(), r[1].name())
 
         return entityList
+
 
 ## Main Program Executing
 
