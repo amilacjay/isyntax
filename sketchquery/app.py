@@ -17,8 +17,10 @@ logger.addHandler(ch)
 
 class SketchQueryApp:
 
-    def __init__(self, filePath):
+    def __init__(self, filePath, detailedImage=True, stepImages=False):
         self.filePath = filePath
+        self.detailedImage = detailedImage
+        self.stepImages = stepImages
 
     def run(self):
 
@@ -228,7 +230,7 @@ class SketchQueryApp:
                             other = el
 
             for query in queryList:
-                print(table[1])
+                # print(table[1])
                 if(table[1] in query.tables):
                     if other != None:
                         if other[0] == 2:
@@ -241,27 +243,30 @@ class SketchQueryApp:
 
 
 
-        for i, query in enumerate(queryList):
-            print("Query : " + str(i+1))
-            print('tables : ' + str(query.tables))
-            print('condition : ' + str(query.conditions))
-            print('projection : ' + str(query.projection))
+        # for i, query in enumerate(queryList):
+        #     print("Query : " + str(i+1))
+        #     print('tables : ' + str(query.tables))
+        #     print('condition : ' + str(query.conditions))
+        #     print('projection : ' + str(query.projection))
 
 
         sql = convertToSQL(queryList)
 
 
-        return sql
-        # logger.info("showing resulting images...")
-        # cv2.imshow('Original', image)
-        # cv2.imshow('Grayscale', gray)
-        # cv2.imshow('resized', resized)
-        # cv2.imshow('test', r)
-        # cv2.imshow('removed', removed)
-        #
-        # cv2.waitKey(0)
-        # cv2.destroyAllWindows()
+        if(self.stepImages):
+            logger.info("showing resulting images...")
+            cv2.imshow('Grayscale', gray)
+            cv2.imshow('test', r)
+            cv2.imshow('removed', removed)
+
+
+        if(self.detailedImage):
+            cv2.imshow('resized', resized)
+
+        cv2.waitKey(0)
+        cv2.destroyAllWindows()
         logger.info("Sketch Query module was finished successfully!")
+        return sql
 
 if __name__ == "__main__":
     app = SketchQueryApp(filePath='samples/sketches/two-queries.png')
