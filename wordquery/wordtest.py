@@ -5,37 +5,33 @@ from nltk import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 from nltk.stem.porter import *
 
-#sent = "what are the department location"
+# sent = "what are the department location"
 sent = "what are the department names of the departments"
-
-# stemmer = PorterStemmer()
-#
-#from pattern.en import  singularize
-from nltk.stem.lancaster import LancasterStemmer
-st = LancasterStemmer()
 
 
 def extractor(sent):
-    # tokens = []
+    sin_list = []
     removed = []
+
     sentences = sent_tokenize(sent)
     for sent in sentences:
         tokens = word_tokenize(sent)
         filtered = [word for word in tokens if word not in stopwords.words('english')]
-        # removed.append(filtered)
-    #print(filtered)
-    for w in filtered:
-
+        removed.append(filtered)
+    print("removed", removed)
+    for w in removed[0]:
         stm = singularize(w)
-        #print(stm)
-        # st = stemmer.stem(w)
-        # print(singularize(w))
-        # print(st)
-        removed.append(stm)
-    # singles = [stemmer.stem(r) for r in removed]
-
-    return removed
-
+        sin_list.append(stm)
+    return sin_list
+# def extractor(sent):
+#     removed = []
+#     sentences = sent_tokenize(sent)
+#     for sent in sentences:
+#         tokens = word_tokenize(sent)
+#         filtered = [word for word in tokens if word not in stopwords.words('english')]
+#         removed.append(filtered)
+#     print(removed)
+#     return removed
 
 def table_names(file):
     attributes = []
