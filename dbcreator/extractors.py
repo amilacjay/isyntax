@@ -1,5 +1,6 @@
 from dbcreator.models import *
 from dbcreator.core import *
+from nltk import WordNetLemmatizer as wn
 
 
 class PrimaryExtractor:
@@ -80,28 +81,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     break
 
 
-                # elif (item[1] == 'VBZ' or item[1] == 'VBP'):
-                #     itemIndex = item[2]
-                #
-                #     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < itemIndex]
-                #
-                #     entityName = candidateEntityNames.pop()
-                #
-                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > itemIndex]
-                #
-                #     attributes = []
-                #
-                #     for chunk in candidateAttributeData:
-                #         attr = Attribute(chunk)
-                #         attributes.append(attr)
-                #         print(attr.name())
-                #
-                #     entity = Entity(entityName)
-                #     entity.setAttributes(attributes)
-                #     target.append(entity)
-                #     break
-
-
 class UniqueKeyExtractor(SecondaryExtractor):
     def execute(self, entities):
         for entity in entities:
@@ -159,14 +138,15 @@ class RemoveDuplicateEntities(SecondaryExtractor):
                     check = False
                     break
 
-                if (entity.name().endswith('s')):
-                    newEnt = entity.name().replace('s', '')
-                    print(newEnt)
-                    if (newEnt.lower() == entity.name().lower()):
-
-                        newEnt.getAttributes().extend(entity.getAttributes())
-                        check = False
-                        break
+                # elif (entity.name().endswith('s')):
+                #     print(entity.name())
+                #     newEnt = entity.name().replace('s', '')
+                #     print(newEnt)
+                    # if (newEnt.lower() == entity.name().lower()):
+                    #
+                    #     newEnt.getAttributes().extend(entity.getAttributes())
+                    #     check = False
+                    #     break
 
             if check:
                 uniqueEntities.append(entity)
@@ -268,7 +248,20 @@ class SuggestRelationshipTypes(SecondaryExtractor):
 #             # print(e.name())
 #             # entities.remove(e)
 
+class GetSingularizedEntities(SecondaryExtractor):
+    def execute(self, entities):
 
+        for entity in entities:
+            lemma = wn.lemmatize(entity, 'n')
+            print(lemma)
+            plural = True if entity is not lemma else False
+            return plural, lemma
+
+        isPlural = True
+
+        for nn in entities:
+            isp, lemma = isPlural(nn)
+            print(nn, lemma, isp)
 
 
 
