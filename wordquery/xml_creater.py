@@ -100,8 +100,11 @@ class Fetcher:
 
 # using existing database
 
-fet = Fetcher("root", "", "company_new")
+# fet = Fetcher("root", "", "comapany_new")
 
-tre = fet.getSchema(fet.dbConn())
-fet.writeXML(tre)
+# tre = fet.getSchema(fet.dbConn())
+# fet.writeXML(tre)
+
+
+
 

@@ -1,9 +1,8 @@
-who are the employees?
 who are the employees of the company?
 what are the departments?
 what are the department locations?
-what are the projects?
 what are the projects done by the company?
 who are the dependants?
-what are all employee Ssns?
-what are all combinations of employee Ssn and employee Dname?
+what are the workplaces ?
+
+

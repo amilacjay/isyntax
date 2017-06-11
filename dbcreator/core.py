@@ -4,6 +4,9 @@ from nltk.tag import pos_tag
 from nltk import ne_chunk
 
 
+from dbcreator.models import DataType
+
+
 def getContentFromFile(filename):
     with open(filename) as f:
         content = f.readlines()
@@ -41,30 +44,28 @@ def extract_ne(tsent):
             yield [(word, tag) for word, tag in t.leaves()]
 
 
-def getNamedEntities(taggedSents):
-    neSents = ne_chunk(taggedSents, binary=True)
+def getNamedEntities(text):
+    sentences = sent_tokenize(text)
+    sentences = [word_tokenize(sent) for sent in sentences]
+    sentences = [pos_tag(sent) for sent in sentences]
 
-    extract_ne_gen = extract_ne(neSents)
+    neTaggedSents = [ne_chunk(sent, binary=True) for sent in sentences]
+
     neList = []
-    neList.append([x for x in extract_ne_gen])
-    flattenedList = [item for list_1 in neList for list_2 in list_1 for item in list_2]
+    for x in neTaggedSents:
+        extract_ne_gen = extract_ne(x)
+        neList.append([x for x in extract_ne_gen])
 
-    return flattenedList
-
-
-# def removeNamedEntities(tSents):
-#     nEntities = getNamedEntities(tSents)
-#     flattenedList = [item for list_1 in nEntities for list_2 in list_1 for item in list_2]
-#     for item in flattenedList:
-#         if item in tSents:
-#             tSents.remove(item)
+    return neList
 
 
 def getChunkedSentences(taggedSents):
     grammar = r"""
-    NP: {<NN.*><IN><NN.*>}
+    NP: {<NN.*><IN><NN.*><NN.*>?}
+        {<NN.*><IN><DT><JJ><NN.*>}
+        {<NN.*><IN>(<VB.*>|<DT>)<NN.*>}
         {<NN.*><TO><DT><NN.*>}
-        {(<JJ.*>|<RB.*>|<NN.*>)*<NN.*>}
+        {((<JJ.*>|<RB.*>|<NN.*>)*|<VBG>?)<NN.*>}
     """
 
     cp = RegexpParser(grammar)
@@ -86,6 +87,7 @@ def createSQLScript(entities):
     wholeSQL = ''
     for entity in entities:
         firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
+        # firstLine = "CREATE TABLE {} (".format(entity.name())
         queryBody = '\n'
         delimiter = ',\n'
         lastLine = "\n);\n\n"
@@ -93,9 +95,15 @@ def createSQLScript(entities):
         attributeList = entity.getAttributes()
         keys = [atr.name() for atr in attributeList if atr.isUnique == True]
         primaryKeyLine = ',\n\tPRIMARY KEY('+ ','.join(keys) +')'
+
         for i, attribute in enumerate(attributeList):
+            dTypeSize = '(50)'
             uniqueKW = ' UNIQUE'
-            attributeLine = '\t{} {}{}'.format(attribute.name(), attribute.dtype, uniqueKW if attribute.isUnique else '')
+            notnullKW = ' NOT NULL'
+
+            attributeLine = '\t{} {}{}{}{}'.format(attribute.name(), attribute.dtype, dTypeSize if attribute.dtype == DataType.VARCHAR else '' ,
+                                               uniqueKW if attribute.isUnique else '', notnullKW if attribute.isNotNull else '')
+
             if i != len(attributeList) - 1:
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
@@ -105,9 +113,9 @@ def createSQLScript(entities):
     return wholeSQL
 
 
-# def csv_reader(filename):
-#
-#     with open(filename) as f:
-#         content = f.readlines()
-#     return [s.strip() for s in str(''.join(content)).split(',')]
+def csv_reader(filename):
+    with open(filename) as f:
+        content = f.readlines()
+    return [s.strip() for s in str(''.join(content)).split(',')]
+
 

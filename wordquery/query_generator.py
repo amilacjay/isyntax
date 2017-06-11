@@ -1,4 +1,5 @@
 import pymysql.cursors
+from wordquery.table_fetcher import get_primaryKey
 
 __author__ = 'ChaminiKD'
 
@@ -43,6 +44,28 @@ def createQuery(attList, tableList, value, symbol, prv_attribute, condition_list
         basciSQL = "none"
         return basciSQL
 
+def create_twoTable_query(ref_table, table, ref_list, identified_attributes, val, att):
+
+    ref_value = ''
+    for x in ref_list:
+        if ref_table in x[1] and table in x[0]:
+            ref_value = x[2]
+        if ref_table in x[0] and table in x[1]:
+            ref_value = x[2]
+
+    if identified_attributes:
+        sql = "SELECT " + ",".join(
+            identified_attributes) + " FROM " + table + ", " + ref_table + " WHERE " + table + "." + ref_value + " = " + ref_table + "." + get_primaryKey(
+            ref_table) + "" \
+                         " AND " \
+                         "" + str(att[0]) + " = " + val[0] + ";"
+
+    else:
+        sql = "SELECT * FROM " + table + ", " + ref_table + " WHERE " + table + "." + ref_value + " = " + ref_table + "." + get_primaryKey(
+            ref_table) + "" \
+                         " AND " \
+                         "" + str(att[0]) + " = " + val[0] + ";"
+    return sql
 
 # get the result
 def getResult(connection, query):

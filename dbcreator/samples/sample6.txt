@@ -1,0 +1,14 @@
+A health provider company has multiple offices in many different states.
+Many doctors work for the company, and each doctor takes care of multiple patients.
+Some doctors just work in one office, and others work in different offices on different days.
+The database keeps information about each doctor, such as doctor's name, address, contact phones, area of specialization, and so on.
+Each patient can be assigned to one or more doctors.
+Specific patient information is also kept in the database.
+Patient's name, address, phones, health record number, date of birth, history of appointments, prescriptions, blood tests, diagnoses.
+Customers can schedule and cancel appointments and order prescription drugs either over the phone or using the company Web site.
+Some restrictions apply,for example, to see a specialist, the patient needs an approval from his/her primary physician;
+to order a prescription the patient should have at least one valid refill left, and so on.
+Patients should be able to access the database using a Web browser to order prescriptions and make appointments.
+This is all that patients may do in the database.
+Doctors and nurses can browse information about their patients, write and renew prescriptions, schedule blood tests and X-Rays, and so on.
+Administrative staff (receptionists, pharmacy assistants) can schedule appointments for patients, fill prescriptions, and run specific reports.

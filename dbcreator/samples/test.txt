@@ -1,1 +1,2 @@
-The Washington Monument has departments
+Each pharmacy sells drugs and has a price for each.
+Drug's trade name and formula must be recorded.

@@ -1,0 +1,12 @@
+Company is organized into departments.
+A department has a department name, unique department number and a manager who manages it.
+Company records manager's ssn and start date.
+Department may have several locations.
+Each department has employees who work in it.
+Employee has name, birth date, address, sex, salary and unique ssn.
+Each employee has a supervisor.
+Supervisor has a unique ssn.
+The company keeps records of each employee's dependents.
+They record dependent's name, sex, birth date and relationship to the employee.
+Each department is working number of projects and each project has a project name, unique project number and a location.
+Company keep track of the current number of hours per week that an employee works on each project.

@@ -12,7 +12,8 @@ def dependencyMatrix(relation, fds):
         row = []
         for sk in relation:
 
-            determiners = [fd[1][0] for fd in fds if fd[0]==d]
+            determiners = []
+            [determiners.extend(fd[1]) for fd in fds if fd[0]==d]
 
             if sk in d:
                 row.append(2)

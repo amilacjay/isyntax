@@ -5,8 +5,6 @@ from PyQt5.QtWidgets import QListWidgetItem
 class DataType(Enum):
 
     def __str__(self):
-        # if(self.name=='VARCHAR'):
-        #     return self.name+'(50)'
         return self.name
 
     VARCHAR = 0
@@ -22,6 +20,7 @@ class Entity(QListWidgetItem):
         self.data = data
         super().setText(str(self.name()))
         self.attributes = []
+        self.relationships=[]
 
     def setAttributes(self, attributes):
         self.attributes = attributes
@@ -37,7 +36,6 @@ class Entity(QListWidgetItem):
         for chunk in self.data:
             words.append(chunk[0])
         return ('_'.join(words)).strip()
-
 
 class Attribute:
     def __init__(self, data):
