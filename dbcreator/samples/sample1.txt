@@ -1,5 +1,5 @@
 The company has organized into departments.
-Each department has a unique name, a unique number, and a particular employee who manages the department.
+Each department has a unique name, a unique number, and an employee who manages it.
 We keep track of the start date when that employee began managing the department.
 A department may have several locations.
 A department controls a number of projects, each of which has a unique name, a unique number, and a single location.

@@ -16,14 +16,13 @@ class App:
         ## primary data sets
         tagged_sentences = getTaggedSentences(text)
         chunked_sentences = getChunkedSentences(tagged_sentences)
-        # print(chunked_sentences)
 
         ne_chunked_sentences = getNamedEntities(text)
         # re = extract_relations(tagged_sentences)
 
         ## extractors List in the order of execution
         extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          IdentifyAttributeDataType, RemoveNonPotentialEntities] #, SuggestRelationshipTypes, FilterNPE
+                          IdentifyAttributeDataType, RemoveNonPotentialEntities, GetSingularizedEntities]
 
         isRelationsChecked = True
 

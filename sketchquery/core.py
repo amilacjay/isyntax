@@ -181,3 +181,7 @@ def getPointsOfRect(stat, shape):
     ret, conts, hier = cv2.findContours(mask, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
 
     return conts[0]
+
+def convertToSQL(queryList):
+
+    return None
