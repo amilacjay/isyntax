@@ -1,3 +1,4 @@
+import itertools
 from nltk.tokenize import word_tokenize, sent_tokenize
 from nltk.corpus import stopwords
 import xml.etree.ElementTree
@@ -9,7 +10,7 @@ signs = ['.', '+', ',']
 attributes = []
 
 # The keyword set
-keywords = ['depends']
+keywords = ['depends', 'decides', 'based', 'relies']
 
 
 # Read the scenario file from inputs
@@ -29,7 +30,6 @@ def extractor(fileContent):
         filtered = [word for word in tokens if word not in stopwords.words('english')]
         filtered = remove(signs, filtered)
         removed.append(filtered)
-    table_reader(removed)
     return removed
 
 
@@ -50,10 +50,10 @@ def remove(signList, tokens):
     return temp
 
 
-# identifying the reference table
-def table_reader(lists):
-    for singleList in lists:
-        print(singleList)
+# # identifying the reference table
+# def table_reader(lists):
+#     for singleList in lists:
+#         print(singleList)
 
 
 # get attribute names from the XML
@@ -69,13 +69,28 @@ def get_functionaldep(content):
     lhs = []
     rhs = []
     for con in content:
-        x = con.index(keywords[0])
-        lhs.append(con[:x])
-        rhs.append(con[(x + 1):])
-    print("lhs", lhs)
-    print("rhs", rhs)
+        if keywords[0] in con:
+            x = con.index(keywords[0])
+            lhs.append(con[:x])
+            rhs.append(con[(x + 1):])
+        if keywords[1] in con:
+            x = con.index(keywords[1])
+            rhs.append(con[:x])
+            lhs.append(con[(x + 1):])
+        if keywords[2] in con:
+            x = con.index(keywords[2])
+            lhs.append(con[:x])
+            rhs.append(con[(x + 1):])
+        if keywords[3] in con:
+            x = con.index(keywords[3])
+            lhs.append(con[:x])
+            rhs.append(con[(x + 1):])
     # return lhs and rhs keys
-    fds = ([lhs, rhs])
+    fds = []
+    index = 0
+    for y in rhs:
+        fds.append([y, lhs[index]])
+        index += 1
     return fds
 
 
@@ -102,7 +117,13 @@ def restructure_keys(fds, attrib):
                     simplelist.append(S)
                 index = index + 1
             final.append(simplelist)
-    print("restructured", final)
+    restructured_final = []
+    for i, v in enumerate(final):
+        if i % 2 == 0:
+            restructured_final.append([final[i], final[i + 1]])
+        elif i % 2 != 0:
+            continue
+    return restructured_final
 
 
 # checks if the word is in the attribute list or not
@@ -113,7 +134,3 @@ def isattribute(word, attrib):
         return -1
 
 
-content = readfile('scenario.txt')
-x = table_names('company_new.xml')
-s = get_functionaldep(extractor(content))
-restructure_keys(s, x)

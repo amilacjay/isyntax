@@ -55,12 +55,12 @@ def dbConn(user, passwd, db):
 # Excute SQL query
 def exec_query(query):
     connection = dbConn('root', '', 'crud')
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            connection.commit()
-    finally:
-        connection.close()
+    # try:
+    #     with connection.cursor() as cursor:
+    #         cursor.execute(query)
+    #         connection.commit()
+    # finally:
+    #     connection.close()
 
 
 table_creator()
