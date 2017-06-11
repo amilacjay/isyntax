@@ -5,7 +5,7 @@ from nltk import WordNetLemmatizer
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target, isNEExcluded):
         pass
 
 
@@ -15,7 +15,7 @@ class SecondaryExtractor:
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target, isNEExcluded):
 
         for sIndex, sent in enumerate(tagged_sents):
             for index, item in enumerate(sent):
@@ -44,9 +44,8 @@ class PossessionBasedExtractor(PrimaryExtractor):
 
                     entity = Entity(entityName)
 
-                    isChecked = False
 
-                    if(isChecked):
+                    if(isNEExcluded):
                         if (any(ne not in entity.name().replace('_', ' ').lower() for ne in ne_entites)):
                             target.append(entity)
                             entity.setAttributes(attributes)
