@@ -15,6 +15,7 @@ from PyQt5.QtWidgets import QMainWindow
 from settings import Ui_Dialog as Settings
 from sketchquery.ui.app import SketchQueryWindow
 from wordquery.ui.main import WordQueryWindow
+from dbcreator.ui.FinalMain import DBCreatorWindow
 
 class WelcomeWindow(QMainWindow):
 
@@ -101,7 +102,8 @@ class WelcomeWindow(QMainWindow):
         dialog.exec_()
 
     def showDBCreator(self):
-        pass
+        dbCreatorWindow = DBCreatorWindow(self)
+        dbCreatorWindow.show()
 
     def showWordQuery(self):
         wordQueryWindow = WordQueryWindow(self)

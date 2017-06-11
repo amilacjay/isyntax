@@ -10,9 +10,9 @@ from dbcreator.core import *
 from dbcreator.models import *
 
 
-class Ui_MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
+class DBCreatorWindow(QMainWindow):
+    def __init__(self, parent=None):
+        QMainWindow.__init__(self, parent)
 
         self.setupUi()
 
@@ -128,11 +128,11 @@ class Ui_MainWindow(QMainWindow):
         self.btn_preview.clicked.connect(self.previewButtonClicked)
 
 
-        self.retranslateUi(self)
+        self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "Database Creator"))
         self.label.setText(_translate("MainWindow", "Database Description:"))
@@ -345,7 +345,7 @@ class Ui_MainWindow(QMainWindow):
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    ui = Ui_MainWindow()
+    ui = DBCreatorWindow()
     ui.show()
     sys.exit(app.exec_())
 
