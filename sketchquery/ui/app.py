@@ -6,6 +6,7 @@ import pymysql
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 from sketchquery.app import *
+from sketchquery.ui.results import ResultDialog
 
 
 class SketchQueryWindow(QMainWindow):
@@ -108,6 +109,7 @@ class SketchQueryWindow(QMainWindow):
 
         self.btnBrowse.clicked.connect(self.browseBtnClicked)
         self.btnGenerateSQL.clicked.connect(self.generateSQLClicked)
+        self.btnExecute.clicked.connect(self.executeSQL)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -124,7 +126,7 @@ class SketchQueryWindow(QMainWindow):
         self.label_3.setText(_translate("MainWindow", "Password:"))
         self.label.setText(_translate("MainWindow", "Database:"))
         self.txtPassword.setText(_translate("MainWindow", "1234"))
-        self.txtDB.setText(_translate("MainWindow", "school"))
+        self.txtDB.setText(_translate("MainWindow", "hotel"))
         self.label_2.setText(_translate("MainWindow", "Username:"))
         self.label_5.setText(_translate("MainWindow", "Host:"))
         self.txtPort.setText(_translate("MainWindow", "3306"))
@@ -148,6 +150,19 @@ class SketchQueryWindow(QMainWindow):
             msg.setIcon(QMessageBox.Information)
             msg.setText("Please select an image file!")
             msg.exec_()
+
+    def executeSQL(self):
+        conn = pymysql.connect(host=self.txtHost.text(),
+                               port=int(self.txtPort.text()),
+                               user=self.txtUsername.text(),
+                               passwd=self.txtPassword.text(),
+                               db=self.txtDB.text())
+        cur = conn.cursor()
+        cur.execute(self.txtSqlCmd.toPlainText())
+        data = cur.fetchall()
+        columns = [col[0] for col in cur.description]
+        resultDialog = ResultDialog(self, data=data, columns=columns)
+        resultDialog.show()
 
 
     def testConn(self):
