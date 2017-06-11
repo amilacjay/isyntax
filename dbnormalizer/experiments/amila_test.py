@@ -2,7 +2,6 @@ import numpy as np
 import copy
 
 def dependencyMatrix(relation, fds):
-
     determinants = []
     [determinants.append(fd[0]) for fd in fds if fd[0] not in determinants]
 
@@ -27,7 +26,6 @@ def dependencyMatrix(relation, fds):
     return DM, np.sort(determinants)
 
 def directedGraph(dm, determinents, relation):
-
     DG = np.zeros((len(determinents), len(determinents)), dtype=np.int)
 
     for i, detI in enumerate(determinents):
@@ -82,7 +80,6 @@ def findOne(i, j, k, n, dc):
         return findOne(i, dc[i][k], k, n-1, dc)
 
 
-
 ## example 01
 
 # relation = ['A', 'B', 'C']
@@ -93,8 +90,8 @@ def findOne(i, j, k, n, dc):
 #         [['B'],['C']]
 #       ]
 
-## example 02
-
+# # example 02
+#
 # relation = ['A', 'B', 'C', 'D', 'E']
 #
 # fds = [
@@ -104,64 +101,72 @@ def findOne(i, j, k, n, dc):
 #       ]
 
 
-## example 03
+# example 03
 
 # relation = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
 #
 # fds = [
-#     [['A'],['B']],
-#     [['A'],['C']],
-#     [['E'],['A']],
-#     [['E'],['D']],
-#     [['G'],['A']],
-#     [['G'],['E']],
-#     [['G'],['J']],
-#     [['G'],['K']],
-#     [['G','H'],['F']],
-#     [['G','H'],['I']],
-#     [['K'],['A']],
-#     [['K'],['L']],
-#     [['J'],['K']]
+#     [['A'], ['B']],
+#     [['A'], ['C']],
+#     [['E'], ['A']],
+#     [['E'], ['D']],
+#     [['G'], ['A']],
+#     [['G'], ['E']],
+#     [['G'], ['J']],
+#     [['G'], ['K']],
+#     [['G', 'H'], ['F']],
+#     [['G', 'H'], ['I']],
+#     [['K'], ['A']],
+#     [['K'], ['L']],
+#     [['J'], ['K']]
+# ]
+#
+# path = [
+#     [1, -1, -1, -1, -1, -1],
+#     [1, 1, -1, -1, -1, -1],
+#     [1, 1, 1, -1, 1, 1],
+#     [1, 1, 1, 1, 1, 1],
+#     [1, -1, -1, -1, 1, -1],
+#     [1, -1, -1, -1, 1, 1]
 # ]
 
+# relation = ['ssn','Pnumber','Hours','Ename','Pname','Plocation']
+# fds = [[['ssn','Pnumber'],['Hours']],[['ssn'],['Ename']],[['Pnumber'],['Pname','Plocation']]]
 
 ## example 04
 
-relation = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+# relation = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H']
+#
+# fds = [
+#     [['A', 'B'], ['C']],
+#     [['A', 'B'], ['E']],
+#     [['A', 'B'], ['F']],
+#     [['A', 'B'], ['G']],
+#     [['A', 'B'], ['H']],
+#     [['A'], ['D']],
+#     [['F'], ['G']],
+#     [['B', 'F'], ['H']],
+#     [['B', 'C', 'H'], ['A']],
+#     [['B', 'C', 'H'], ['D']],
+#     [['B', 'C', 'H'], ['E']],
+#     [['B', 'C', 'H'], ['F']],
+#     [['B', 'C', 'H'], ['F']],
+#     [['B', 'C', 'F'], ['A']],
+#     [['B', 'C', 'F'], ['D']],
+#     [['B', 'C', 'F'], ['E']]
+# ]
 
-fds = [
-    [['A', 'B'],['C']],
-    [['A', 'B'],['E']],
-    [['A', 'B'],['F']],
-    [['A', 'B'],['G']],
-    [['A', 'B'],['H']],
-    [['A'],['D']],
-    [['F'],['G']],
-    [['B','F'],['H']],
-    [['B','C', 'H'],['A']],
-    [['B','C', 'H'],['D']],
-    [['B','C', 'H'],['E']],
-    [['B','C', 'H'],['F']],
-    [['B','C', 'H'],['F']],
-    [['B','C', 'F'],['A']],
-    [['B','C', 'F'],['D']],
-    [['B','C', 'F'],['E']]
-]
-
-
-
-DM, determinents = dependencyMatrix(relation, fds)
-print(DM)
-
-DG = directedGraph(DM, determinents, relation)
-print(DG)
-
-DC = dependencyClosure(DM, DG, determinents, relation, fds)
-print(DC)
-
-CDC = circularDependency(DM, DC)
-print(CDC)
-
-
-
-
+# DM, determinents = dependencyMatrix(relation, fds)
+# print("DM")
+# print(DM)
+#
+# DG = directedGraph(DM, determinents, relation)
+# print("DG")
+# print(DG)
+#
+# DC = dependencyClosure(DM, DG, determinents, relation, fds)
+# print(DC)
+#
+# CDC = circularDependency(DM, DC)
+# print("CDC")
+# print(CDC)

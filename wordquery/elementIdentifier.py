@@ -129,7 +129,6 @@ def get_attribute_names(xmlfile):
 
 # calculate edit distance
 def extract_tables(nouns, xml_file):
-    print("llllllllllllllssaaaaaaaaaaaa")
     table_file = open('out/table_editDistance.txt', 'w')
     table_list = get_Table_names(xml_file)
     list1 = []

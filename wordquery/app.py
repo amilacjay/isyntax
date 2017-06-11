@@ -88,20 +88,20 @@ class App:
 
 
         # find tables and attributes in user input
-        print("*****List of nouns          :", list_of_nouns)
+        print("List of nouns          :", list_of_nouns)
         identified_table, n_list = tableIdentifier(asd, list_of_nouns, xml_file)
         identified_table = list(identified_table)
-        print("*****Table found            :", identified_table)
+        print("Table found            :", identified_table)
 
         new_nounList = list(set(n_list) ^ set(list_of_nouns))
         # print("*****New Noun List, after removing table names : ", new_nounList)
 
         identified_attribute = attributeIdentifier(att, new_nounList, xml_file)
-        print("*****Attributes found       :", identified_attribute)
-        print("*****value                  :", value)
-        print("*****symbol list            :", symbol)
-        print("*****prv attribute          :", prv_attribute)
-        print("*****conditon atribute list :", condition_att_list)
+        print("Attributes found       :", identified_attribute)
+        print("value                  :", value)
+        print("symbol list            :", symbol)
+        print("prv attribute          :", prv_attribute)
+        print("conditon atribute list :", condition_att_list)
 
         tab_att_list = table_extractor(xml_file)
         print("tables with attributes", tab_att_list)
