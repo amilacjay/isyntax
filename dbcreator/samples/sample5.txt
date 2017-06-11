@@ -1,8 +1,8 @@
 Reviews by reviewers are recorded for use in the paper selection process.
 The database system caters primarily to reviewers who record answers to evaluation questions for each paper they review and make recommendations regarding whether to accept or reject the paper.
 Authors of papers are uniquely identified by e-mail id. Authors' first name and last name are also recorded.
-Each paper is assigned a unique identifier by the system and it is described by a title, abstract, and the name of the electronic file containing the paper.
-A paper may have multiple authors, but one of the authors is designated as the contact author.
+Each paper has a unique identifier and it is described by a title, abstract, and the name of the electronic file.
+A paper may have multiple authors, but one is designated as the contact author.
 Reviewers of papers are uniquely identified by e-mail address.
 Each reviewer's first name, last name, phone number, affiliation, and topics of interest are also recorded.
 Each paper is assigned between two and four reviewers.

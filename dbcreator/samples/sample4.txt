@@ -6,7 +6,7 @@ Each band has a desired fee.
 The agent notes a telephone number of just one band member, which is used as the band's contact number.
 The agent keeps track of just one instrument that each band member plays.
 Each nightclub has a name, an address, and a contact person.
-That contact person has a telephone number that the agent uses to contact the club.
+That contact person has a telephone number.
 Each nightclub has a target maximum fee.
-The contact person will try to get the agent to accept that amount for a band's appearance.
+The contact person will try to get the agent to accept that amount for appearance of a band.
 Some clubs will feed the band members for free, and others will not.

@@ -1,5 +1,7 @@
 from dbcreator.models import *
 from dbcreator.core import *
+from nltk import WordNetLemmatizer
+
 
 
 class PrimaryExtractor:
@@ -54,16 +56,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         entity.setAttributes(attributes)
                         break
 
-                # elif (item[0] == 'uniquely'):
-                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][1] == 'NN']
-                #
-                #     for chunk in candidateAttributeData:
-                #         attr = Attribute(chunk)
-                #         attributes.append(attr)
-
-                        # attr.isUnique = True
-                        # attr.isPrimaryKey = True
-                        # attr.isNotNull = True
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -80,26 +72,9 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     break
 
 
-                # elif (item[1] == 'VBZ' or item[1] == 'VBP'):
-                #     itemIndex = item[2]
-                #
-                #     candidateEntityNames = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] < itemIndex]
-                #
-                #     entityName = candidateEntityNames.pop()
-                #
-                #     candidateAttributeData = [chunk for chunk in chunked_sents[sIndex] if chunk[0][2] > itemIndex]
-                #
-                #     attributes = []
-                #
-                #     for chunk in candidateAttributeData:
-                #         attr = Attribute(chunk)
-                #         attributes.append(attr)
-                #         print(attr.name())
-                #
-                #     entity = Entity(entityName)
-                #     entity.setAttributes(attributes)
-                #     target.append(entity)
-                #     break
+                elif item[1] == 'PRP':
+                    pass
+
 
 
 class UniqueKeyExtractor(SecondaryExtractor):
@@ -151,10 +126,19 @@ class RemoveDuplicateEntities(SecondaryExtractor):
     def execute(self, entities):
         uniqueEntities = []
 
+        wn = WordNetLemmatizer()
+
+
         for entity in entities:
+            ent = entity.name().lower()
+            entLemma = wn.lemmatize(ent)
+
             check = True
             for e in uniqueEntities:
-                if e.name().lower() == entity.name().lower():
+                uq = e.name().lower()
+                uqLemma = wn.lemmatize(uq)
+
+                if uqLemma == entLemma:
                     e.getAttributes().extend(entity.getAttributes())
                     check = False
                     break
@@ -243,6 +227,8 @@ class SuggestRelationshipTypes(SecondaryExtractor):
                         if atr.name().lower() == entity1.name().lower():
                             entity1.relationships.append((entity2, atr))
 
+
+
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
 #     def execute(self, entities):
 #
@@ -260,12 +246,8 @@ class SuggestRelationshipTypes(SecondaryExtractor):
 #             # entities.remove(e)
 
 
-# class RemoveAttributesInEntityList(SecondaryExtractor):
-#     def execute(self, entities):
-#         for entity in entities:
-#             for attr in entity.getAttributes():
-#                 if attr in entities:
-#                     entities.remove(attr)
+
+
 
 
 
