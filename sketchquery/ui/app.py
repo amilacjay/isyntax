@@ -1,10 +1,5 @@
-# -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'main.ui'
-#
-# Created by: PyQt5 UI code generator 5.7.1
-#
-# WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 import pymysql
@@ -16,6 +11,7 @@ from sketchquery.app import *
 class SketchQueryWindow(QMainWindow):
     def __init__(self, parent=None):
         QMainWindow.__init__(self, parent)
+        self.filePath = None
         self.setupUi()
 
     def setupUi(self):
@@ -23,12 +19,13 @@ class SketchQueryWindow(QMainWindow):
         self.resize(720, 582)
         self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
-        self.enableSaving = QtWidgets.QCheckBox(self.centralwidget)
-        self.enableSaving.setGeometry(QtCore.QRect(30, 90, 211, 20))
-        self.enableSaving.setObjectName("enableSaving")
-        self.enablePrev = QtWidgets.QCheckBox(self.centralwidget)
-        self.enablePrev.setGeometry(QtCore.QRect(30, 120, 211, 20))
-        self.enablePrev.setObjectName("enablePrev")
+        self.intermediateImages = QtWidgets.QCheckBox(self.centralwidget)
+        self.intermediateImages.setGeometry(QtCore.QRect(30, 90, 211, 20))
+        self.intermediateImages.setObjectName("intermediateImages")
+        self.detailedImage = QtWidgets.QCheckBox(self.centralwidget)
+        self.detailedImage.setGeometry(QtCore.QRect(30, 120, 211, 20))
+        self.detailedImage.setObjectName("detailedImage")
+        self.detailedImage.setChecked(True)
         self.txtSqlCmd = QtWidgets.QPlainTextEdit(self.centralwidget)
         self.txtSqlCmd.setEnabled(True)
         self.txtSqlCmd.setGeometry(QtCore.QRect(30, 200, 661, 101))
@@ -115,8 +112,8 @@ class SketchQueryWindow(QMainWindow):
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
         self.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.enableSaving.setText(_translate("MainWindow", "Generate Intermediate Results"))
-        self.enablePrev.setText(_translate("MainWindow", "Preview Intermediate Results"))
+        self.intermediateImages.setText(_translate("MainWindow", "Generate Intermediate Images"))
+        self.detailedImage.setText(_translate("MainWindow", "Generate Detailed Image"))
         self.btnGenerateSQL.setText(_translate("MainWindow", "Generate SQL"))
         self.btnExecute.setText(_translate("MainWindow", "Execute"))
         self.btnBrowse.setText(_translate("MainWindow", "Browse Sketch"))
@@ -142,12 +139,15 @@ class SketchQueryWindow(QMainWindow):
 
     def generateSQLClicked(self):
         if(self.filePath != None):
-            sketchQueryApp = SketchQueryApp(self.filePath)
-            queryList = sketchQueryApp.run()
+            sketchQueryApp = SketchQueryApp(self.filePath, self.detailedImage.isChecked(), self.intermediateImages.isChecked())
+            sql = sketchQueryApp.run()
+            self.txtSqlCmd.setPlainText(sql)
+
         else:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
             msg.setText("Please select an image file!")
+            msg.exec_()
 
 
     def testConn(self):
@@ -167,6 +167,7 @@ class SketchQueryWindow(QMainWindow):
             msg.setWindowTitle("Connection Test")
             msg.setDetailedText("The details are as follows:\nExecuted: SELECT version()\nResult: " + version)
             msg.exec_()
+
         except Exception as e:
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)

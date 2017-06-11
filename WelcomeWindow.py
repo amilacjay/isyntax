@@ -10,15 +10,22 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from configparser import ConfigParser
 
 from PyQt5.QtWidgets import QDialog
+from PyQt5.QtWidgets import QMainWindow
 
 from settings import Ui_Dialog as Settings
-from sketchquery.ui.app import Ui_MainWindow as SketchQuery
+from sketchquery.ui.app import SketchQueryWindow
+from wordquery.ui.main import WordQueryWindow
 
-class Ui_MainWindow(object):
-    def setupUi(self, MainWindow):
-        MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(760, 534)
-        self.centralwidget = QtWidgets.QWidget(MainWindow)
+class WelcomeWindow(QMainWindow):
+
+    def __init__(self, parent=None):
+        QMainWindow.__init__(self, parent)
+        self.setupUi()
+
+    def setupUi(self):
+        self.setObjectName("MainWindow")
+        self.resize(760, 534)
+        self.centralwidget = QtWidgets.QWidget(self)
         self.centralwidget.setObjectName("centralwidget")
         self.btnDBCreator = QtWidgets.QPushButton(self.centralwidget)
         self.btnDBCreator.setGeometry(QtCore.QRect(280, 170, 201, 32))
@@ -57,26 +64,27 @@ class Ui_MainWindow(object):
         self.btnDBNormalizer.raise_()
         self.label_2.raise_()
         self.btnSettings.raise_()
-        MainWindow.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar(MainWindow)
+        self.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar(self)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 760, 22))
         self.menubar.setObjectName("menubar")
-        MainWindow.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar(MainWindow)
+        self.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
-        MainWindow.setStatusBar(self.statusbar)
+        self.setStatusBar(self.statusbar)
 
-        self.retranslateUi(MainWindow)
-        QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
 
         self.btnSettings.clicked.connect(self.showSettings)
         self.btnDBCreator.clicked.connect(self.showDBCreator)
+        self.btnQueryByText.clicked.connect(self.showWordQuery)
         self.btnQueryBySketch.clicked.connect(self.showSketchQuery)
 
 
-    def retranslateUi(self, MainWindow):
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "NLP Interface for Databases"))
+        self.setWindowTitle(_translate("MainWindow", "NLP Interface for Databases"))
         self.btnDBCreator.setText(_translate("MainWindow", "Database Creator"))
         self.btnDBNormalizer.setText(_translate("MainWindow", "Database Normalizer"))
         self.btnQueryBySketch.setText(_translate("MainWindow", "Query by Sketches"))
@@ -95,19 +103,18 @@ class Ui_MainWindow(object):
     def showDBCreator(self):
         pass
 
+    def showWordQuery(self):
+        wordQueryWindow = WordQueryWindow(self)
+        wordQueryWindow.show()
+
     def showSketchQuery(self):
-        dialog = QDialog()
-        dialog.ui = SketchQuery()
-        dialog.ui.setupUi(dialog)
-        dialog.setAttribute(QtCore.Qt.WA_DeleteOnClose)
-        dialog.exec_()
+        sketchQueryWindow = SketchQueryWindow(self)
+        sketchQueryWindow.show()
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    MainWindow = QtWidgets.QMainWindow()
-    ui = Ui_MainWindow()
-    ui.setupUi(MainWindow)
-    MainWindow.show()
+    welcomeWindow = WelcomeWindow()
+    welcomeWindow.show()
     sys.exit(app.exec_())
 

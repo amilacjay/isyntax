@@ -236,6 +236,19 @@
     </property>
    </widget>
   </widget>
+  <widget class="QPushButton" name="btnTableDetails">
+   <property name="geometry">
+    <rect>
+     <x>140</x>
+     <y>60</y>
+     <width>151</width>
+     <height>32</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Show Table Details</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
