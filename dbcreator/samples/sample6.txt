@@ -1,14 +1,13 @@
-A health provider company has multiple offices in many different states.
-Many doctors work for the company, and each doctor takes care of multiple patients.
-Some doctors just work in one office, and others work in different offices on different days.
-The database keeps information about each doctor, such as doctor's name, address, contact phones, area of specialization, and so on.
-Each patient can be assigned to one or more doctors.
-Specific patient information is also kept in the database.
-Patient's name, address, phones, health record number, date of birth, history of appointments, prescriptions, blood tests, diagnoses.
-Customers can schedule and cancel appointments and order prescription drugs either over the phone or using the company Web site.
-Some restrictions apply,for example, to see a specialist, the patient needs an approval from his/her primary physician;
-to order a prescription the patient should have at least one valid refill left, and so on.
-Patients should be able to access the database using a Web browser to order prescriptions and make appointments.
-This is all that patients may do in the database.
-Doctors and nurses can browse information about their patients, write and renew prescriptions, schedule blood tests and X-Rays, and so on.
-Administrative staff (receptionists, pharmacy assistants) can schedule appointments for patients, fill prescriptions, and run specific reports.
+Every airplane has a registration number, and each airplane is of a specific model.
+The airport accommodates a number of airplane models, and each model is identified by a model number and has a capacity and a weight.
+A number of technicians work at the airport. You need to store the name, SSN, address, phone number, and salary of each technician.
+Each technician is an expert on one or more plane model(s), and his or her expertise may overlap with that of other technicians.
+This information about technicians must also be recorded.
+Traffic controllers must have an annual medical examination. For each traffic controller, you must store the date of the most recent exam.
+All airport employees (including technicians) belong to a union. You must store the union membership number of each employee.
+You can assume that each employee is uniquely identified by a social security number.
+The airport has a number of tests that are used periodically to ensure that airplanes are still airworthy.
+Each test has a Federal Aviation Administration (FAA) test number, a name, and a maximum possible score.
+The FAA requires the airport to keep track of each time a given airplane is tested by a given technician using a given test.
+For each testing event, the information needed is the date, the number of hours the technician spent doing the test, and
+the score the airplane received on the test.
