@@ -4,7 +4,6 @@ import dbnormalizer.experiments.amila_test as depMatrix
 
 
 def table_names(file):
-    table_primary = []
     relations = []
     database = xml.etree.ElementTree.parse('..\output\\' + file).getroot()
     for a in database.iter('table'):
@@ -14,24 +13,21 @@ def table_names(file):
             attributes.append(x.attrib['attname'])
             if str(x.find('columnKey').text).lower() == 'pri':
                 primary.append(x.attrib['attname'])
-        relations.append([a.attrib['tbname'], attributes])
-        table_primary.append([a.attrib['tbname'], primary])
-    return relations, table_primary
+        relations.append([a.attrib['tbname'], attributes,primary])
+    return relations
 
 
 # get the relevant dependencies from the list
-def get_relevantDep(fds, primary, atts):
+def get_relevantDep(fds, primary):
     alldep = []
     for i, key in enumerate(primary):
         relevantfds = []
         for fd in fds:
-            if [fds for fds in fd[0] if fds in key[1]] and len(fd[0]) <= len(key[1]):
+            if [fds for fds in fd[0] if fds in key[2]] and len(fd[0]) <= len(key[1]):
                 relevantfds.append(fd)
-        for at in atts:
-            print("atts,",atts)
-            if [fds for fds in fd[0] if fds in at[1]]:
+            if [fds for fds in fd[0] if fds in key[1] and (fds not in relevantfds)]:
                 relevantfds.append(fd)
-        alldep.append([key[0], key[1], relevantfds])
+        alldep.append([key[0], key[2], relevantfds])
     return alldep
 
 
@@ -41,24 +37,26 @@ def normalize(dep, relation):
         for v in relation:
             if str(v[0]).lower() == str(d[0]).lower():
                 ind = v
+                print("Table Name,", v[0])
                 print("functional dep", d[2])
                 print("relation", ind)
                 rel = ind[1]
         fds = d[2]
-        # DM, determinents = depMatrix.dependencyMatrix(rel, fds)
-        # print("DM")
-        # print(DM)
-        #
-        # DG = depMatrix.directedGraph(DM, determinents, rel)
-        # print("DG")
-        # print(DG)
-        #
-        # DC = depMatrix.dependencyClosure(DM, DG, determinents, rel, fds)
-        # print(DC)
-        #
-        # CDC = depMatrix.circularDependency(DM, DC)
-        # print("CDC")
-        # print(CDC)
+        print("fds",fds)
+        DM, determinents = depMatrix.dependencyMatrix(rel, fds)
+        print("DM")
+        print(DM)
+
+        DG = depMatrix.directedGraph(DM, determinents, rel)
+        print("DG")
+        print(DG)
+
+        DC = depMatrix.dependencyClosure(DM, DG, determinents, rel, fds)
+        print(DC)
+
+        CDC = depMatrix.circularDependency(DM, DC)
+        print("CDC")
+        print(CDC)
 
 
 file_name = "example_scenario.txt"
@@ -68,6 +66,6 @@ content = extract.readfile(file_name)
 x = extract.table_names(xml_file)
 s = extract.get_functionaldep(extract.extractor(content))
 fds = extract.restructure_keys(s, x)
-tables, primary = table_names(xml_file)
-dependencies = get_relevantDep(fds, primary, tables)
+tables = table_names(xml_file)
+dependencies = get_relevantDep(fds, tables)
 normalize(dependencies, tables)

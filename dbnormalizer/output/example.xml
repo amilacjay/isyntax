@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database dbname="example">
+    <tables>
+        <table tbname="emp_dept">
+            <attributes>
+                <attribute attname="Ename">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="emp_Ssn">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Bdate">
+                    <dataType>date</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Address">
+                    <dataType>varchar</dataType>
+                    <maxLength>100</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Dnumber">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Dname">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Dmgr_ssn">
+                    <dataType>varchar</dataType>
+                    <maxLength>80</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="emp_proj">
+            <attributes>
+                <attribute attname="Ssn">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Pnumber">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Hours">
+                    <dataType>time</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Ename">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Pname">
+                    <dataType>varchar</dataType>
+                    <maxLength>10</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="Plocation">
+                    <dataType>varchar</dataType>
+                    <maxLength>30</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+            </attributes>
+        </table>
+    </tables>
+</database>
