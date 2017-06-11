@@ -61,7 +61,7 @@ def dbConn(user, passwd, db):
 # Excute SQL query
 def exec_query(query):
     config = ConfigParser()
-    config.read('config.ini')
+    config.read('../../config.ini')
 
     txtHost = config.get('DBNormalizer', 'host')
     txtPort = config.get('DBNormalizer', 'port')
