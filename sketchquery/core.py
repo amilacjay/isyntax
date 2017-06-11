@@ -184,4 +184,10 @@ def getPointsOfRect(stat, shape):
 
 def convertToSQL(queryList):
 
-    return None
+    for i, query in enumerate(queryList):
+        print("Query : " + str(i + 1))
+        print('tables : ' + str(query.tables))
+        print('condition : ' + str(query.conditions))
+        print('projection : ' + str(query.projection))
+
+    return "SELECT * FROM Student"

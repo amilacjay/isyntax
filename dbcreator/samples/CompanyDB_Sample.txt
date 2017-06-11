@@ -1,4 +1,4 @@
-Company is organized into departments.
+Company has organized into departments.
 A department has a department name, unique department number and a manager who manages it.
 Company records manager's ssn and start date.
 Department may have several locations.

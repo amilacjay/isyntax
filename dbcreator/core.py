@@ -108,7 +108,10 @@ def createSQLScript(entities):
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
 
-        wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+            if primaryKeyLine != '':
+                wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+            else:
+                wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
 
     return wholeSQL
 

@@ -5,17 +5,17 @@ from nltk import WordNetLemmatizer
 
 
 class PrimaryExtractor:
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target, isNEExcluded):
         pass
 
 
 class SecondaryExtractor:
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
         pass
 
 
 class PossessionBasedExtractor(PrimaryExtractor):
-    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target):
+    def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target, isNEExcluded):
 
         for sIndex, sent in enumerate(tagged_sents):
             for index, item in enumerate(sent):
@@ -44,9 +44,8 @@ class PossessionBasedExtractor(PrimaryExtractor):
 
                     entity = Entity(entityName)
 
-                    isChecked = False
 
-                    if(isChecked):
+                    if(isNEExcluded):
                         if (any(ne not in entity.name().replace('_', ' ').lower() for ne in ne_entites)):
                             target.append(entity)
                             entity.setAttributes(attributes)
@@ -76,9 +75,8 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     pass
 
 
-
 class UniqueKeyExtractor(SecondaryExtractor):
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
         for entity in entities:
 
             for attr in entity.getAttributes():
@@ -100,7 +98,7 @@ class UniqueKeyExtractor(SecondaryExtractor):
 
 
 class IdentifyAttributeDataType(SecondaryExtractor):
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
 
         intList = ['number', 'no', 'id', 'SSN']
         dateList = ['date', 'dob']
@@ -123,11 +121,10 @@ class IdentifyAttributeDataType(SecondaryExtractor):
 
 
 class RemoveDuplicateEntities(SecondaryExtractor):
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
         uniqueEntities = []
 
         wn = WordNetLemmatizer()
-
 
         for entity in entities:
             ent = entity.name().lower()
@@ -168,7 +165,7 @@ class RemoveDuplicateEntities(SecondaryExtractor):
 
 
 class RemoveDuplicateAttributes(SecondaryExtractor):
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
 
         for entity in entities:
             attrList = entity.getAttributes()
@@ -200,24 +197,25 @@ class RemoveDuplicateAttributes(SecondaryExtractor):
 
 
 class RemoveNonPotentialEntities(SecondaryExtractor):
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
         nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
         filteredList = []
 
-        for entity in entities:
-            check = True
-            for item in nonPotentialList:
-                if (entity.name().lower() == item.lower()) or (item.lower() in entity.name()):
-                    check = False
+        if(isNPEExcluded):
+            for entity in entities:
+                check = True
+                for item in nonPotentialList:
+                    if (entity.name().lower() == item.lower()) or (item.lower() in entity.name()):
+                        check = False
 
-            if check:
-                filteredList.append(entity)
+                if check:
+                    filteredList.append(entity)
 
-        entities[:] = filteredList[:]
+            entities[:] = filteredList[:]
 
 
 class SuggestRelationshipTypes(SecondaryExtractor):
-    def execute(self, entities):
+    def execute(self, entities, isNPEExcluded):
 
         for i, entity1 in enumerate(entities):
             for j, entity2 in enumerate(entities):
@@ -230,7 +228,7 @@ class SuggestRelationshipTypes(SecondaryExtractor):
 
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):
-#     def execute(self, entities):
+#     def execute(self, entities, isNPEExcluded):
 #
 #         removingIndex = []
 #         for entity in entities:

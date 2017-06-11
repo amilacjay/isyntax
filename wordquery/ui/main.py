@@ -9,7 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from wordquery.app import App
-
+from wordquery.ui.tableDetails import Ui_Dialog as TableDetailsDialog
 
 class WordQueryWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -79,11 +79,15 @@ class WordQueryWindow(QMainWindow):
         self.txtUsername = QtWidgets.QLineEdit(self.groupBox)
         self.txtUsername.setGeometry(QtCore.QRect(140, 120, 151, 21))
         self.txtUsername.setObjectName("txtUsername")
+        self.btnTableDetails = QtWidgets.QPushButton(self)
+        self.btnTableDetails.setGeometry(QtCore.QRect(140, 60, 151, 32))
+        self.btnTableDetails.setObjectName("btnTableDetails")
 
         self.retranslateUi()
         QtCore.QMetaObject.connectSlotsByName(self)
 
         self.btnGenerateSQL.clicked.connect(self.generateSQL)
+        self.btnTableDetails.clicked.connect(self.showTableDetails)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -103,13 +107,19 @@ class WordQueryWindow(QMainWindow):
         self.label_5.setText(_translate("Dialog", "Host:"))
         self.txtPort.setText(_translate("Dialog", "3306"))
         self.txtUsername.setText(_translate("Dialog", "root"))
+        self.btnTableDetails.setText(_translate("Dialog", "Show Table Details"))
 
     def generateSQL(self):
         wordQueryApp = App(self.lineEdit.text())
-        sql = wordQueryApp.run()
+        sql, self.xmlFile = wordQueryApp.run('wordquery/out/')
 
         self.txtSqlCmd.setPlainText(sql)
 
+    def showTableDetails(self):
+        dialogWindow = QtWidgets.QDialog()
+        ui = TableDetailsDialog(self.xmlFile)
+        ui.setupUi(dialogWindow)
+        dialogWindow.exec_()
 
 if __name__ == "__main__":
     import sys

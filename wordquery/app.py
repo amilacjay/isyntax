@@ -10,10 +10,10 @@ class App:
     def __init__(self, input):
         self.input = input
 
-    def run(self):
-        database = "company_new"
+    def run(self, rootPath='out/'):
+        database = "company_new_new"
         username = "root"
-        password = ""
+        password = "1234"
         fet = Fetcher(username, password, database)
         tre = fet.getSchema(fet.dbConn())
         fet.writeXML(tre)
@@ -60,7 +60,7 @@ class App:
         postag_list = pos_tagging(tokens)
         print("Pos tags :", postag_list)
 
-        f = open('out/pos_tags.txt', 'w')
+        f = open(rootPath+'pos_tags.txt', 'w')
         for tag in postag_list:
             f.write(str(tag))
             f.write("\n")
@@ -137,7 +137,7 @@ class App:
 
                     except:
                         sql = "none"
-        return sql
+        return sql, xml_file
 
 # Main Program Executing
 if __name__ == "__main__":
