@@ -7,7 +7,7 @@ class App:
         self.filePath = filePath
 
 
-    def run(self):
+    def run(self, isNEChecked):
 
         text = getContentFromFile(self.filePath)
 
@@ -33,7 +33,7 @@ class App:
             extObject = extractor()
 
             if isinstance(extObject, PrimaryExtractor):
-                extObject.execute(tagged_sents=tagged_sentences, chunked_sents=chunked_sentences, ne_chunked_sents=ne_chunked_sentences, target=entityList)
+                extObject.execute(tagged_sents=tagged_sentences, chunked_sents=chunked_sentences, ne_chunked_sents=ne_chunked_sentences, target=entityList, isNEExcluded = isNEChecked)
 
             elif isinstance(extObject, SecondaryExtractor):
                 extObject.execute(entities=entityList)
