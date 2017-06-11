@@ -1,5 +1,5 @@
-Patients have unique SSN and their names, addresses, and ages must be recorded.
-Doctors have unique SSN and also their name, specialty, and years of experience must be recorded.
+Each patient has unique SSN and their names, addresses, and ages must be recorded.
+Each doctor has unique SSN and also their name, specialty, and years of experience must be recorded.
 Each pharmaceutical company has a unique name and a phone number.
 For each drug, drug's trade name and formula must be recorded.
 Each drug is sold by a given pharmaceutical company, and the trade name identifies a drug uniquely from among the products of that company.
