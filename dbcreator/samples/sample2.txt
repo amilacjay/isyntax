@@ -1,9 +1,9 @@
-The university keeps track of each student's name, student number, Social Security number, current address and phone number, permanent address,
+The university keeps track of each student's name, unique student number, Social Security number, current address and phone number, permanent address,
 phone number, birth date, sex, class, major department, minor department and degree program.
 Some user applications need to refer to the city, state, and ZIP Code of the permanent address and to the student's last name.
-Both Social Security number and student number have unique values for each student.
+Each student has a unique Social Security number.
 Each department is described by a name, department code, office number, office phone number, and college.
-Both name and ZIP code have unique values for each department.
+Each department has a unique name and unique ZIP code.
 Each course has a course name, description, course number, number of semester hours, level, and department.
 The value of the course number is unique for each course.
 Each section has an instructor, semester, year, course, and section number.
