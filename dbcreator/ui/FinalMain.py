@@ -114,7 +114,9 @@ class DBCreatorWindow(QMainWindow):
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
-        self.frameGeometry()
+
+        # self.frameGeometry().moveCenter(QtGui.QDesktopWidget().availableGeometry().center())
+
 
         ###
         self.closeEvent = self.closeButtonClicked
