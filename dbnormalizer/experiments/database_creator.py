@@ -6,12 +6,14 @@ tableMatrix = [['course_id'], ['course_id', 'title', 'department_name']]
 database_name = 'university'
 db_name = ""
 
+def create_name(matrix, db_name):
+    return str((matrix[0][0]))+'_'+db_name
 
 # create database
 def table_creator():
     attrib_string = ",".join(str(single) for single in tableMatrix[0])
     asd = 'PRIMARY KEY(' + attrib_string + ')'
-    sql = 'CREATE TABLE ' + database_name + '_new (' + (
+    sql = 'CREATE TABLE ' + create_name(tableMatrix,database_name) + '_new (' + (
         ",".join(str(get_datatype(single)[0]) for single in tableMatrix[1])) + ' ,' + asd + ');'
     print(sql)
     exec_query(sql)

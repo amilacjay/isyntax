@@ -7,7 +7,7 @@ from wordquery.preprocessor import *
 
 __author__ = 'ChaminiKD'
 
-rootPath = '../out/'
+rootPath = 'wordquery/out/'
 
 # xml_file = 'company_new.xml'
 expression_list = [("equals", "="), ("greater than", ">"), ("less than", "<"), ("greater than or equal", ">="),

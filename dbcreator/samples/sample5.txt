@@ -1,9 +1,14 @@
-Reviews by reviewers are recorded for use in the paper selection process.
-The database system caters primarily to reviewers who record answers to evaluation questions for each paper they review and make recommendations regarding whether to accept or reject the paper.
-Authors of papers are uniquely identified by e-mail id. Authors' first name and last name are also recorded.
-Each paper has a unique identifier and it is described by a title, abstract, and the name of the electronic file.
-A paper may have multiple authors, but one is designated as the contact author.
-Reviewers of papers are uniquely identified by e-mail address.
-Each reviewer's first name, last name, phone number, affiliation, and topics of interest are also recorded.
-Each paper is assigned between two and four reviewers.
-A reviewer rates each paper assigned to him or her on a scale of 1 to 10 in four categories.
+A health provider company has multiple offices in many different states.
+Many doctors work for the company, and each doctor takes care of multiple patients.
+Some doctors just work in one office, and others work in different offices on different days.
+The database keeps information about each doctor, such as doctor's name, address, contact phones, area of specialization, and so on.
+Each patient can be assigned to one or more doctors.
+Specific patient information is also kept in the database.
+Patient's name, address, phones, health record number, date of birth, history of appointments, prescriptions, blood tests, diagnoses.
+Customers can schedule and cancel appointments and order prescription drugs either over the phone or using the company Web site.
+Some restrictions apply,for example, to see a specialist, the patient needs an approval from his/her primary physician;
+to order a prescription the patient should have at least one valid refill left, and so on.
+Patients should be able to access the database using a Web browser to order prescriptions and make appointments.
+This is all that patients may do in the database.
+Doctors and nurses can browse information about their patients, write and renew prescriptions, schedule blood tests and X-Rays, and so on.
+Administrative staff (receptionists, pharmacy assistants) can schedule appointments for patients, fill prescriptions, and run specific reports.

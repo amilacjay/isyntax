@@ -3,7 +3,6 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
 from nltk import ne_chunk
 
-
 from dbcreator.models import DataType
 
 
@@ -87,14 +86,13 @@ def createSQLScript(entities):
     wholeSQL = ''
     for entity in entities:
         firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
-        # firstLine = "CREATE TABLE {} (".format(entity.name())
         queryBody = '\n'
         delimiter = ',\n'
         lastLine = "\n);\n\n"
 
         attributeList = entity.getAttributes()
         keys = [atr.name() for atr in attributeList if atr.isUnique == True]
-        primaryKeyLine = ',\n\tPRIMARY KEY('+ ','.join(keys) +')'
+        primaryKeyLine = '\tPRIMARY KEY('+ ','.join(keys) +')'
 
         for i, attribute in enumerate(attributeList):
             dTypeSize = '(50)'
@@ -104,11 +102,14 @@ def createSQLScript(entities):
             attributeLine = '\t{} {}{}{}{}'.format(attribute.name(), attribute.dtype, dTypeSize if attribute.dtype == DataType.VARCHAR else '' ,
                                                uniqueKW if attribute.isUnique else '', notnullKW if attribute.isNotNull else '')
 
-            if i != len(attributeList) - 1:
+            if i < len(attributeList) - 1:
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
 
-        wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+            if len(keys) != 0:
+                wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+            else:
+                wholeSQL = wholeSQL + (firstLine + queryBody +lastLine)
 
     return wholeSQL
 

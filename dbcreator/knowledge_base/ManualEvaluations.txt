@@ -1,63 +1,69 @@
 Company_DB
-department - department name, department number(unique), manager, several locations, employee
+department - department name, department number(unique), manager, several locations, employee, projects
 manager - ssn, start date
-employee - name, birth date, address, sex, salary, ssn(unique), direct supervisor, current number of hours per week
+employee - name, birth date, address, sex, salary, ssn(unique), supervisor, current number of hours per week
 supervisor - ssn(unique)
 dependent - name, sex, birth date, relationship to the employee
 project - project name, project number(unique), location
 
+(r'ships => department-manager, department-employee, department-projects, employee-supervisor, employee-dependent)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_1
 department - name(unique), number(unique), employee, several locations, projects
 employee - name, social security number, address, salary, sex, birth date, department, project,
-	   startdate, number of hours per week, direct supervisor, dependents
+	        start date, number of hours per week, supervisor, dependents
 project - name(unique), number(unique), location
 dependent - first name, sex, birth date, relationship to employee
+supervisor
 
+(r'ships => department-employee, department-projects, employee-project, employee-supervisor, employee-dependent)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_2
 student - name, number(unique), social security number(unique), current address, phone number, permanent address(city, state, ZIP code),
-	  phone number, birth date, sex, class, major department, minor department, degree program, last name
+	        phone number, birth date, sex, class, major department, minor department, degree program, last name
 department - name(unique), department code(unique), office number, office phone number, college
 course - course name, description, course number(unique), number of semester hours, level, offering department
 section - instructor, semester, year, course, section number(unique)
 grade report - student, section, letter grade, numeric grade
 
+(r'ships => section-course, grade report-section, course-department, student-department)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_3
-student - identifier(unique), first name, last name, e-mail address
-instructor - course
-course - course number, section number, term, minimum number of points
-grading component - maximum number of points, weight
-
-
-Sample_4
 booking - date, time, fee
 band - members, desired fee
 agent
 night club - name, address, contact person, target maximum fee
 contact person - telephone number
 
+(r'ships =>
 
-Sample_5
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample_4
 author - e-mail id(unique), first name, last name
 paper - identifier(unique), title, abstract, name of the electronic file, authors, contact author
 reviewer - e-mail address(unique), first name, last name, phone number, affiliation, topics of interest
 
+(r'ships => paper-author)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample_5
+doctor - name, address, contact phones, area of specialization
+patient - name, address, phones, health record number, date of birth, history of appointments, prescriptions,
+            blood tests, diagnoses, valid refill
+
+(r'ships =>
+
+---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_6
-doctor - name, address, contact phones, area of specialization
-patient - name, address, phones, health record number, date of birth, history of appointments, prescriptions, blood tests, diagnoses, valid refill
-
-
-Sample_7
-musician - ssn, name, address, phone number
-instrument - identification number(unique), name, musical key
-album - identification number(unique), title, copyright date, format, album identifier, songs, musician(producer)
-song - title, author
-
-
-Sample_8
 airplane - registration number, model
 model - model number, capacity, weight
 technicians - name, ssn, address, phone number, salary
@@ -66,8 +72,11 @@ employee - union membership number, social security number(unique)
 test - Federal Aviation Administration(FAA) test number, name, maximum possible score
 testing event - date, number of hours, score
 
+(r'ships =>airplane-model)
 
-Sample_9
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample_7
 patient - ssn(unique), name, address, age, primary physician
 doctor - ssn(unique), name, speciality, years of experience, patient
 pharmaceutical company - name(unique), phone number
@@ -76,6 +85,36 @@ pharmacy - name, address, phone number
 contract - start date, end date, text of the contract, supervisor
 supervisor
 
+(r'ships => doctor-patient, contract-supervisor)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample_8
+professor - ssn, name, age, rank, research specialty
+project - project number, sponsor name, starting date, ending date, budget,
+            principal investigator, co-investigators, research assistants
+graduate student - ssn, name, age, degree program, supervisor, major department, student advisor
+department - department number, department name, main office, professor
+
+(r'ships =>department-professor)
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample_9
+employee - unique ssn, name, hours of work, unique project number, project name, project location
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+Sample_10
+employee - employee name, unique ssn, birth date, address, department number, department name, department ssn
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Removed_Sample_3
+student - identifier(unique), first name, last name, e-mail address
+instructor - course
+course - course number, section number, term, minimum number of points
+grading component - maximum number of points, weight
 
 Removed_Sample_4
 player - personnel id(unique), first name, last name, date, place of birth, batting orientation,
@@ -86,5 +125,11 @@ coach - personnel id(unique), first name, last name, date, place of birth
 manager - personnel id(unique), first name, last name, date, place of birth
 umpire - personnel id(unique), first name, last name, date, place of birth
 game - home team, visiting team, date, winning pitcher, losing pitcher, save pitcher, number of hits by each player
+
+Removed_Sample_7
+musician - ssn, name, address, phone number
+instrument - identification number(unique), name, musical key
+album - identification number(unique), title, copyright date, format, album identifier, songs, musician(producer)
+song - title, author
 
 

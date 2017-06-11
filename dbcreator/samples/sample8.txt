@@ -1,13 +1,14 @@
-Every airplane has a registration number, and each airplane is of a specific model.
-The airport accommodates a number of airplane models, and each model is identified by a model number and has a capacity and a weight.
-A number of technicians work at the airport. You need to store the name, SSN, address, phone number, and salary of each technician.
-Each technician is an expert on one or more plane model(s), and his or her expertise may overlap with that of other technicians.
-This information about technicians must also be recorded.
-Traffic controllers must have an annual medical examination. For each traffic controller, you must store the date of the most recent exam.
-All airport employees (including technicians) belong to a union. You must store the union membership number of each employee.
-You can assume that each employee is uniquely identified by a social security number.
-The airport has a number of tests that are used periodically to ensure that airplanes are still airworthy.
-Each test has a Federal Aviation Administration (FAA) test number, a name, and a maximum possible score.
-The FAA requires the airport to keep track of each time a given airplane is tested by a given technician using a given test.
-For each testing event, the information needed is the date, the number of hours the technician spent doing the test, and
-the score the airplane received on the test.
+Professors have an SSN, a name, an age, a rank, and a research specialty.
+Projects have a project number, a sponsor name, a starting date, an ending date, and a budget.
+Graduate students have an SSN, a name, an age, and a degree program.
+Each project is managed by one professor known as the project’s principal investigator.
+Each project is worked on by one or more professors known as the project’s co-investigators.
+Professors can manage and/or work on multiple projects.
+Each project is managed by one or more research assistants.
+When graduate students work on a project, a professor must supervise their work on the project.
+Graduate students can work on multiple projects. Graduate students will have a supervisor for each one.
+Departments have a department number, a department name, and a main office.
+Departments have a professor.
+Professors work in one or more departments, and for each department that they work in, a time percentage is associated with their job.
+Graduate students have one major department.
+Each graduate student has a student advisor.

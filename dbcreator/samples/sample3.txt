@@ -1,0 +1,12 @@
+A "booking" is an event in which a certain band plays in a particular club on a particular date, starting at a certain time, ending at a certain time, and for a specific fee.
+A band can play more than once a day.
+For each booking, the club pays the talent agent, who keeps a five percent fee and then gives the rest to the band.
+Each band has at least two members.
+Each band has a desired fee.
+The agent notes a telephone number of just one band member, which is used as the band's contact number.
+The agent keeps track of just one instrument that each band member plays.
+Each nightclub has a name, an address, and a contact person.
+That contact person has a telephone number.
+Each nightclub has a target maximum fee.
+The contact person will try to get the agent to accept that amount for appearance of a band.
+Some clubs will feed the band members for free, and others will not.
