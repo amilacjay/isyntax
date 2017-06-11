@@ -3,8 +3,6 @@ __author__ = 'ChaminiKD'
 import xml.etree.cElementTree as etree
 
 # xml_file = "university.xml"
-
-
 # tab_att_list = []
 
 def table_extractor(xml_file):

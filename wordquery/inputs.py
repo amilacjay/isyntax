@@ -27,3 +27,4 @@ d2 = " employee details whose departmentname equals 'headquarters' " #w
 d3 = " deparmentnames of  department of which departmentlocation equals 'Houston'" #w
 d4 = "What are the locations of departments" #not
 
+#25 inputs
