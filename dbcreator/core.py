@@ -3,6 +3,7 @@ from nltk import sent_tokenize, word_tokenize
 from nltk.tag import pos_tag
 from nltk import ne_chunk
 
+
 from dbcreator.models import DataType
 
 
@@ -58,17 +59,10 @@ def getNamedEntities(text):
     return neList
 
 
-# def removeNamedEntities(tSents):
-#     nEntities = getNamedEntities(tSents)
-#     flattenedList = [item for list_1 in nEntities for list_2 in list_1 for item in list_2]
-#     for item in flattenedList:
-#         if item in tSents:
-#             tSents.remove(item)
-
-
 def getChunkedSentences(taggedSents):
     grammar = r"""
     NP: {<NN.*><IN><NN.*><NN.*>?}
+        {<NN.*><IN><DT><JJ><NN.*>}
         {<NN.*><IN>(<VB.*>|<DT>)<NN.*>}
         {<NN.*><TO><DT><NN.*>}
         {((<JJ.*>|<RB.*>|<NN.*>)*|<VBG>?)<NN.*>}
@@ -124,39 +118,4 @@ def csv_reader(filename):
         content = f.readlines()
     return [s.strip() for s in str(''.join(content)).split(',')]
 
-
-
-# def extract_relations(taggedSents):
-#     grammar = "NP: {<NN.*><NN.*><IN><NN.*>}"
-#
-#     # { < NN. * > < VB. * > < VB. * > < TO > < DT > < NN. * >}
-#     # { < NN. * > < VB. * > * < IN > < DT > < NN. * >}
-#     #         {<NN.*><VB.*><JJ><NN.*>}
-#     # grammar = """r
-#     # NP: {<NN.*>(<NN.*>|<VB.*>)(<IN>|<JJ>|<VB.*>)<NN.*>}
-#     #     {<NN.*><VB.*>(<IN>|<VB.*>)<TO><DT><NN.*>}
-#     # """
-#
-#     cp = RegexpParser(grammar)
-#
-#     relationList = []
-#     for tSent in taggedSents:
-#         result = cp.parse(tSent)
-#
-#         extract_gen = extract_np(result)
-#
-#         relationList.append([x for x in extract_gen])
-#
-#         # for item in relationList:
-#         #     for index, re in enumerate(item):
-#         #         if re[2][1] == 'IN':
-#         #             hIndex = re[2][2]
-#         #             for i, chunk in enumerate(relationList[index]):
-#         #                 print(chunk[0][3])
-#         #                 if chunk[0][2] < hIndex:
-#         #                     relative_1 = chunk[0][0]
-#         #                     print(relative_1)
-#         #                 if chunk[0][2] > hIndex:
-#         #                     relative_2 = chunk[0][3]
-#         #                     print(relative_2)
 
