@@ -1,12 +1,9 @@
-A "booking" is an event in which a certain band plays in a particular club on a particular date, starting at a certain time, ending at a certain time, and for a specific fee.
-A band can play more than once a day.
-For each booking, the club pays the talent agent, who keeps a five percent fee and then gives the rest to the band.
-Each band has at least two members.
-Each band has a desired fee.
-The agent notes a telephone number of just one band member, which is used as the band's contact number.
-The agent keeps track of just one instrument that each band member plays.
-Each nightclub has a name, an address, and a contact person.
-That contact person has a telephone number.
-Each nightclub has a target maximum fee.
-The contact person will try to get the agent to accept that amount for appearance of a band.
-Some clubs will feed the band members for free, and others will not.
+Reviews by reviewers are recorded for use in the paper selection process.
+The database system caters primarily to reviewers who record answers to evaluation questions for each paper they review and make recommendations regarding whether to accept or reject the paper.
+Authors of papers are uniquely identified by e-mail id. Authors' first name and last name are also recorded.
+Each paper has a unique identifier and it is described by a title, abstract, and the name of the electronic file.
+A paper may have multiple authors, but one is designated as the contact author.
+Reviewers of papers are uniquely identified by e-mail address.
+Each reviewer's first name, last name, phone number, affiliation, and topics of interest are also recorded.
+Each paper is assigned between two and four reviewers.
+A reviewer rates each paper assigned to him or her on a scale of 1 to 10 in four categories.
