@@ -7,26 +7,33 @@
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtWidgets import QMainWindow
+from wordquery.app import App
 
-class Ui_Dialog(object):
-    def setupUi(self, Dialog):
-        Dialog.setObjectName("Dialog")
-        Dialog.resize(718, 445)
-        self.txtSqlCmd = QtWidgets.QPlainTextEdit(Dialog)
+
+class WordQueryWindow(QMainWindow):
+    def __init__(self, parent=None):
+        QMainWindow.__init__(self, parent)
+        self.setupUi()
+
+    def setupUi(self):
+        self.setObjectName("Dialog")
+        self.resize(718, 445)
+        self.txtSqlCmd = QtWidgets.QPlainTextEdit(self)
         self.txtSqlCmd.setEnabled(True)
         self.txtSqlCmd.setGeometry(QtCore.QRect(30, 100, 661, 101))
         self.txtSqlCmd.setObjectName("txtSqlCmd")
-        self.btnGenerateSQL = QtWidgets.QPushButton(Dialog)
+        self.btnGenerateSQL = QtWidgets.QPushButton(self)
         self.btnGenerateSQL.setGeometry(QtCore.QRect(30, 60, 113, 32))
         self.btnGenerateSQL.setObjectName("btnGenerateSQL")
-        self.btnTestConn = QtWidgets.QPushButton(Dialog)
+        self.btnTestConn = QtWidgets.QPushButton(self)
         self.btnTestConn.setGeometry(QtCore.QRect(30, 400, 151, 32))
         self.btnTestConn.setObjectName("btnTestConn")
-        self.btnExecute = QtWidgets.QPushButton(Dialog)
+        self.btnExecute = QtWidgets.QPushButton(self)
         self.btnExecute.setGeometry(QtCore.QRect(572, 400, 121, 32))
         self.btnExecute.setDefault(True)
         self.btnExecute.setObjectName("btnExecute")
-        self.layoutWidget = QtWidgets.QWidget(Dialog)
+        self.layoutWidget = QtWidgets.QWidget(self)
         self.layoutWidget.setGeometry(QtCore.QRect(30, 30, 661, 23))
         self.layoutWidget.setObjectName("layoutWidget")
         self.horizontalLayout = QtWidgets.QHBoxLayout(self.layoutWidget)
@@ -38,7 +45,7 @@ class Ui_Dialog(object):
         self.lineEdit = QtWidgets.QLineEdit(self.layoutWidget)
         self.lineEdit.setObjectName("lineEdit")
         self.horizontalLayout.addWidget(self.lineEdit)
-        self.groupBox = QtWidgets.QGroupBox(Dialog)
+        self.groupBox = QtWidgets.QGroupBox(self)
         self.groupBox.setGeometry(QtCore.QRect(30, 210, 311, 181))
         self.groupBox.setObjectName("groupBox")
         self.txtHost = QtWidgets.QLineEdit(self.groupBox)
@@ -73,12 +80,14 @@ class Ui_Dialog(object):
         self.txtUsername.setGeometry(QtCore.QRect(140, 120, 151, 21))
         self.txtUsername.setObjectName("txtUsername")
 
-        self.retranslateUi(Dialog)
-        QtCore.QMetaObject.connectSlotsByName(Dialog)
+        self.retranslateUi()
+        QtCore.QMetaObject.connectSlotsByName(self)
 
-    def retranslateUi(self, Dialog):
+        self.btnGenerateSQL.clicked.connect(self.generateSQL)
+
+    def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Natural Language Queries"))
+        self.setWindowTitle(_translate("Dialog", "Natural Language Queries"))
         self.btnGenerateSQL.setText(_translate("Dialog", "Generate SQL"))
         self.btnTestConn.setText(_translate("Dialog", "Test Connection"))
         self.btnExecute.setText(_translate("Dialog", "Execute"))
@@ -95,13 +104,17 @@ class Ui_Dialog(object):
         self.txtPort.setText(_translate("Dialog", "3306"))
         self.txtUsername.setText(_translate("Dialog", "root"))
 
+    def generateSQL(self):
+        wordQueryApp = App(self.lineEdit.text())
+        sql = wordQueryApp.run()
+
+        self.txtSqlCmd.setPlainText(sql)
+
 
 if __name__ == "__main__":
     import sys
     app = QtWidgets.QApplication(sys.argv)
-    Dialog = QtWidgets.QDialog()
-    ui = Ui_Dialog()
-    ui.setupUi(Dialog)
-    Dialog.show()
+    wordQueryWindow = WordQueryWindow()
+    wordQueryWindow.show()
     sys.exit(app.exec_())
 

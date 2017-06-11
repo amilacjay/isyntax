@@ -189,7 +189,7 @@ def find_attributes(noun_list, xml_file):
     return set(attList)
 
 
-table_synset_file = open('out/table_synset.txt', 'w')
+table_synset_file = open('../out/table_synset.txt', 'w')
 
 
 def tableIdentifier(knowledgeBase, nounList, xml_file):
@@ -222,7 +222,7 @@ def tableIdentifier(knowledgeBase, nounList, xml_file):
         return tab, n_list
 
 
-att_synset_file = open('out/attribute_synset.txt', 'w')
+att_synset_file = open('../out/attribute_synset.txt', 'w')
 
 
 def attributeIdentifier(knowledgeBase, nounList, xml_file):
