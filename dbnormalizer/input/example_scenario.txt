@@ -1,0 +1,5 @@
+Hours depends on Ssn and Pnumber.
+Ssn decides Ename.
+Pname and Plocation based on Pnumber.
+Bdate, Address, Ename and Dnumber depends on emp_Ssn.
+Dnumber decides Dname and Dmgr_ssn.

@@ -22,7 +22,10 @@ def extractor(sent):
     for w in removed[0]:
         stm = singularize(w)
         sin_list.append(stm)
-    return sin_list
+    list = []
+    list.append(sin_list)
+    return list
+
 # def extractor(sent):
 #     removed = []
 #     sentences = sent_tokenize(sent)
