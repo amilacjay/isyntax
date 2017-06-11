@@ -3,7 +3,6 @@ from PyQt5.QtWidgets import QListWidgetItem
 
 
 class DataType(Enum):
-
     def __str__(self):
         return self.name
 
@@ -36,6 +35,7 @@ class Entity(QListWidgetItem):
         for chunk in self.data:
             words.append(chunk[0])
         return ('_'.join(words)).strip()
+
 
 class Attribute:
     def __init__(self, data):
