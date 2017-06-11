@@ -65,22 +65,16 @@ def normalize(dep, relation):
 
 
 
+def start_normalizer(file_name="example_scenario.txt", xml_file="example.xml"):
 
+    content = extract.readfile(file_name)
+    x = extract.table_names(xml_file)
+    s = extract.get_functionaldep(extract.extractor(content))
 
-file_name = "example_scenario.txt"
-xml_file = 'example.xml'
+    fds = extract.restructure_keys(s, x)
 
-content = extract.readfile(file_name)
-x = extract.table_names(xml_file)
-s = extract.get_functionaldep(extract.extractor(content))
+    tables = table_names(xml_file)
 
-fds = extract.restructure_keys(s, x)
+    dependencies = get_relevantDep(fds, tables)
 
-tables = table_names(xml_file)
-
-dependencies = get_relevantDep(fds, tables)
-
-# print(dependencies)
-# print(tables)
-
-normalize(dependencies, tables)
+    normalize(dependencies, tables)

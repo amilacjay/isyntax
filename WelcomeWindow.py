@@ -12,6 +12,7 @@ from configparser import ConfigParser
 from PyQt5.QtWidgets import QDialog
 from PyQt5.QtWidgets import QMainWindow
 
+from dbnormalizer.ui.main import DBNormalizerWindow
 from settings import Ui_Dialog as Settings
 from sketchquery.ui.app import SketchQueryWindow
 from wordquery.ui.main import WordQueryWindow
@@ -81,6 +82,7 @@ class WelcomeWindow(QMainWindow):
         self.btnDBCreator.clicked.connect(self.showDBCreator)
         self.btnQueryByText.clicked.connect(self.showWordQuery)
         self.btnQueryBySketch.clicked.connect(self.showSketchQuery)
+        self.btnDBNormalizer.clicked.connect(self.showDBNormalizer)
 
 
     def retranslateUi(self):
@@ -112,6 +114,10 @@ class WelcomeWindow(QMainWindow):
     def showSketchQuery(self):
         sketchQueryWindow = SketchQueryWindow(self)
         sketchQueryWindow.show()
+
+    def showDBNormalizer(self):
+        dbNormalizerWindow = DBNormalizerWindow(self)
+        dbNormalizerWindow.show()
 
 if __name__ == "__main__":
     import sys

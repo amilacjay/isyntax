@@ -1,6 +1,7 @@
 import xml.etree.ElementTree
 
 import pymysql
+from configparser import ConfigParser
 
 # tMatrix = [['course_id'], ['course_id', 'title', 'department_name']]
 tMatrix = [['Dnumber'], ['Dnumber', 'Dname', 'Dmgr_ssn']]
@@ -59,14 +60,26 @@ def dbConn(user, passwd, db):
 
 # Excute SQL query
 def exec_query(query):
-    connection = dbConn('root', '1234', 'dbnormalizer')
-    try:
-        with connection.cursor() as cursor:
-            cursor.execute(query)
-            connection.commit()
-    finally:
-        connection.close()
-    pass
+    config = ConfigParser()
+    config.read('config.ini')
+
+    txtHost = config.get('DBNormalizer', 'host')
+    txtPort = config.get('DBNormalizer', 'port')
+    txtUsername = config.get('DBNormalizer', 'username')
+    txtPassword = config.get('DBNormalizer', 'password')
+    txtDatabase = config.get('DBNormalizer', 'database')
+
+
+
+    # connection = dbConn(txtUsername, txtPassword, txtDatabase)
+    # try:
+    #     with connection.cursor() as cursor:
+    #         cursor.execute(query)
+    #         connection.commit()
+    # finally:
+    #     connection.close()
+    # pass
+    print(query)
 
 
 # table_creator(tableMatrix=tMatrix)

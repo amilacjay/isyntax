@@ -15,7 +15,7 @@ keywords = ['depends', 'decides', 'based', 'relies']
 
 # Read the scenario file from inputs
 def readfile(name):
-    scenario = open('../input/' + name, 'r')
+    scenario = open(name, 'r')
     contents = scenario.read()
     return contents
 
