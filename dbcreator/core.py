@@ -86,8 +86,8 @@ def getChunkedSentences(taggedSents):
 def createSQLScript(entities):
     wholeSQL = ''
     for entity in entities:
-        # firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
-        firstLine = "CREATE TABLE {} (".format(entity.name())
+        firstLine = "DROP TABLE IF EXISTS {} CASCADE;\nCREATE TABLE {} (".format(entity.name(), entity.name())
+        # firstLine = "CREATE TABLE {} (".format(entity.name())
         queryBody = '\n'
         delimiter = ',\n'
         lastLine = "\n);\n\n"
@@ -108,7 +108,10 @@ def createSQLScript(entities):
                 attributeLine = attributeLine + delimiter
             queryBody = queryBody + attributeLine
 
-        wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+            if primaryKeyLine != '':
+                wholeSQL = wholeSQL + (firstLine + queryBody + primaryKeyLine + lastLine)
+            else:
+                wholeSQL = wholeSQL + (firstLine + queryBody + lastLine)
 
     return wholeSQL
 
