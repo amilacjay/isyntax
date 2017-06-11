@@ -3,12 +3,13 @@ from PyQt5.QtWidgets import QComboBox
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 from PyQt5.QtWidgets import QTableWidgetItem
-from dbcreator.database_connection.db_connection import DbConnection
+from PyQt5.QtCore import QSize
 
+from dbcreator.database_connection.db_connection import DbConnection
 from dbcreator.app import App
-from dbcreator.core import getContentFromFile
-from dbcreator.core import createSQLScript
-from dbcreator.models import DataType
+from dbcreator.core import *
+from dbcreator.models import *
+from dbcreator.extractors import *
 
 
 class Ui_MainWindow(QMainWindow):
@@ -61,6 +62,7 @@ class Ui_MainWindow(QMainWindow):
         self.btn_analyze.setGeometry(QtCore.QRect(20, 200, 113, 32))
         self.btn_analyze.setObjectName("btn_analyze")
         self.btn_generate = QtWidgets.QPushButton(self.centralwidget)
+        self.btn_generate.setEnabled(False)
         self.btn_generate.setGeometry(QtCore.QRect(140, 200, 113, 32))
         self.btn_generate.setObjectName("btn_generate")
         self.btn_execute = QtWidgets.QPushButton(self.centralwidget)
@@ -91,24 +93,24 @@ class Ui_MainWindow(QMainWindow):
         self.btn_preview.setGeometry(QtCore.QRect(260, 200, 113, 32))
         self.btn_preview.setObjectName("btn_preview")
         self.chk_NE = QtWidgets.QCheckBox(self.centralwidget)
-        self.chk_NE.setEnabled(False)
+        self.chk_NE.setEnabled(True)
         self.chk_NE.setGeometry(QtCore.QRect(620, 200, 131, 31))
         self.chk_NE.setObjectName("chk_NE")
         self.chk_nonpotential = QtWidgets.QCheckBox(self.centralwidget)
-        self.chk_nonpotential.setEnabled(False)
+        self.chk_nonpotential.setEnabled(True)
         self.chk_nonpotential.setGeometry(QtCore.QRect(760, 200, 171, 31))
         self.chk_nonpotential.setObjectName("chk_nonpotential")
         self.chk_relation = QtWidgets.QCheckBox(self.centralwidget)
         self.chk_relation.setEnabled(False)
         self.chk_relation.setGeometry(QtCore.QRect(230, 530, 141, 31))
         self.chk_relation.setObjectName("chk_relation")
-        self.btn_add = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_add.setEnabled(False)
-        self.btn_add.setGeometry(QtCore.QRect(20, 540, 71, 23))
-        self.btn_add.setObjectName("btn_add")
+        # self.btn_add = QtWidgets.QPushButton(self.centralwidget)
+        # self.btn_add.setEnabled(False)
+        # self.btn_add.setGeometry(QtCore.QRect(20, 540, 71, 23))
+        # self.btn_add.setObjectName("btn_add")
         self.btn_remove = QtWidgets.QPushButton(self.centralwidget)
         self.btn_remove.setEnabled(False)
-        self.btn_remove.setGeometry(QtCore.QRect(100, 540, 71, 23))
+        self.btn_remove.setGeometry(QtCore.QRect(20, 540, 71, 23)) #100, 540, 71, 23
         self.btn_remove.setObjectName("btn_remove")
         self.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(self)
@@ -127,6 +129,8 @@ class Ui_MainWindow(QMainWindow):
         self.btn_reset.clicked.connect(self.resetBtnClicked)
         self.btn_generate.clicked.connect(self.generateSqlClicked)
         self.btn_execute.clicked.connect(self.executeBtnClicked)
+        self.chk_relation.clicked.connect(self.relationshipIsChecked)
+        self.btn_preview.clicked.connect(self.previewButtonClicked)
 
 
         self.retranslateUi(self)
@@ -135,7 +139,7 @@ class Ui_MainWindow(QMainWindow):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Database Creator"))
+        self.setWindowTitle(_translate("MainWindow", "Database Creator"))
         self.label.setText(_translate("MainWindow", "Database Description:"))
         self.btn_browse.setText(_translate("MainWindow", "Browse"))
         self.label_3.setText(_translate("MainWindow", "Attributes :"))
@@ -151,7 +155,7 @@ class Ui_MainWindow(QMainWindow):
         self.chk_NE.setText(_translate("MainWindow", "Remove Named Entities"))
         self.chk_nonpotential.setText(_translate("MainWindow", "Remove Non Potential Entities"))
         self.chk_relation.setText(_translate("MainWindow", "Show Relationships"))
-        self.btn_add.setText(_translate("MainWindow", "Add"))
+        # self.btn_add.setText(_translate("MainWindow", "Add"))
         self.btn_remove.setText(_translate("MainWindow", "Remove"))
 
 
@@ -163,6 +167,7 @@ class Ui_MainWindow(QMainWindow):
         if self.filePath != '':
             content = getContentFromFile(path)
             self.description.setText(content)
+
             if (content.strip() != ''):
                 self.btn_analyze.setEnabled(True)
             else:
@@ -171,28 +176,38 @@ class Ui_MainWindow(QMainWindow):
 
     def analyzeBtnClicked(self):
         app = App(filePath=self.filePath)
-        self.entities = app.run()
+        self.entities = app.run(isNEChecked=self.chk_NE.isChecked())
         self.addEntitiesToList(self.entities)
 
         if (len(self.entities) > 0):
             self.btn_generate.setEnabled(True)
-            self.checkBox.setEnabled(True)
-            self.checkBox_2.setEnabled(True)
+            self.chk_generate.setEnabled(True)
+            self.chk_nonpotential.setEnabled(True)
+            self.chk_relation.setEnabled(True)
+            # self.btn_add.setEnabled(True)
+            self.btn_remove.setEnabled(True)
         else:
             self.btn_generate.setEnabled(False)
+            self.chk_generate.setEnabled(True)
+            self.chk_nonpotential.setEnabled(True)
+            self.chk_relation.setEnabled(True)
+            # self.btn_add.setEnabled(True)
+            self.btn_remove.setEnabled(True)
 
 
     def generateSqlClicked(self):
-        script = createSQLScript(self.entities)
+        self.script = createSQLScript(self.entities)
 
-        if self.checkBox.isChecked():
+        if self.chk_generate.isChecked():
             fileName = str(self.filePath).split('/')[len(str(self.filePath).split('/')) - 1]
             output = open('../generated_sql/' + fileName.replace(".txt", ".sql"), 'w')
-            print(script, file=output)
+            print(self.script, file=output)
             output.close()
 
-        self.executableScript = script.replace('\n','').replace('\t','')
+        self.executableScript = self.script.replace('\n','').replace('\t','')
         self.btn_execute.setEnabled(True)
+        self.btn_preview.setEnabled(True)
+        self.btn_analyze.setEnabled(False)
 
 
     def executeBtnClicked(self):
@@ -306,6 +321,31 @@ class Ui_MainWindow(QMainWindow):
         attr = self.sender().property('attribute')
         if (attr != None):
             attr.isUnique = uq
+
+
+    def removeButtonClick(self, event):
+        pass
+
+
+    def relationshipIsChecked(self, event):
+        if self.chk_relation.isChecked():
+            self.lbl_relation.setEnabled(True)
+            self.relationships.setEnabled(True)
+            # relations =
+        else:
+            self.lbl_relation.setEnabled(False)
+            self.relationships.setEnabled(False)
+
+
+    def previewButtonClicked(self, event):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        # msg.setBaseSize(QSize(1500, 300))
+        msg.setWindowTitle("SQL Script")
+        msg.setText("SQL Script is Generated!!")
+        msg.setDetailedText(self.script)
+        msg.exec_()
+
 
 
 if __name__ == "__main__":
