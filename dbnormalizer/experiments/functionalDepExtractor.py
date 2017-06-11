@@ -15,7 +15,7 @@ keywords = ['depends', 'decides', 'based', 'relies']
 
 # Read the scenario file from inputs
 def readfile(name):
-    scenario = open('..\input\\' + name, 'r')
+    scenario = open('../input/' + name, 'r')
     contents = scenario.read()
     return contents
 
@@ -58,7 +58,7 @@ def remove(signList, tokens):
 
 # get attribute names from the XML
 def table_names(file):
-    database = xml.etree.ElementTree.parse('..\output\\' + file).getroot()
+    database = xml.etree.ElementTree.parse('../output/' + file).getroot()
     for a in database.iter('attribute'):
         attributes.append(a.attrib['attname'])
     return attributes

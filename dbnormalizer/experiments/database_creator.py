@@ -2,19 +2,21 @@ import xml.etree.ElementTree
 
 import pymysql
 
-tableMatrix = [['course_id'], ['course_id', 'title', 'department_name']]
-database_name = 'university'
+# tMatrix = [['course_id'], ['course_id', 'title', 'department_name']]
+tMatrix = [['Dnumber'], ['Dnumber', 'Dname', 'Dmgr_ssn']]
+database_name = 'example'
 db_name = ""
 
 def create_name(matrix, db_name):
     return str((matrix[0][0]))+'_'+db_name
 
 # create database
-def table_creator():
+def table_creator(tableMatrix):
     attrib_string = ",".join(str(single) for single in tableMatrix[0])
     asd = 'PRIMARY KEY(' + attrib_string + ')'
     sql = 'CREATE TABLE ' + create_name(tableMatrix,database_name) + '_new (' + (
         ",".join(str(get_datatype(single)[0]) for single in tableMatrix[1])) + ' ,' + asd + ');'
+
     print(sql)
     exec_query(sql)
 
@@ -24,15 +26,16 @@ def get_datatype(attrib):
     returntype = ''
     attrib_list = attribute_types(database_name + '.xml')
     for singleattrib in attrib_list:
-        if singleattrib[0] == attrib.lower():
+        if singleattrib[0].lower() == attrib.lower():
             returntype = singleattrib[1]
+    print(returntype)
     return returntype
 
 
 # get attribute datatypes from the XML
 def attribute_types(file):
     attribute_type = []
-    database = xml.etree.ElementTree.parse('..\output\\' + file).getroot()
+    database = xml.etree.ElementTree.parse('../output/' + file).getroot()
     for a in database.iter('attribute'):
         attribute_type.append([a.attrib['attname'], a.find('dataType').text])
         if a.find('maxLength').text.lower() != 'none':
@@ -56,13 +59,14 @@ def dbConn(user, passwd, db):
 
 # Excute SQL query
 def exec_query(query):
-    connection = dbConn('root', '', 'crud')
-    # try:
-    #     with connection.cursor() as cursor:
-    #         cursor.execute(query)
-    #         connection.commit()
-    # finally:
-    #     connection.close()
+    connection = dbConn('root', '1234', 'dbnormalizer')
+    try:
+        with connection.cursor() as cursor:
+            cursor.execute(query)
+            connection.commit()
+    finally:
+        connection.close()
+    pass
 
 
-table_creator()
+# table_creator(tableMatrix=tMatrix)

@@ -5,7 +5,7 @@ import dbnormalizer.experiments.amila_test as depMatrix
 
 def table_names(file):
     relations = []
-    database = xml.etree.ElementTree.parse('..\output\\' + file).getroot()
+    database = xml.etree.ElementTree.parse('../output/' + file).getroot()
     for a in database.iter('table'):
         primary = []
         attributes = []
@@ -32,31 +32,39 @@ def get_relevantDep(fds, primary):
 
 
 def normalize(dep, relation):
-    rel, fds = '', []
-    for d in dep:
-        for v in relation:
-            if str(v[0]).lower() == str(d[0]).lower():
-                ind = v
-                print("Table Name,", v[0])
-                print("functional dep", d[2])
-                print("relation", ind)
-                rel = ind[1]
-        fds = d[2]
-        print("fds",fds)
+    for i in range(len(relation)):
+
+        fds = dep[i][2]
+        rel = relation[i][1]
+
+        # ind = v
+        # print("Table Name,", v[0])
+        # print("functional dep", d[2])
+        # print("relation", ind)
+        # rel = ind[1]
+
+        # fds = d[2]
+        # print("fds",fds)
         DM, determinents = depMatrix.dependencyMatrix(rel, fds)
-        print("DM")
-        print(DM)
+        # print("DM")
+        # print(DM)
 
         DG = depMatrix.directedGraph(DM, determinents, rel)
-        print("DG")
-        print(DG)
+        # print("DG")
+        # print(DG)
 
         DC = depMatrix.dependencyClosure(DM, DG, determinents, rel, fds)
-        print(DC)
+        # print(DC)
 
         CDC = depMatrix.circularDependency(DM, DC)
-        print("CDC")
-        print(CDC)
+        # print("CDC")
+        # print(CDC)
+
+        depMatrix.to3NF(CDC, rel, fds)
+
+
+
+
 
 
 file_name = "example_scenario.txt"
@@ -65,7 +73,14 @@ xml_file = 'example.xml'
 content = extract.readfile(file_name)
 x = extract.table_names(xml_file)
 s = extract.get_functionaldep(extract.extractor(content))
+
 fds = extract.restructure_keys(s, x)
+
 tables = table_names(xml_file)
+
 dependencies = get_relevantDep(fds, tables)
+
+# print(dependencies)
+# print(tables)
+
 normalize(dependencies, tables)
