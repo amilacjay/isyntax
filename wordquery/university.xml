@@ -7,8 +7,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>5</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>student</referencedTable>
+                    <referencedColumn>ID</referencedColumn>
                     <values>
                         <data id="1">12345</data>
                         <data id="2">44553</data>
@@ -25,8 +25,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>5</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>instructor</referencedTable>
+                    <referencedColumn>instructor_id</referencedColumn>
                     <values>
                         <data id="1">10101</data>
                         <data id="2">22222</data>
@@ -137,8 +137,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>20</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>university_department</referencedTable>
+                    <referencedColumn>department_name</referencedColumn>
                     <values>
                         <data id="1">Biology</data>
                         <data id="2">Biology</data>
@@ -227,8 +227,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>20</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>university_department</referencedTable>
+                    <referencedColumn>department_name</referencedColumn>
                     <values>
                         <data id="1">Biology</data>
                         <data id="2">Computer Science</data>
@@ -273,8 +273,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>course</referencedTable>
+                    <referencedColumn>course_id</referencedColumn>
                     <values>
                         <data id="1">BIO-301</data>
                         <data id="2">BIO-399</data>
@@ -289,8 +289,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>course</referencedTable>
+                    <referencedColumn>course_id</referencedColumn>
                     <values>
                         <data id="1">BIO-101</data>
                         <data id="2">BIO-101</data>
@@ -309,8 +309,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>course</referencedTable>
+                    <referencedColumn>course_id</referencedColumn>
                     <values>
                         <data id="1">CS-319</data>
                         <data id="2">PHY-101</data>
@@ -405,8 +405,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>15</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>classroom</referencedTable>
+                    <referencedColumn>building</referencedColumn>
                     <values>
                         <data id="1">Packard</data>
                         <data id="2">Packard</data>
@@ -429,8 +429,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>7</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>classroom</referencedTable>
+                    <referencedColumn>room_number</referencedColumn>
                     <values>
                         <data id="1">100</data>
                         <data id="2">100</data>
@@ -525,8 +525,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>20</maxLength>
                     <columnKey>MUL</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>university_department</referencedTable>
+                    <referencedColumn>department_name</referencedColumn>
                     <values>
                         <data id="1">Biology</data>
                         <data id="2">Computer Science</data>
@@ -573,8 +573,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>5</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>student</referencedTable>
+                    <referencedColumn>ID</referencedColumn>
                     <values>
                         <data id="1">98988</data>
                         <data id="2">98988</data>
@@ -604,8 +604,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>course_id</referencedColumn>
                     <values>
                         <data id="1">BIO-101</data>
                         <data id="2">BIO-301</data>
@@ -635,8 +635,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>section_id</referencedColumn>
                     <values>
                         <data id="1">1</data>
                         <data id="2">1</data>
@@ -666,8 +666,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>6</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>semester</referencedColumn>
                     <values>
                         <data id="1">Summer</data>
                         <data id="2">Summer</data>
@@ -697,8 +697,8 @@
                     <dataType>decimal</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>started_year</referencedColumn>
                     <values>
                         <data id="1">2009</data>
                         <data id="2">2010</data>
@@ -763,8 +763,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>5</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>instructor</referencedTable>
+                    <referencedColumn>instructor_id</referencedColumn>
                     <values>
                         <data id="1">76766</data>
                         <data id="2">76766</data>
@@ -787,8 +787,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>course_id</referencedColumn>
                     <values>
                         <data id="1">BIO-101</data>
                         <data id="2">BIO-301</data>
@@ -811,8 +811,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>8</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>section_id</referencedColumn>
                     <values>
                         <data id="1">1</data>
                         <data id="2">1</data>
@@ -835,8 +835,8 @@
                     <dataType>varchar</dataType>
                     <maxLength>6</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>semester</referencedColumn>
                     <values>
                         <data id="1">Summer</data>
                         <data id="2">Summer</data>
@@ -859,8 +859,8 @@
                     <dataType>decimal</dataType>
                     <maxLength>None</maxLength>
                     <columnKey>PRI</columnKey>
-                    <referencedTable/>
-                    <referencedColumn/>
+                    <referencedTable>section</referencedTable>
+                    <referencedColumn>started_year</referencedColumn>
                     <values>
                         <data id="1">2009</data>
                         <data id="2">2010</data>

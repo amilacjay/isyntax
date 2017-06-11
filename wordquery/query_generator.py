@@ -50,6 +50,8 @@ def create_twoTable_query(ref_table, table, ref_list, identified_attributes, val
     for x in ref_list:
         if ref_table in x[1] and table in x[0]:
             ref_value = x[2]
+        if ref_table in x[0] and table in x[1]:
+            ref_value = x[2]
 
     if identified_attributes:
         sql = "SELECT " + ",".join(

@@ -129,6 +129,7 @@ def get_attribute_names(xmlfile):
 
 # calculate edit distance
 def extract_tables(nouns, xml_file):
+    print("llllllllllllllssaaaaaaaaaaaa")
     table_file = open('out/table_editDistance.txt', 'w')
     table_list = get_Table_names(xml_file)
     list1 = []
@@ -193,6 +194,7 @@ table_synset_file = open('out/table_synset.txt', 'w')
 
 
 def tableIdentifier(knowledgeBase, nounList, xml_file):
+    # print("mmmmmmmmm")
     try:
         list = []
         temp = []
@@ -210,7 +212,13 @@ def tableIdentifier(knowledgeBase, nounList, xml_file):
                         list.append(a[0])
                         n_list.append(n)
                         return list, n_list
+                    else:
+                         # print("lllllll")
+                         tab, n_list = find_tables(nounList, xml_file)
+                         return tab, n_list
+
     except:
+        # print("hhhhhhhhhhhhhhh")
         tab, n_list = find_tables(nounList, xml_file)
         return tab, n_list
 
