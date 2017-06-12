@@ -142,14 +142,8 @@ class SketchQueryWindow(QMainWindow):
 
     def generateSQLClicked(self):
         if(self.filePath != None):
-            conn = pymysql.connect(host=self.txtHost.text(),
-                                   port=int(self.txtPort.text()),
-                                   user=self.txtUsername.text(),
-                                   passwd=self.txtPassword.text(),
-                                   db=self.txtDB.text())
-
-
-            sketchQueryApp = SketchQueryApp(self.filePath, self.detailedImage.isChecked(), self.intermediateImages.isChecked(), conn)
+            tree = schemaTree(user='root', password='1234', db=self.txtDB.text())
+            sketchQueryApp = SketchQueryApp(self.filePath, self.detailedImage.isChecked(), self.intermediateImages.isChecked(), tree)
             sql = sketchQueryApp.run()
             self.txtSqlCmd.setPlainText(sql)
 

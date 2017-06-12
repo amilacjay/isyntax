@@ -1,11 +1,11 @@
 import cv2
 import numpy as np
 import tesserocr
-
 import pymysql
 from PIL import Image
 import math
 from xml.etree.ElementTree import Element, SubElement, ElementTree
+from nltk.metrics import *
 
 def optimalSize(img, sqr=800):
     height, width = img.shape[:2]
@@ -180,11 +180,11 @@ def getPointsOfRect(stat, shape):
 
     return conts[0]
 
-def schemaTree():
+def schemaTree(user, password, db):
     connection = pymysql.connect(host='localhost',
-                                 user=self.user,
-                                 password=self.passwd,
-                                 db=self.db,
+                                 user=user,
+                                 password=password,
+                                 db=db,
                                  charset='utf8mb4',
                                  cursorclass=pymysql.cursors.DictCursor)
 
@@ -192,7 +192,7 @@ def schemaTree():
         with connection.cursor() as cursor:
             # forming an XML
             root = Element('database')
-            root.set('dbname', self.db)
+            root.set('dbname', db)
             tree = ElementTree(root)
             tablesElement = Element('tables')
             root.append(tablesElement)
@@ -207,7 +207,7 @@ def schemaTree():
                 tableSubElement.set('tbname', str(table[tablekeyList[0]]))
                 cursor.execute("select table_name, column_name, data_type, character_maximum_length, column_key "
                                "from INFORMATION_SCHEMA.COLUMNS "
-                               "where table_name = '"+table[tablekeyList[0]]+"' AND TABLE_SCHEMA = '"+self.db+"';")
+                               "where table_name = '"+table[tablekeyList[0]]+"' AND TABLE_SCHEMA = '"+db+"';")
                 atts = cursor.fetchall()
                 connection.commit()
                 attsSubElement = SubElement(tableSubElement, "attributes")
@@ -228,7 +228,7 @@ def schemaTree():
                                    "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
                                    "WHERE column_name = '" + str(att[attKeyList[2]]).lower() + "' AND table_name = '" + str(
                         table[tablekeyList[
-                            0]]).lower() + "' AND referenced_column_name IS NOT NULL AND CONSTRAINT_SCHEMA = '" + self.db + "';")
+                            0]]).lower() + "' AND referenced_column_name IS NOT NULL AND CONSTRAINT_SCHEMA = '" + db + "';")
                     foreigns = cursor.fetchall()
                     connection.commit()
 
@@ -253,9 +253,26 @@ def schemaTree():
     finally:
         connection.close()
 
+def getTableNames(tree):
+    return [tableNode.attrib['tbname'] for tableNode in tree.iter('table')]
 
+def getColumnNames(tree, tableName):
+    list = [tableNode for tableNode in tree.iter('table') if tableNode.attrib['tbname']==tableName]
+    if len(list)==1:
+        return [attr.attrib['attname'] for attr in list[0].iter('attribute')]
 
-def convertToSQL(queryList):
+def minDisWord(word, list):
+    if len(list) >0:
+        suitableWord = list[0]
+
+        for item in list:
+            if edit_distance(word, suitableWord) > edit_distance(word, item):
+                suitableWord = item
+        return suitableWord
+    else:
+        return word
+
+def convertToSQL(queryList, tree):
 
     queryStatementList = []
 
@@ -263,23 +280,31 @@ def convertToSQL(queryList):
         tableName = ''
         conditionStr = ''
         projectionStr = '*'
+        projectionList = []
 
-        # if(query.projection[0] != ''):
-        #     projectionStr = query.projection[0].replace('[', '').replace(']', '').replace(' ','')
+        if(len(query.projection)>0):
+            projectionList = query.projection[0].replace('[', '').replace(']', '').replace(' ','').split(',')
 
 
         if len(query.tables)==1:
             tableName = query.tables[0]
-            template = ''
+            statement = ''
             if len(query.conditions) > 0:
+
+
                 conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
+                if (len(query.projection) > 0):
+                    projectionStr = ','.join(projectionList)
                 template = "SELECT {} FROM {} WHERE {}"
+                statement = template.format(projectionStr, tableName, conditionStr)
 
             else:
+                if (len(query.projection) > 0):
+                    projectionStr = ','.join([minDisWord(col, getColumnNames(tree, minDisWord(tableName, getTableNames(tree)))) for col in projectionList])
                 template = "SELECT {} FROM {}"
+                statement = template.format(projectionStr, minDisWord(tableName, getTableNames(tree)))
 
-            statement = template.format(projectionStr, tableName, conditionStr)
-            print(statement)
+
             queryStatementList.append(statement.replace("'","\"").replace("‘", "\""))
 
 
