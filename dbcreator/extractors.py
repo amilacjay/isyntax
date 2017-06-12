@@ -142,9 +142,9 @@ class SuggestRelationshipTypes(SecondaryExtractor):
                             e1Pk = [at.name() for at in entity2.getAttributes() if at.isPrimaryKey == True]
 
                             atrListE2.remove(atr)
-                            newAttr=Attribute(entity2.data)
+                            newAttr = Attribute(entity2.data)
                             newAttr.dtype = DataType.INTEGER
-                            newAttr.isForeignKey=True
+                            newAttr.isForeignKey = True
                             entity1.getAttributes().append(newAttr)
                             entity1.relationships.append((newAttr, entity2, e1Pk))
 
