@@ -1,8 +1,11 @@
 import cv2
 import numpy as np
 import tesserocr
+
+import pymysql
 from PIL import Image
 import math
+from xml.etree.ElementTree import Element, SubElement, ElementTree
 
 def optimalSize(img, sqr=800):
     height, width = img.shape[:2]
@@ -117,7 +120,6 @@ def enclosedByCircle(textRegionStat, contours):
 
     return False, None
 
-
 def eucDist(point1, point2):
     return math.sqrt(pow(point1[0]-point2[0], 2) + pow(point1[1]-point2[1], 2))
 
@@ -127,7 +129,6 @@ def getPointsOfCircle(center, radius, shape):
 
     where = np.argwhere(mask == 255)
     return where
-
 
 def getCommonPoints(points1, points2):
     commonPts = []
@@ -140,19 +141,16 @@ def getCommonPoints(points1, points2):
 
     return np.array(commonPts)
 
-
 def getCentroid(contour):
     M = cv2.moments(contour)
     cx = int(M['m10'] / M['m00'])
     cy = int(M['m01'] / M['m00'])
     return (cx, cy)
 
-
 def toPoints(stat):
     return [(stat[cv2.CC_STAT_LEFT], stat[cv2.CC_STAT_TOP]),
             (stat[cv2.CC_STAT_LEFT]+stat[cv2.CC_STAT_WIDTH],
              stat[cv2.CC_STAT_TOP]+stat[cv2.CC_STAT_HEIGHT])]
-
 
 def scale(cont, ratio):
     cx, cy = getCentroid(cont)
@@ -182,6 +180,81 @@ def getPointsOfRect(stat, shape):
 
     return conts[0]
 
+def schemaTree():
+    connection = pymysql.connect(host='localhost',
+                                 user=self.user,
+                                 password=self.passwd,
+                                 db=self.db,
+                                 charset='utf8mb4',
+                                 cursorclass=pymysql.cursors.DictCursor)
+
+    try:
+        with connection.cursor() as cursor:
+            # forming an XML
+            root = Element('database')
+            root.set('dbname', self.db)
+            tree = ElementTree(root)
+            tablesElement = Element('tables')
+            root.append(tablesElement)
+
+            # Using Cursor to fetch data as SQL queries
+            cursor.execute("SHOW TABLES")
+            connection.commit()
+            tables = cursor.fetchall()
+            for table in tables:
+                tablekeyList = sorted(list(table.keys()))
+                tableSubElement = SubElement(tablesElement, "table")
+                tableSubElement.set('tbname', str(table[tablekeyList[0]]))
+                cursor.execute("select table_name, column_name, data_type, character_maximum_length, column_key "
+                               "from INFORMATION_SCHEMA.COLUMNS "
+                               "where table_name = '"+table[tablekeyList[0]]+"' AND TABLE_SCHEMA = '"+self.db+"';")
+                atts = cursor.fetchall()
+                connection.commit()
+                attsSubElement = SubElement(tableSubElement, "attributes")
+                for att in atts:
+                    attKeyList = sorted(list(att.keys()))
+                    attSubElement = SubElement(attsSubElement, "attribute")
+                    dataTypeSubElement = SubElement(attSubElement, "dataType")
+                    lengthSubElement = SubElement(attSubElement, "maxLength")
+                    columnKeyElement = SubElement(attSubElement, "columnKey")
+                    refTableSubElement = SubElement(attSubElement, "referencedTable")
+                    refColumnSubElement = SubElement(attSubElement, "referencedColumn")
+                    valuesSubElement = SubElement(attSubElement, "values")
+                    attSubElement.set('attname', str(att[attKeyList[2]]))
+                    dataTypeSubElement.text = str(att[attKeyList[3]])
+                    lengthSubElement.text = str(att[attKeyList[0]])
+                    columnKeyElement.text = str(att[attKeyList[1]])
+                    cursor.execute("SELECT table_name,column_name,referenced_table_name,referenced_column_name "
+                                   "FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE "
+                                   "WHERE column_name = '" + str(att[attKeyList[2]]).lower() + "' AND table_name = '" + str(
+                        table[tablekeyList[
+                            0]]).lower() + "' AND referenced_column_name IS NOT NULL AND CONSTRAINT_SCHEMA = '" + self.db + "';")
+                    foreigns = cursor.fetchall()
+                    connection.commit()
+
+                    cursor.execute("SELECT " + str(att[attKeyList[2]]) + " FROM " + str(table[tablekeyList[0]]))
+                    dataSet = cursor.fetchall()
+                    connection.commit()
+
+                    i = 1
+                    for data in dataSet:
+                        dataSubElement = SubElement(valuesSubElement, "data")
+                        dataSubElement.set('id', str(i))
+                        if data:
+                            dataSubElement.text = str(data[str(att[attKeyList[2]])])
+                            i += 1
+
+                    for foreign in foreigns:
+                        foreignKeyList = sorted(list(foreign.keys()))
+                        if foreign:
+                            refTableSubElement.text = foreign[foreignKeyList[2]]
+                            refColumnSubElement.text = foreign[foreignKeyList[1]]
+            return tree
+    finally:
+        connection.close()
+
+
+
 def convertToSQL(queryList):
 
     queryStatementList = []
@@ -191,17 +264,35 @@ def convertToSQL(queryList):
         conditionStr = ''
         projectionStr = '*'
 
+        # if(query.projection[0] != ''):
+        #     projectionStr = query.projection[0].replace('[', '').replace(']', '').replace(' ','')
+
+
         if len(query.tables)==1:
             tableName = query.tables[0]
-        if len(query.conditions) > 0:
-            conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
+            template = ''
+            if len(query.conditions) > 0:
+                conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
+                template = "SELECT {} FROM {} WHERE {}"
 
-        template = "SELECT {} FROM {} WHERE {}"
-        statement = template.format(projectionStr, tableName, conditionStr)
-        print(statement)
-        queryStatementList.append(statement.replace("'","\"").replace("‘", "\""))
+            else:
+                template = "SELECT {} FROM {}"
+
+            statement = template.format(projectionStr, tableName, conditionStr)
+            print(statement)
+            queryStatementList.append(statement.replace("'","\"").replace("‘", "\""))
 
 
+        if len(query.tables)==2:
+            if len(query.conditions) > 0:
+                conditionStr = ' AND '.join(
+                    [condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in
+                     query.conditions])
+
+            template = "SELECT {} FROM {} INNER JOIN {} ON {}"
+            statement = template.format(projectionStr, query.tables[0], query.tables[1], conditionStr)
+            print(statement)
+            queryStatementList.append(statement.replace("'", "\"").replace("‘", "\""))
 
     if len(queryStatementList)==1:
         return queryStatementList[0]
@@ -214,3 +305,4 @@ def convertToSQL(queryList):
         print('projection : ' + str(query.projection))
 
     return "SELECT * FROM hotel"
+

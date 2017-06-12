@@ -16,6 +16,12 @@ def makeConnection(user, passwd, db):
 
 # create the sql query
 def createQuery(attList, tableList, value, symbol, prv_attribute, condition_list, operator):
+    if value and len(condition_list) >= 2 and not attList:
+        basciSQL = "SELECT * FROM " + ', '.join(tableList) + " WHERE " + condition_list[
+            0][0] + condition_list[0][1] + value[0] + operator[0].upper() + " " + condition_list[1][0] + \
+                   condition_list[1][1] + value[1] + ";"
+        return basciSQL
+
     if value and len(condition_list) >= 2:
         basciSQL = "SELECT " + ', '.join(attList) + " FROM " + ', '.join(tableList) + " WHERE " + condition_list[
             0][0] + condition_list[0][1] + value[0] + operator[0].upper() + " " + condition_list[1][0] + \
