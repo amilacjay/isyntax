@@ -20,8 +20,8 @@ class App:
 
 
         ### Extractors List in the Order of Execution
-        extractorsList = [PossessionBasedExtractor, RemoveDuplicateEntities, RemoveNonPotentialEntities, SuggestRelationshipTypes,
-                          RemoveDuplicateAttributes, UniqueKeyExtractor, IdentifyAttributeDataType]
+        extractorsList = [PossessionBasedExtractor, RemoveDuplicateEntities, RemoveNonPotentialEntities,
+                          RemoveDuplicateAttributes, UniqueKeyExtractor, SuggestRelationshipTypes, IdentifyAttributeDataType]
 
 
         for extractor in extractorsList:
