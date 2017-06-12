@@ -193,15 +193,26 @@ def convertToSQL(queryList):
 
         if len(query.tables)==1:
             tableName = query.tables[0]
-        if len(query.conditions) > 0:
-            conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
 
-        template = "SELECT {} FROM {} WHERE {}"
-        statement = template.format(projectionStr, tableName, conditionStr)
-        print(statement)
-        queryStatementList.append(statement.replace("'","\"").replace("‘", "\""))
+            if len(query.conditions) > 0:
+                conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
+
+            template = "SELECT {} FROM {} WHERE {}"
+            statement = template.format(projectionStr, tableName, conditionStr)
+            print(statement)
+            queryStatementList.append(statement.replace("'","\"").replace("‘", "\""))
 
 
+        if len(query.tables)==2:
+            if len(query.conditions) > 0:
+                conditionStr = ' AND '.join(
+                    [condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in
+                     query.conditions])
+
+            template = "SELECT {} FROM {} INNER JOIN {} ON {}"
+            statement = template.format(projectionStr, query.tables[0], query.tables[1], conditionStr)
+            print(statement)
+            queryStatementList.append(statement.replace("'", "\"").replace("‘", "\""))
 
     if len(queryStatementList)==1:
         return queryStatementList[0]
