@@ -110,6 +110,7 @@ class SketchQueryWindow(QMainWindow):
         self.btnBrowse.clicked.connect(self.browseBtnClicked)
         self.btnGenerateSQL.clicked.connect(self.generateSQLClicked)
         self.btnExecute.clicked.connect(self.executeSQL)
+        self.btnPrev.clicked.connect(self.showImage)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -134,14 +135,21 @@ class SketchQueryWindow(QMainWindow):
         self.btnTestConn.setText(_translate("MainWindow", "Test Connection"))
 
     def browseBtnClicked(self):
-        path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../samples/', filter='*.png;*.jpg')
+        path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='sketchquery/samples/', filter='*.png;*.jpg')
         self.filePath = path
         self.txtFile.setText(self.filePath)
 
 
     def generateSQLClicked(self):
         if(self.filePath != None):
-            sketchQueryApp = SketchQueryApp(self.filePath, self.detailedImage.isChecked(), self.intermediateImages.isChecked())
+            conn = pymysql.connect(host=self.txtHost.text(),
+                                   port=int(self.txtPort.text()),
+                                   user=self.txtUsername.text(),
+                                   passwd=self.txtPassword.text(),
+                                   db=self.txtDB.text())
+
+
+            sketchQueryApp = SketchQueryApp(self.filePath, self.detailedImage.isChecked(), self.intermediateImages.isChecked(), conn)
             sql = sketchQueryApp.run()
             self.txtSqlCmd.setPlainText(sql)
 
@@ -163,6 +171,15 @@ class SketchQueryWindow(QMainWindow):
         columns = [col[0] for col in cur.description]
         resultDialog = ResultDialog(self, data=data, columns=columns)
         resultDialog.show()
+        cur.close()
+        conn.close()
+
+    def showImage(self):
+        image = cv2.imread(self.filePath)
+        ratio, resized = optimalSize(image)
+        cv2.imshow('Image', resized)
+        cv2.waitKey(0)
+        cv2.destroyWindow('Image')
 
 
     def testConn(self):
