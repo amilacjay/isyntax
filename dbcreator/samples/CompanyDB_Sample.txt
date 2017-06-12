@@ -2,7 +2,7 @@ Company is organized into departments.
 A department has a department name, unique department number and a manager who manages it.
 Company records manager's ssn and start date.
 Department may have several locations.
-Each department has employees who work in it.
+Each department has atleast one employee who works in it.
 Employee has name, birth date, address, sex, salary and unique ssn.
 Each employee has a supervisor.
 Supervisor has a unique ssn.
