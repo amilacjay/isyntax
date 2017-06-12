@@ -57,7 +57,7 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         entity.setAttributes(attributes)
                         break
 
-                ### Possession Based Extraction
+                ### Possession Based Entity Extraction
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -138,7 +138,15 @@ class SuggestRelationshipTypes(SecondaryExtractor):
                     atrListE2 = entity2.getAttributes()
                     for atr in atrListE2:
                         if atr.name().lower() == entity1.name().lower():
-                            entity1.relationships.append((entity2, atr))
+
+                            e1Pk = [at.name() for at in entity2.getAttributes() if at.isPrimaryKey == True]
+
+                            atrListE2.remove(atr)
+                            newAttr=Attribute(entity2.data)
+                            newAttr.dtype = DataType.INTEGER
+                            newAttr.isForeignKey=True
+                            entity1.getAttributes().append(newAttr)
+                            entity1.relationships.append((newAttr, entity2, e1Pk))
 
 
 ### Fiteration of Attributes
