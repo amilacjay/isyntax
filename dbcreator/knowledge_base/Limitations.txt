@@ -1,0 +1,33 @@
+1)Company keeps track of the current number of hours per week that an employee works on each project.
+
+2)Each department is described by a name, department code, office number, office phone number, and college.
+  Each student is identified by a unique identifier, first and last name, and an e-mail address.
+  Each course is identified by a course number, a section number, and the term in which it is taught.
+  Both Social Security number and student number have unique values for each student.
+  Each drug is sold by a given pharmaceutical company, and the trade name identifies a drug uniquely from among the products of that company.
+  Authors of papers are uniquely identified by e-mail id.
+  Reviewers of papers are uniquely identified by e-mail address.
+
+3)Both name and ZIP code have unique values for each department.
+  The value of the course number is unique for each course.
+  The section number distinguishes sections of the same course that are taught during the same semester/year.
+
+4)Each instructor teaches certain courses each term.
+  For each course he or she teaches, instructor specifies the minimum number of points required in order to earn letter grades.
+  For each traffic controller, you must store the date of the most recent exam.
+  For each testing event, the information needed is the date, the number of hours the technician spent doing the test, and the score the airplane received on the test.
+
+5)Each technician is an expert on one or more plane model(s).
+
+6)Traffic controllers must have an annual medical examination.
+
+
+
+
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@ supervisor - ssn(unique)
 dependent - name, sex, birth date, relationship to the employee
 project - project name, project number(unique), location
 
+(NPE => company)
 (r'ships => department-manager, department-employee, department-projects, employee-supervisor, employee-dependent)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -18,6 +19,7 @@ project - name(unique), number(unique), location
 dependent - first name, sex, birth date, relationship to employee
 supervisor
 
+(NPE => company)
 (r'ships => department-employee, department-projects, employee-project, employee-supervisor, employee-dependent)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -26,31 +28,34 @@ Sample_2
 student - name, number(unique), social security number(unique), current address, phone number, permanent address(city, state, ZIP code),
 	        phone number, birth date, sex, class, major department, minor department, degree program, last name
 department - name(unique), department code(unique), office number, office phone number, college
-course - course name, description, course number(unique), number of semester hours, level, offering department
+course - course name, description, course number(unique), number of semester hours, level, department
 section - instructor, semester, year, course, section number(unique)
 grade report - student, section, letter grade, numeric grade
 
+(NPE => university)
 (r'ships => section-course, grade report-section, course-department, student-department)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_3
 booking - date, time, fee
-band - members, desired fee
-agent
+band - members, fee, contact number
+agent - fee, band's contact number
 night club - name, address, contact person, target maximum fee
 contact person - telephone number
 
-(r'ships =>
+(NPE =>
+(r'ships => night club-contact person)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_4
 author - e-mail id(unique), first name, last name
-paper - identifier(unique), title, abstract, name of the electronic file, authors, contact author
+paper - identifier(unique), title, abstract, name of the electronic file, multiple authors, contact author
 reviewer - e-mail address(unique), first name, last name, phone number, affiliation, topics of interest
 
-(r'ships => paper-author)
+(NPE => database system)
+(r'ships => paper-author, paper-reviewer)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -58,20 +63,25 @@ Sample_5
 doctor - name, address, contact phones, area of specialization
 patient - name, address, phones, health record number, date of birth, history of appointments, prescriptions,
             blood tests, diagnoses, valid refill
+nurses
+administrative staff
 
-(r'ships =>
+(NPE => health provider company)
+(r'ships => doctor-patient)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
 Sample_6
 airplane - registration number, model
 model - model number, capacity, weight
-technicians - name, ssn, address, phone number, salary
+technician - name, ssn, address, phone number, salary
 traffic controller - date of the most recent exam
 employee - union membership number, social security number(unique)
-test - Federal Aviation Administration(FAA) test number, name, maximum possible score
+test - Federal Aviation Administration test number, name, maximum possible score
 testing event - date, number of hours, score
 
+(NPE => airport)
+(NE => FAA)
 (r'ships =>airplane-model)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
@@ -79,13 +89,15 @@ testing event - date, number of hours, score
 Sample_7
 patient - ssn(unique), name, address, age, primary physician
 doctor - ssn(unique), name, speciality, years of experience, patient
-pharmaceutical company - name(unique), phone number
 drug - trade name(unique), formula, price
 pharmacy - name, address, phone number
+prescription - date, quantity
 contract - start date, end date, text of the contract, supervisor
 supervisor
+pharmaceutical company - name(unique), phone number
 
-(r'ships => doctor-patient, contract-supervisor)
+(NPE => pharmaceutical company)
+(r'ships => doctor-patient, contract-supervisor, pharmaceutical company-pharmacy, patient-primary physician, pharmacy-drug, patient-drug)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -95,8 +107,9 @@ project - project number, sponsor name, starting date, ending date, budget,
             principal investigator, co-investigators, research assistants
 graduate student - ssn, name, age, degree program, supervisor, major department, student advisor
 department - department number, department name, main office, professor
+student advisor
 
-(r'ships =>department-professor)
+(r'ships =>department-professor, project-professor, project-graduate student, graduate student-department, graduate student-student advisor)
 
 ---------------------------------------------------------------------------------------------------------------------------------------------
 

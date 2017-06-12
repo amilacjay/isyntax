@@ -13,15 +13,15 @@ class App:
 
         entityList = []
 
-        ## primary data sets
+        ### Primary Data Sets
         tagged_sentences = getTaggedSentences(text)
         chunked_sentences = getChunkedSentences(tagged_sentences)
         ne_chunked_sentences = getNamedEntities(text)
 
 
-        ## extractors List in the order of execution
-        extractorsList = [PossessionBasedExtractor, UniqueKeyExtractor, RemoveDuplicateEntities, RemoveDuplicateAttributes,
-                          IdentifyAttributeDataType, RemoveNonPotentialEntities, SuggestRelationshipTypes]
+        ### Extractors List in the Order of Execution
+        extractorsList = [PossessionBasedExtractor, RemoveDuplicateEntities, RemoveNonPotentialEntities, SuggestRelationshipTypes,
+                          RemoveDuplicateAttributes, UniqueKeyExtractor, IdentifyAttributeDataType]
 
 
         for extractor in extractorsList:
@@ -37,7 +37,7 @@ class App:
         return entityList
 
 
-## Main Program Executing
+### Main Program Execution
 
 if __name__ == "__main__":
     app = App(filePath='samples/sample1.txt')

@@ -184,10 +184,44 @@ def getPointsOfRect(stat, shape):
 
 def convertToSQL(queryList):
 
+    queryStatementList = []
+
+    for query in queryList:
+        tableName = ''
+        conditionStr = ''
+        projectionStr = '*'
+
+        if len(query.tables)==1:
+            tableName = query.tables[0]
+
+            if len(query.conditions) > 0:
+                conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
+
+            template = "SELECT {} FROM {} WHERE {}"
+            statement = template.format(projectionStr, tableName, conditionStr)
+            print(statement)
+            queryStatementList.append(statement.replace("'","\"").replace("‘", "\""))
+
+
+        if len(query.tables)==2:
+            if len(query.conditions) > 0:
+                conditionStr = ' AND '.join(
+                    [condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in
+                     query.conditions])
+
+            template = "SELECT {} FROM {} INNER JOIN {} ON {}"
+            statement = template.format(projectionStr, query.tables[0], query.tables[1], conditionStr)
+            print(statement)
+            queryStatementList.append(statement.replace("'", "\"").replace("‘", "\""))
+
+    if len(queryStatementList)==1:
+        return queryStatementList[0]
+
+
     for i, query in enumerate(queryList):
         print("Query : " + str(i + 1))
         print('tables : ' + str(query.tables))
         print('condition : ' + str(query.conditions))
         print('projection : ' + str(query.projection))
 
-    return "SELECT * FROM Student"
+    return "SELECT * FROM hotel"

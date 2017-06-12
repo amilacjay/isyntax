@@ -3,7 +3,6 @@ from dbcreator.core import *
 from nltk import WordNetLemmatizer
 
 
-
 class PrimaryExtractor:
     def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target, isNEExcluded):
         pass
@@ -13,6 +12,8 @@ class SecondaryExtractor:
     def execute(self, entities, isNPEExcluded):
         pass
 
+
+### Identify Candidate Entities & Attributes
 
 class PossessionBasedExtractor(PrimaryExtractor):
     def execute(self, tagged_sents, chunked_sents, ne_chunked_sents, target, isNEExcluded):
@@ -33,6 +34,8 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         attr = Attribute(chunk)
                         attributes.append(attr)
 
+                    ### Named Entity Recognition
+
                     ne_entites = []
 
                     for x in ne_chunked_sents[sIndex]:
@@ -44,7 +47,6 @@ class PossessionBasedExtractor(PrimaryExtractor):
 
                     entity = Entity(entityName)
 
-
                     if(isNEExcluded):
                         if (any(ne not in entity.name().replace('_', ' ').lower() for ne in ne_entites)):
                             target.append(entity)
@@ -55,6 +57,7 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         entity.setAttributes(attributes)
                         break
 
+                ### Possession Based Extraction
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -71,54 +74,16 @@ class PossessionBasedExtractor(PrimaryExtractor):
                     break
 
 
+                ### Pro-noun Based Extraction
+
                 elif item[1] == 'PRP':
                     pass
 
 
-class UniqueKeyExtractor(SecondaryExtractor):
-    def execute(self, entities, isNPEExcluded):
-        for entity in entities:
-
-            for attr in entity.getAttributes():
-                isUnique = False
-                isPrimaryKey = False
-                isNotNull = False
-                tempData = []
-                for i, word in enumerate(attr.data):
-                    if(word[0].lower() in ['unique','uniquely','distinguishable','distinguishes','distinct']):
-                        isUnique = True
-                        isPrimaryKey = True
-                        isNotNull = True
-                    else:
-                        tempData.append(word)
-                attr.data = tempData
-                attr.isUnique = isUnique
-                attr.isPrimaryKey = isPrimaryKey
-                attr.isNotNull = isNotNull
+#############################################################################################################################################
 
 
-class IdentifyAttributeDataType(SecondaryExtractor):
-    def execute(self, entities, isNPEExcluded):
-
-        intList = ['number', 'no', 'id', 'SSN']
-        dateList = ['date', 'dob']
-        doubleList = ['temperature', 'price', 'distance', 'weight', 'fee']
-
-        for entity in entities:
-            attrList = entity.getAttributes()
-            for attr in attrList:
-                for item in intList:
-                    if item.lower() in attr.name().lower():
-                        attr.dtype = DataType.INTEGER
-                    if 'phone' in attr.name().lower():
-                        attr.dtype = DataType.VARCHAR
-                for item in dateList:
-                    if item.lower() in attr.name().lower():
-                        attr.dtype = DataType.DATETIME
-                for item in doubleList:
-                    if item.lower() in attr.name().lower():
-                        attr.dtype = DataType.DOUBLE
-
+### Filteration of Entities
 
 class RemoveDuplicateEntities(SecondaryExtractor):
     def execute(self, entities, isNPEExcluded):
@@ -144,56 +109,6 @@ class RemoveDuplicateEntities(SecondaryExtractor):
                 uniqueEntities.append(entity)
 
         entities[:] = uniqueEntities[:]
-
-
-        # uniqueAttributes = []
-        #
-        # for entity in entities:
-        #     check = True
-        #     attrList = entity.getAttributes()
-        #     for attr in attrList:
-        #         if attr.name().lower() == entity.name().lower():
-        #             check = False
-        #             uniqueAttributes.remove(attr)
-        #             print(attr.name())
-        #             break
-        #
-        #     if check:
-        #         uniqueAttributes.append(attr)
-        #
-        # attrList[:] = uniqueAttributes[:]
-
-
-class RemoveDuplicateAttributes(SecondaryExtractor):
-    def execute(self, entities, isNPEExcluded):
-
-        for entity in entities:
-            attrList = entity.getAttributes()
-            compList = []
-            for i, attr1 in enumerate(attrList):
-                for j, attr2 in enumerate(attrList):
-                    if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
-                        attrList.remove(attr2)
-
-                    compList.append(set([i,j]))
-
-            for attr in attrList:
-                if attr.name() == '%':
-                    attrList.remove(attr)
-
-        # uniqueAttributes = []
-        # for attr in attrList:
-        #         check = True
-        #         for a in uniqueAttributes:
-        #             print(a.name())
-        #             if a.name() == attr.name() or attr.name() == '%':
-        #                 check = False
-        #                 break
-        #
-        #     if check:
-        #         uniqueAttributes.append(attr)
-        #
-        # attrList[:] = uniqueAttributes[:]
 
 
 class RemoveNonPotentialEntities(SecondaryExtractor):
@@ -225,6 +140,111 @@ class SuggestRelationshipTypes(SecondaryExtractor):
                         if atr.name().lower() == entity1.name().lower():
                             entity1.relationships.append((entity2, atr))
 
+
+### Fiteration of Attributes
+
+class RemoveDuplicateAttributes(SecondaryExtractor):
+    def execute(self, entities, isNPEExcluded):
+
+        for entity in entities:
+            attrList = entity.getAttributes()
+            compList = []
+            for i, attr1 in enumerate(attrList):
+                for j, attr2 in enumerate(attrList):
+                    if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
+                        attrList.remove(attr2)
+
+                    compList.append(set([i,j]))
+
+            for attr in attrList:
+                if attr.name() == ('%' or '#' or '$' or '&' or '*' or '@'):
+                    attrList.remove(attr)
+
+
+class UniqueKeyExtractor(SecondaryExtractor):
+    def execute(self, entities, isNPEExcluded):
+        for entity in entities:
+
+            for attr in entity.getAttributes():
+                isUnique = False
+                isPrimaryKey = False
+                isNotNull = False
+                tempData = []
+                for i, word in enumerate(attr.data):
+                    if(word[0].lower() in ['unique','uniquely','distinguishable','distinguishes','distinct']):
+                        isUnique = True
+                        isPrimaryKey = True
+                        isNotNull = True
+                    else:
+                        tempData.append(word)
+                attr.data = tempData
+                attr.isUnique = isUnique
+                attr.isPrimaryKey = isPrimaryKey
+                attr.isNotNull = isNotNull
+
+
+class IdentifyAttributeDataType(SecondaryExtractor):
+    def execute(self, entities, isNPEExcluded):
+
+        intList = ['number', 'no', 'id', 'SSN', 'code']
+        dateList = ['date', 'dob']
+        doubleList = ['temperature', 'price', 'distance', 'weight', 'fee', 'volume']
+
+        for entity in entities:
+            attrList = entity.getAttributes()
+            for attr in attrList:
+                for item in intList:
+                    if item.lower() in attr.name().lower():
+                        attr.dtype = DataType.INTEGER
+                    if 'phone' in attr.name().lower():
+                        attr.dtype = DataType.VARCHAR
+                for item in dateList:
+                    if item.lower() in attr.name().lower():
+                        attr.dtype = DataType.DATETIME
+                for item in doubleList:
+                    if item.lower() in attr.name().lower():
+                        attr.dtype = DataType.DOUBLE
+
+
+
+
+
+
+
+
+
+        # uniqueAttributes = []
+        # for attr in attrList:
+        #         check = True
+        #         for a in uniqueAttributes:
+        #             print(a.name())
+        #             if a.name() == attr.name() or attr.name() == '%':
+        #                 check = False
+        #                 break
+        #
+        #     if check:
+        #         uniqueAttributes.append(attr)
+        #
+        # attrList[:] = uniqueAttributes[:]
+
+
+
+        # uniqueAttributes = []
+        #
+        # for entity in entities:
+        #     check = True
+        #     attrList = entity.getAttributes()
+        #     for attr in attrList:
+        #         if attr.name().lower() == entity.name().lower():
+        #             check = False
+        #             uniqueAttributes.remove(attr)
+        #             print(attr.name())
+        #             break
+        #
+        #     if check:
+        #         uniqueAttributes.append(attr)
+        #
+        # attrList[:] = uniqueAttributes[:]
 
 
 # class RemoveAttributesFromEntityList(SecondaryExtractor):

@@ -1,5 +1,6 @@
 import numpy as np
 import copy
+from dbnormalizer.experiments.database_creator import *
 
 def dependencyMatrix(relation, fds):
     determinants = []
@@ -79,6 +80,27 @@ def findOne(i, j, k, n, dc):
     else:
         return findOne(i, dc[i][k], k, n-1, dc)
 
+def to3NF(cdc, relation, fds):
+    print(cdc)
+    print(relation)
+    print(fds)
+
+    uniques = []
+
+    for x in fds:
+        if x[0] not in uniques:
+            uniques.append(x[0])
+
+    for r, row in enumerate(cdc):
+        rowList = []
+        for c, col in enumerate(row):
+            if str(col) in ['1', '2']:
+                rowList.append(relation[c])
+        # print([uniques[r], rowList])
+        table_creator([uniques[r], rowList])
+
+
+    print("--------->")
 
 ## example 01
 

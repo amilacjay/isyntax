@@ -114,7 +114,9 @@ class DBCreatorWindow(QMainWindow):
         self.statusbar = QtWidgets.QStatusBar(self)
         self.statusbar.setObjectName("statusbar")
         self.setStatusBar(self.statusbar)
-        self.frameGeometry()
+
+        # self.frameGeometry().moveCenter(QtGui.QDesktopWidget().availableGeometry().center())
+
 
         ###
         self.closeEvent = self.closeButtonClicked
@@ -203,7 +205,7 @@ class DBCreatorWindow(QMainWindow):
     def executeBtnClicked(self):
         try:
             dbConn = DbConnection()
-            dbConn.connectToDb(self.executableScript)
+            dbConn.connectToDb(self.executableScript, config_path='../../config.ini')
 
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)

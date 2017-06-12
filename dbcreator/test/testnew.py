@@ -1,7 +1,7 @@
 from nltk import *
 
 
-sentence = "Number of projects has 10 digits and a char."
+sentence = "The FAA requires the airport to keep track"
 wt = word_tokenize(sentence)
 pt = pos_tag(wt)
 # ne = ne_chunk(pt, binary=True)
@@ -25,7 +25,7 @@ def getNamedEntities(text):
     neList = []
     neList.append([x for x in extract_ne_gen])
     print(neSents)
-    # neSents.draw()
+    neSents.draw()
     return neList
 
 

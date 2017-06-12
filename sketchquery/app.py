@@ -258,13 +258,16 @@ class SketchQueryApp:
             cv2.imshow('Grayscale', gray)
             cv2.imshow('test', r)
             cv2.imshow('removed', removed)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
 
         if(self.detailedImage):
             cv2.imshow('resized', resized)
+            cv2.waitKey(0)
+            cv2.destroyAllWindows()
 
-        cv2.waitKey(0)
-        cv2.destroyAllWindows()
+
         logger.info("Sketch Query module was finished successfully!")
         return sql
 
