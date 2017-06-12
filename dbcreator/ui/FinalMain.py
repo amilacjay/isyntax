@@ -241,10 +241,6 @@ class DBCreatorWindow(QMainWindow):
             comboPk.currentTextChanged.connect(self.comboBoxChangedPk)
             comboPk.addItems([str(d) for d in [True, False]])
 
-            comboFk = QComboBox()
-            comboFk.currentTextChanged.connect(self.comboBoxChangedPk)
-            comboFk.addItems([str(d) for d in [True, False]])
-
             comboDt = QComboBox()
             comboDt.currentTextChanged.connect(self.comboBoxChangedDt)
             comboDt.addItems([str(d) for d in list(DataType)])
@@ -257,24 +253,27 @@ class DBCreatorWindow(QMainWindow):
             comboUq.currentTextChanged.connect(self.comboBoxChangedUq)
             comboUq.addItems([str(d) for d in [True, False]])
 
+            ##
             self.attributetable.setItem(row, 0, QTableWidgetItem(attr.name().lower()))
+
             self.attributetable.setCellWidget(row, 1, comboPk)
             comboPk.setCurrentText(str(attr.isPrimaryKey))
             comboPk.setProperty('attribute', attr)
 
-            self.attributetable.setCellWidget(row, 2, comboFk)
-            comboFk.setCurrentText(str(attr.isForeignKey))
-            comboFk.setProperty('attribute', attr)
+            self.attributetable.setItem(row, 2, QTableWidgetItem(str(attr.isForeignKey)))
 
             self.attributetable.setCellWidget(row, 3, comboDt)
             comboDt.setCurrentText(str(attr.dtype))
             comboDt.setProperty('attribute', attr)
+
             self.attributetable.setCellWidget(row, 4, comboNu)
             comboNu.setCurrentText(str(attr.isNotNull))
             comboNu.setProperty('attribute', attr)
+
             self.attributetable.setCellWidget(row, 5, comboUq)
             comboUq.setCurrentText(str(attr.isUnique))
             comboUq.setProperty('attribute', attr)
+
             self.attributetable.setItem(row, 6, QTableWidgetItem(str(attr.data)))
 
         if(self.chk_relation.isChecked()):
