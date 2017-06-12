@@ -4,7 +4,7 @@ Graduate students have an SSN, a name, an age, and a degree program.
 Each project is managed by one professor known as the project’s principal investigator.
 Each project is worked on by one or more professors known as the project’s co-investigators.
 Professors can manage and/or work on multiple projects.
-Each project is managed by one or more research assistants.
+Each project is managed by one or more research assistants who is a graduate student.
 When graduate students work on a project, a professor must supervise their work on the project.
 Graduate students can work on multiple projects. Graduate students will have a supervisor for each one.
 Departments have a department number, a department name, and a main office.

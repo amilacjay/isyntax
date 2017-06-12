@@ -1,4 +1,5 @@
-A "booking" is an event in which a certain band plays in a particular club on a particular date, starting at a certain time, ending at a certain time, and for a specific fee.
+A "booking" is an event in which a certain band plays in a particular club on a particular date, starting at a certain time,
+ending at a certain time, and for a specific fee.
 A band can play more than once a day.
 For each booking, the club pays the talent agent, who keeps a five percent fee and then gives the rest to the band.
 Each band has at least two members.

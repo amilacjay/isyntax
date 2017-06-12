@@ -1,6 +1,6 @@
 import xml.etree.ElementTree
 import dbnormalizer.experiments.functionalDepExtractor as extract
-import dbnormalizer.experiments.amila_test as depMatrix
+import dbnormalizer.experiments.Normalization_algo as depMatrix
 
 
 def table_names(file):
