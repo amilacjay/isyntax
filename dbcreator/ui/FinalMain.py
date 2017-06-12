@@ -205,7 +205,7 @@ class DBCreatorWindow(QMainWindow):
     def executeBtnClicked(self):
         try:
             dbConn = DbConnection()
-            dbConn.connectToDb(self.executableScript)
+            dbConn.connectToDb(self.executableScript, config_path='../../config.ini')
 
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)

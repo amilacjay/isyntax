@@ -46,7 +46,7 @@ class WelcomeWindow(QMainWindow):
         self.label.setGeometry(QtCore.QRect(0, 0, 771, 511))
         self.label.setMinimumSize(QtCore.QSize(771, 511))
         self.label.setText("")
-        self.label.setPixmap(QtGui.QPixmap("../../../../../../Desktop/background.jpg"))
+        self.label.setPixmap(QtGui.QPixmap("background.jpg"))
         self.label.setObjectName("label")
         self.label_2 = QtWidgets.QLabel(self.centralwidget)
         self.label_2.setGeometry(QtCore.QRect(480, 20, 261, 20))
