@@ -251,7 +251,7 @@ class SketchQueryApp:
         #     print('projection : ' + str(query.projection))
 
 
-        sql = convertToSQL(queryList)
+        sql = convertToSQL(queryList, self.schemaTree)
 
 
         if(self.stepImages):
