@@ -106,18 +106,22 @@ class WelcomeWindow(QMainWindow):
     def showDBCreator(self):
         dbCreatorWindow = DBCreatorWindow(self)
         dbCreatorWindow.show()
+        self.showMinimized()
 
     def showWordQuery(self):
         wordQueryWindow = WordQueryWindow(self)
         wordQueryWindow.show()
+        self.showMinimized()
 
     def showSketchQuery(self):
         sketchQueryWindow = SketchQueryWindow(self)
         sketchQueryWindow.show()
+        self.showMinimized()
 
     def showDBNormalizer(self):
         dbNormalizerWindow = DBNormalizerWindow(self)
         dbNormalizerWindow.show()
+        self.showMinimized()
 
 if __name__ == "__main__":
     import sys
