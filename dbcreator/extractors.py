@@ -154,12 +154,17 @@ class SuggestRelationshipTypes(SecondaryExtractor):
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities, isNPEExcluded):
 
+        wn = WordNetLemmatizer()
+
         for entity in entities:
             attrList = entity.getAttributes()
             compList = []
             for i, attr1 in enumerate(attrList):
+                orgAttr = wn.lemmatize(attr1.name().lower())
                 for j, attr2 in enumerate(attrList):
-                    if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
+                    unqAttr = wn.lemmatize(attr2.name().lower())
+
+                    if(i!=j and set([i,j]) not in compList and orgAttr == unqAttr):
                         attrList.remove(attr2)
 
                     compList.append(set([i,j]))

@@ -9,6 +9,8 @@ from dbcreator.app import App
 from dbcreator.core import *
 from dbcreator.models import *
 
+from nltk import WordNetLemmatizer
+
 
 class DBCreatorWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -172,6 +174,39 @@ class DBCreatorWindow(QMainWindow):
                 self.chk_nonpotential.setEnabled(True)
             else:
                 self.btn_analyze.setEnabled(False)
+                self.chk_generate.setEnabled(False)
+                self.chk_NE.setEnabled(False)
+                self.chk_nonpotential.setEnabled(False)
+
+
+    def resetBtnClicked(self):
+        self.btn_analyze.setEnabled(False)
+        self.btn_generate.setEnabled(False)
+        self.btn_preview.setEnabled(False)
+        self.btn_execute.setEnabled(False)
+        # self.btn_remove.setEnabled(False)
+        self.chk_relation.setEnabled(False)
+        self.chk_generate.setEnabled(False)
+        self.chk_NE.setEnabled(False)
+        self.relationships.clear()
+        # self.chk_nonpotential.setEnabled(False)
+
+        self.entitylist.clear()
+        for i in range(self.attributetable.rowCount()):
+            self.attributetable.removeRow(0)
+        self.description.clear()
+
+
+    def closeButtonClicked(self, event):
+        pass
+        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
+                                     QMessageBox.Yes | QMessageBox.No,
+                                     QMessageBox.No)
+
+        if reply == QMessageBox.Yes:
+            event.accept()
+        else:
+            event.ignore()
 
 
     def analyzeBtnClicked(self):
@@ -206,6 +241,15 @@ class DBCreatorWindow(QMainWindow):
         self.btn_analyze.setEnabled(False)
 
 
+    def previewButtonClicked(self, event):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Information)
+        msg.setWindowTitle("SQL Script")
+        msg.setText("SQL Script is Generated!!")
+        msg.setDetailedText(self.script)
+        msg.exec_()
+
+
     def executeBtnClicked(self):
         try:
             dbConn = DbConnection()
@@ -232,9 +276,17 @@ class DBCreatorWindow(QMainWindow):
     def entityListItemClicked(self, item):
         self.currentEntity = item
         attributes = item.getAttributes()
+
+        # wn = WordNetLemmatizer()
+        # attrLemmaList = []
+        # for att in attributes:
+        #     attLemma = wn.lemmatize(att.name().lower())
+        # attrLemmaList.append(attLemma)
+
         self.attributetable.setColumnCount(7)
         self.attributetable.setHorizontalHeaderLabels(['Name', 'Primary Key', 'Foreign Key', 'Data Type', 'Not Null', 'Unique', 'INFO'])
 
+        ##
         self.attributetable.setRowCount(len(attributes))
         for row, attr in enumerate(attributes):
             comboPk = QComboBox()
@@ -283,36 +335,6 @@ class DBCreatorWindow(QMainWindow):
             self.relationships.setText('\n'.join(relationshiplist))
 
 
-    def resetBtnClicked(self):
-        self.btn_analyze.setEnabled(False)
-        self.btn_generate.setEnabled(False)
-        self.btn_preview.setEnabled(False)
-        self.btn_execute.setEnabled(False)
-        # self.btn_remove.setEnabled(False)
-        self.chk_relation.setEnabled(False)
-        self.chk_generate.setEnabled(False)
-        self.chk_NE.setEnabled(False)
-        self.relationships.clear()
-        # self.chk_nonpotential.setEnabled(False)
-
-        self.entitylist.clear()
-        for i in range(self.attributetable.rowCount()):
-            self.attributetable.removeRow(0)
-        self.description.clear()
-
-
-    def closeButtonClicked(self, event):
-        pass
-        reply = QMessageBox.question(self, 'Message', "Are you sure to quit?",
-                                     QMessageBox.Yes | QMessageBox.No,
-                                     QMessageBox.No)
-
-        if reply == QMessageBox.Yes:
-            event.accept()
-        else:
-            event.ignore()
-
-
     def tableRowClicked(self, row, column):
         print(row, column)
 
@@ -352,15 +374,6 @@ class DBCreatorWindow(QMainWindow):
         else:
             self.lbl_relation.setEnabled(False)
             self.relationships.setEnabled(False)
-
-
-    def previewButtonClicked(self, event):
-        msg = QMessageBox()
-        msg.setIcon(QMessageBox.Information)
-        msg.setWindowTitle("SQL Script")
-        msg.setText("SQL Script is Generated!!")
-        msg.setDetailedText(self.script)
-        msg.exec_()
 
 
 
