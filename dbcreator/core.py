@@ -93,8 +93,15 @@ def createSQLScript(entities):
         attributeList = entity.getAttributes()
         keys = [atr.name() for atr in attributeList if atr.isUnique == True]
         primaryKeyLine = '\tPRIMARY KEY('+ ','.join(keys) +')'
+
         # fKeys = [atr.name() for atr in attributeList if atr.isForeignKey == True]
-        # foreignKeyLine = '\tFOREIGN KEY('+ ','.join(fKeys) +')'
+        foreignKeyLines = ''
+        for i, relationship in enumerate(entity.relationships):
+            if i < len(entity.relationships)-1:
+                foreignKeyLines += (',\n\tFOREIGN KEY (' + relationship[0].name().lower() + ') REFERENCES '+relationship[1].name() + ' (' + ','.join(relationship[2]) + '),\n')
+            else:
+                foreignKeyLines += (',\n\tFOREIGN KEY (' + relationship[0].name().lower() + ') REFERENCES ' + relationship[1].name() + ' (' + ','.join(relationship[2]) + ')')
+
 
         for i, attribute in enumerate(attributeList):
             dTypeSize = '(50)'
@@ -109,11 +116,11 @@ def createSQLScript(entities):
             queryBody = queryBody + attributeLine
 
         if len(keys) != 0:
-            wholeSQL = wholeSQL + (firstLine + queryBody + delimiter + primaryKeyLine + lastLine)
+            wholeSQL = wholeSQL + (firstLine + queryBody + delimiter + primaryKeyLine + foreignKeyLines + lastLine)
         # elif len(fKeys) != 0:
         #     wholeSQL = wholeSQL + (firstLine + queryBody + delimiter + primaryKeyLine + delimiter + foreignKeyLine +lastLine)
         else:
-            wholeSQL = wholeSQL + (firstLine + queryBody +lastLine)
+            wholeSQL = wholeSQL + (firstLine + queryBody + foreignKeyLines + lastLine)
 
     return wholeSQL
 

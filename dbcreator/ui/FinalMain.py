@@ -77,11 +77,11 @@ class DBCreatorWindow(QMainWindow):
         self.chk_generate.setGeometry(QtCore.QRect(500, 200, 131, 31))
         self.chk_generate.setObjectName("chk_generate")
         self.relationships = QtWidgets.QTextEdit(self.centralwidget)
-        self.relationships.setEnabled(False)
+        self.relationships.setEnabled(True)
         self.relationships.setGeometry(QtCore.QRect(230, 590, 441, 71))
         self.relationships.setObjectName("relationships")
         self.lbl_relation = QtWidgets.QLabel(self.centralwidget)
-        self.lbl_relation.setEnabled(False)
+        self.lbl_relation.setEnabled(True)
         self.lbl_relation.setGeometry(QtCore.QRect(230, 560, 91, 21))
         font = QtGui.QFont()
         font.setBold(True)
@@ -101,7 +101,7 @@ class DBCreatorWindow(QMainWindow):
         self.chk_nonpotential.setGeometry(QtCore.QRect(760, 200, 171, 31))
         self.chk_nonpotential.setObjectName("chk_nonpotential")
         self.chk_relation = QtWidgets.QCheckBox(self.centralwidget)
-        self.chk_relation.setEnabled(False)
+        self.chk_relation.setEnabled(True)
         self.chk_relation.setGeometry(QtCore.QRect(230, 530, 141, 31))
         self.chk_relation.setObjectName("chk_relation")
         # self.btn_remove = QtWidgets.QPushButton(self.centralwidget)
@@ -128,7 +128,7 @@ class DBCreatorWindow(QMainWindow):
         self.btn_reset.clicked.connect(self.resetBtnClicked)
         self.btn_generate.clicked.connect(self.generateSqlClicked)
         self.btn_execute.clicked.connect(self.executeBtnClicked)
-        self.chk_relation.clicked.connect(self.relationshipIsChecked)
+        # self.chk_relation.clicked.connect(self.relationshipIsChecked)
         self.btn_preview.clicked.connect(self.previewButtonClicked)
         # self.btn_remove.clicked.connect(self.removeButtonClicked)
 
@@ -185,7 +185,7 @@ class DBCreatorWindow(QMainWindow):
         self.btn_preview.setEnabled(False)
         self.btn_execute.setEnabled(False)
         # self.btn_remove.setEnabled(False)
-        self.chk_relation.setEnabled(False)
+        self.chk_relation.setEnabled(True)
         self.chk_generate.setEnabled(False)
         self.chk_NE.setEnabled(False)
         self.relationships.clear()
@@ -217,12 +217,12 @@ class DBCreatorWindow(QMainWindow):
         if (len(self.entities) > 0):
             self.btn_generate.setEnabled(True)
             self.chk_generate.setEnabled(True)
-            self.chk_relation.setEnabled(True)
+            # self.chk_relation.setEnabled(True)
             # self.btn_remove.setEnabled(True)
         else:
             self.btn_generate.setEnabled(False)
             self.chk_generate.setEnabled(False)
-            self.chk_relation.setEnabled(False)
+            # self.chk_relation.setEnabled(False)
             # self.btn_remove.setEnabled(False)
 
 
@@ -253,7 +253,7 @@ class DBCreatorWindow(QMainWindow):
     def executeBtnClicked(self):
         try:
             dbConn = DbConnection()
-            dbConn.connectToDb(self.executableScript, config_path='../../config.ini')
+            dbConn.connectToDb(self.executableScript, config_path='config.ini')
 
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Information)
@@ -367,13 +367,13 @@ class DBCreatorWindow(QMainWindow):
     #     pass
 
 
-    def relationshipIsChecked(self, event):
-        if self.chk_relation.isChecked():
-            self.lbl_relation.setEnabled(True)
-            self.relationships.setEnabled(True)
-        else:
-            self.lbl_relation.setEnabled(False)
-            self.relationships.setEnabled(False)
+    # def relationshipIsChecked(self, event):
+    #     if self.chk_relation.isChecked():
+    #         self.lbl_relation.setEnabled(True)
+    #         self.relationships.setEnabled(True)
+    #     else:
+    #         self.lbl_relation.setEnabled(False)
+    #         self.relationships.setEnabled(False)
 
 
 

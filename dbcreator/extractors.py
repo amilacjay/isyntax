@@ -113,7 +113,7 @@ class RemoveDuplicateEntities(SecondaryExtractor):
 
 class RemoveNonPotentialEntities(SecondaryExtractor):
     def execute(self, entities, isNPEExcluded):
-        nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
+        nonPotentialList = csv_reader('dbcreator/knowledge_base/nonpotential_entities.csv')
         filteredList = []
 
         if(isNPEExcluded):
