@@ -17,5 +17,5 @@ wnl = WordNetLemmatizer()
 #     print (nn, lemma, isp)
 
 
-lemma = wnl.lemmatize('drugs')
+lemma = wnl.lemmatize('locations')
 print(lemma)
