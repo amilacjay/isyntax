@@ -98,7 +98,7 @@ def createSQLScript(entities):
         foreignKeyLines = ''
         for i, relationship in enumerate(entity.relationships):
             if i < len(entity.relationships)-1:
-                foreignKeyLines += (',\n\tFOREIGN KEY (' + relationship[0].name().lower() + ') REFERENCES '+relationship[1].name() + ' (' + ','.join(relationship[2]) + '),\n')
+                foreignKeyLines += (',\n\tFOREIGN KEY (' + relationship[0].name().lower() + ') REFERENCES '+relationship[1].name() + ' (' + ','.join(relationship[2]) + ')')
             else:
                 foreignKeyLines += (',\n\tFOREIGN KEY (' + relationship[0].name().lower() + ') REFERENCES ' + relationship[1].name() + ' (' + ','.join(relationship[2]) + ')')
 
