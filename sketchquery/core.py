@@ -294,9 +294,9 @@ def convertToSQL(queryList, tree):
 
                 conditionStr = ' AND '.join([condition.replace('&&', 'AND').replace('==', '=').replace('||', 'OR') for condition in query.conditions])
                 if (len(query.projection) > 0):
-                    projectionStr = ','.join(projectionList)
+                    projectionStr = ','.join([minDisWord(col, getColumnNames(tree, minDisWord(tableName, getTableNames(tree)))) for col in projectionList])
                 template = "SELECT {} FROM {} WHERE {}"
-                statement = template.format(projectionStr, tableName, conditionStr)
+                statement = template.format(projectionStr, minDisWord(tableName, getTableNames(tree)), conditionStr)
 
             else:
                 if (len(query.projection) > 0):
