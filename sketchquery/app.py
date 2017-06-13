@@ -17,10 +17,11 @@ logger.addHandler(ch)
 
 class SketchQueryApp:
 
-    def __init__(self, filePath, detailedImage=True, stepImages=False):
+    def __init__(self, filePath, detailedImage=True, stepImages=False, tree=None):
         self.filePath = filePath
         self.detailedImage = detailedImage
         self.stepImages = stepImages
+        self.schemaTree = tree
 
     def run(self):
 
@@ -46,7 +47,7 @@ class SketchQueryApp:
 
         resizingSquare = 700
         logger.info("resizing image into "+ str(resizingSquare) + " square")
-        atio, resized = optimalSize(image, sqr=resizingSquare)
+        ratio, resized = optimalSize(image, sqr=resizingSquare)
 
         logger.info("converting image from BGR to GRAY")
         gray = cv2.cvtColor(resized, cv2.COLOR_BGR2GRAY)
@@ -250,7 +251,7 @@ class SketchQueryApp:
         #     print('projection : ' + str(query.projection))
 
 
-        sql = convertToSQL(queryList)
+        sql = convertToSQL(queryList, self.schemaTree)
 
 
         if(self.stepImages):

@@ -38,7 +38,7 @@ class ResultDialog(QMainWindow):
 
             for r, row in enumerate(self.data):
                 for c, col in enumerate(row):
-                    self.results.setItem(r, c, QTableWidgetItem(col))
+                    self.results.setItem(r, c, QTableWidgetItem(str(col)))
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate

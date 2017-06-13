@@ -1,7 +1,7 @@
 from nltk import *
 
 
-sentence = "The FAA requires the airport to keep track"
+sentence = "Department has department num and dep name."
 wt = word_tokenize(sentence)
 pt = pos_tag(wt)
 # ne = ne_chunk(pt, binary=True)

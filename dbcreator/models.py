@@ -44,6 +44,7 @@ class Attribute:
         self.isPrimaryKey = False
         self.isUnique = False
         self.isNotNull = False
+        self.isForeignKey = False
 
     def name(self):
         words = []

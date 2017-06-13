@@ -57,7 +57,7 @@ class PossessionBasedExtractor(PrimaryExtractor):
                         entity.setAttributes(attributes)
                         break
 
-                ### Possession Based Extraction
+                ### Possession Based Entity Extraction
 
                 elif item[1] == 'POS':
                     posIndex = sent[index-1][2]
@@ -113,7 +113,7 @@ class RemoveDuplicateEntities(SecondaryExtractor):
 
 class RemoveNonPotentialEntities(SecondaryExtractor):
     def execute(self, entities, isNPEExcluded):
-        nonPotentialList = csv_reader('../knowledge_base/nonpotential_entities.csv')
+        nonPotentialList = csv_reader('dbcreator/knowledge_base/nonpotential_entities.csv')
         filteredList = []
 
         if(isNPEExcluded):
@@ -138,7 +138,15 @@ class SuggestRelationshipTypes(SecondaryExtractor):
                     atrListE2 = entity2.getAttributes()
                     for atr in atrListE2:
                         if atr.name().lower() == entity1.name().lower():
-                            entity1.relationships.append((entity2, atr))
+
+                            e1Pk = [at.name() for at in entity2.getAttributes() if at.isPrimaryKey == True]
+
+                            atrListE2.remove(atr)
+                            newAttr = Attribute(entity2.data)
+                            newAttr.dtype = DataType.INTEGER
+                            newAttr.isForeignKey = True
+                            entity1.getAttributes().append(newAttr)
+                            entity1.relationships.append((newAttr, entity2, e1Pk))
 
 
 ### Fiteration of Attributes
@@ -146,12 +154,17 @@ class SuggestRelationshipTypes(SecondaryExtractor):
 class RemoveDuplicateAttributes(SecondaryExtractor):
     def execute(self, entities, isNPEExcluded):
 
+        wn = WordNetLemmatizer()
+
         for entity in entities:
             attrList = entity.getAttributes()
             compList = []
             for i, attr1 in enumerate(attrList):
+                orgAttr = wn.lemmatize(attr1.name().lower())
                 for j, attr2 in enumerate(attrList):
-                    if(i!=j and set([i,j]) not in compList and attr1.name() == attr2.name()):
+                    unqAttr = wn.lemmatize(attr2.name().lower())
+
+                    if(i!=j and set([i,j]) not in compList and orgAttr == unqAttr):
                         attrList.remove(attr2)
 
                     compList.append(set([i,j]))

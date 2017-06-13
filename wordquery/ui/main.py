@@ -10,6 +10,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 from PyQt5.QtWidgets import QMainWindow
 from wordquery.app import App
 from wordquery.ui.tableDetails import Ui_Dialog as TableDetailsDialog
+import pymysql
+from sketchquery.ui.results import ResultDialog
 
 class WordQueryWindow(QMainWindow):
     def __init__(self, parent=None):
@@ -88,6 +90,7 @@ class WordQueryWindow(QMainWindow):
 
         self.btnGenerateSQL.clicked.connect(self.generateSQL)
         self.btnTableDetails.clicked.connect(self.showTableDetails)
+        self.btnExecute.clicked.connect(self.executeSQL)
 
     def retranslateUi(self):
         _translate = QtCore.QCoreApplication.translate
@@ -120,6 +123,19 @@ class WordQueryWindow(QMainWindow):
         ui = TableDetailsDialog(self.xmlFile)
         ui.setupUi(dialogWindow)
         dialogWindow.exec_()
+
+    def executeSQL(self):
+        conn = pymysql.connect(host=self.txtHost.text(),
+                               port=int(self.txtPort.text()),
+                               user=self.txtUsername.text(),
+                               passwd=self.txtPassword.text(),
+                               db=self.txtDB.text())
+        cur = conn.cursor()
+        cur.execute(self.txtSqlCmd.toPlainText())
+        data = cur.fetchall()
+        columns = [col[0] for col in cur.description]
+        resultDialog = ResultDialog(self, data=data, columns=columns)
+        resultDialog.show()
 
 if __name__ == "__main__":
     import sys
