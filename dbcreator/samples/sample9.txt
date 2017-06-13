@@ -1,1 +1,1 @@
-Each employee has a unique ssn, name, hours of work, unique project number, project name and project location.
+Each employee_project has a unique ssn, name, hours work, unique project number, project name and project location.

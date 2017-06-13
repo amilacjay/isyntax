@@ -93,6 +93,8 @@ def createSQLScript(entities):
         attributeList = entity.getAttributes()
         keys = [atr.name() for atr in attributeList if atr.isUnique == True]
         primaryKeyLine = '\tPRIMARY KEY('+ ','.join(keys) +')'
+        fKeys = [atr.name() for atr in attributeList if atr.isForeignKey == True]
+        foreignKeyLine = '\tFOREIGN KEY('+ ','.join(fKeys) +')'
 
         for i, attribute in enumerate(attributeList):
             dTypeSize = '(50)'
@@ -108,6 +110,8 @@ def createSQLScript(entities):
 
         if len(keys) != 0:
             wholeSQL = wholeSQL + (firstLine + queryBody + delimiter + primaryKeyLine + lastLine)
+        elif len(fKeys) != 0:
+            wholeSQL = wholeSQL + (firstLine + queryBody + delimiter + primaryKeyLine + foreignKeyLine +lastLine)
         else:
             wholeSQL = wholeSQL + (firstLine + queryBody +lastLine)
 

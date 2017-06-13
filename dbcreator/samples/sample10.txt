@@ -1,2 +1,2 @@
-Each employee has employee name, unique ssn, birth date, address, department number,
+Each employee_dep has employee name, unique ssn, birth date, address, department number,
 department name and department ssn.

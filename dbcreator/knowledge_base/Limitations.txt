@@ -7,6 +7,7 @@
   Each drug is sold by a given pharmaceutical company, and the trade name identifies a drug uniquely from among the products of that company.
   Authors of papers are uniquely identified by e-mail id.
   Reviewers of papers are uniquely identified by e-mail address.
+  Each project is managed by one professor known as the project’s principal investigator.
 
 3)Both name and ZIP code have unique values for each department.
   The value of the course number is unique for each course.
