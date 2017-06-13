@@ -1,5 +1,5 @@
-Hours depends on Ssn and Pnumber.
-Ssn decides Ename.
-Pname and Plocation based on Pnumber.
-Bdate, Address, Ename and Dnumber depends on emp_Ssn.
-Dnumber decides Dname and Dmgr_ssn.
+hours depends on ssn and project number.
+employee ssn decides name.
+project name and project location based on project number.
+bithdate, address, employee name and department number depends on employee ssn.
+department number decides department name and department ssn.

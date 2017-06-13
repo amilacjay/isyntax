@@ -1,0 +1,16 @@
+This is a company database.
+hours works tells the employee hous worked.
+hours depends on employee ssn and project number.
+ssn in the key attribute and the project number is also unique.
+ssn decides name.
+The project table is to depict the project details.
+it contains project name and project location details.
+project number is the key.
+project name  and project location based on project number.
+employee ssn is a key attribute.
+employee ssn decides name.
+birth date, address, employee name and department number depends on ssn.
+department number decides department name and department ssn.
+There are 7 departments and it has department names.
+manager has a department ssn number.
+

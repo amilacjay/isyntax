@@ -39,7 +39,7 @@ class Fetcher:
                     tableSubElement.set('tbname', str(table[tablekeyList[0]]))
                     cursor.execute("select table_name, column_name, data_type, character_maximum_length, column_key "
                                    "from INFORMATION_SCHEMA.COLUMNS "
-                                   "where table_name = '"+table[tablekeyList[0]]+" AND TABLE_SHEMA = '"+self.db+"';", )
+                                   "where table_name = '"+table[tablekeyList[0]]+"' AND TABLE_SCHEMA = '"+self.db+"';" )
                     atts = cursor.fetchall()
                     connection.commit()
                     attsSubElement = SubElement(tableSubElement, "attributes")
