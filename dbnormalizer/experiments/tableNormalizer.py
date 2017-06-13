@@ -22,11 +22,14 @@ def get_relevantDep(fds, primary):
     alldep = []
     for i, key in enumerate(primary):
         relevantfds = []
+        print("table Name, ",key[0])
         for fd in fds:
             if [fds for fds in fd[0] if fds in key[2]] and len(fd[0]) <= len(key[1]):
                 relevantfds.append(fd)
+                print("fd",fd)
             if [fds for fds in fd[0] if fds in key[1] and (fds not in relevantfds)]:
                 relevantfds.append(fd)
+                print("fd", fd)
         alldep.append([key[0], key[2], relevantfds])
     return alldep
 

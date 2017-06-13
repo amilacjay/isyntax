@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<database dbname="demo1">
+    <tables>
+        <table tbname="employee_dep">
+            <attributes>
+                <attribute attname="employee_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="ssn">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="birth_date">
+                    <dataType>datetime</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="address">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="department_number">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="department_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="department_ssn">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+            </attributes>
+        </table>
+        <table tbname="employee_project">
+            <attributes>
+                <attribute attname="employee_ssn">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="name">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="hours">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="project_number">
+                    <dataType>int</dataType>
+                    <maxLength>None</maxLength>
+                    <columnKey>PRI</columnKey>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="project_name">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+                <attribute attname="project_location">
+                    <dataType>varchar</dataType>
+                    <maxLength>50</maxLength>
+                    <columnKey/>
+                    <referencedTable/>
+                    <referencedColumn/>
+                    <values/>
+                </attribute>
+            </attributes>
+        </table>
+    </tables>
+</database>
