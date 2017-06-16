@@ -38,7 +38,7 @@ Dr. Supunmali Ahangama
 
 Dr. Lochandaka Ranathunga
 
-Members:
+Members & Modules:
 --------
 V.K.M.I. Karunarathne   (Database Creator - dbcreator)
 
