@@ -1,8 +1,8 @@
-# isyntax
-Natural Language Interface for Databases
-Final Year Project
-Faculty of Information Technology
-University of Moratuwa
+# iSyntax
+## Natural Language Interface for Databases
+### Final Year Project
+### Faculty of Information Technology
+### University of Moratuwa
 
 In modern environment the databases has become a strong point of advantage in any field. This is because most of the systems are now computerized. But to handle these systems there needs to be special knowladge and education. These systems enables us to store and retrive necessery data without any hassle. But most of the organizations tend to recruit more people due to the necessity of the technica knowladge.
 
