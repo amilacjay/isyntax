@@ -40,8 +40,11 @@ Dr. Lochandaka Ranathunga
 Members:
 --------
 V.K.M.I. Karunarathne   (Database Creator - dbcreator)
+
 R.A.A.Y. Ranasinghe     (Database Normalizer - dbnormalizer)
+
 K.D.C.P. Kumarasinghe   (Query By Texts - wordquery)
+
 H.P.A.C. Jayawardhana   (Query By Sketches - sketchquery)
 
 
