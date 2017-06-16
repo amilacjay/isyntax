@@ -179,6 +179,9 @@ class DBCreatorWindow(QMainWindow):
                 self.chk_nonpotential.setEnabled(False)
 
 
+    def closeEvent(self, QCloseEvent):
+        self.parent().showNormal()
+
     def resetBtnClicked(self):
         self.btn_analyze.setEnabled(False)
         self.btn_generate.setEnabled(False)
@@ -205,6 +208,7 @@ class DBCreatorWindow(QMainWindow):
 
         if reply == QMessageBox.Yes:
             event.accept()
+            self.parent().showNormal()
         else:
             event.ignore()
 

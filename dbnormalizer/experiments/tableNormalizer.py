@@ -5,7 +5,7 @@ import dbnormalizer.experiments.Normalization_algo as depMatrix
 
 def table_names(file):
     relations = []
-    database = xml.etree.ElementTree.parse('../output/' + file).getroot()
+    database = xml.etree.ElementTree.parse('dbnormalizer/output/' + file).getroot()
     for a in database.iter('table'):
         primary = []
         attributes = []
@@ -34,7 +34,8 @@ def get_relevantDep(fds, primary):
     return alldep
 
 
-def normalize(dep, relation):
+def normalize(dep, relation, database_name):
+    sqlText = ''
     for i in range(len(relation)):
 
         fds = dep[i][2]
@@ -63,12 +64,12 @@ def normalize(dep, relation):
         # print("CDC")
         # print(CDC)
 
-        depMatrix.to3NF(CDC, rel, fds)
 
+        sqlText += str(depMatrix.to3NF(CDC, rel, fds, database_name))
 
+    return sqlText
 
-
-def start_normalizer(file_name="example_scenario.txt", xml_file="example.xml"):
+def start_normalizer(file_name="example_scenario.txt", xml_file="example.xml", database_name=None):
 
     content = extract.readfile(file_name)
     x = extract.table_names(xml_file)
@@ -80,4 +81,4 @@ def start_normalizer(file_name="example_scenario.txt", xml_file="example.xml"):
 
     dependencies = get_relevantDep(fds, tables)
 
-    normalize(dependencies, tables)
+    return normalize(dependencies, tables, database_name)

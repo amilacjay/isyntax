@@ -80,7 +80,8 @@ def findOne(i, j, k, n, dc):
     else:
         return findOne(i, dc[i][k], k, n-1, dc)
 
-def to3NF(cdc, relation, fds):
+def to3NF(cdc, relation, fds, database_name):
+    sql = ''
     print(cdc)
     print(relation)
     print(fds)
@@ -97,11 +98,11 @@ def to3NF(cdc, relation, fds):
             if str(col) in ['1', '2']:
                 rowList.append(relation[c])
         # print([uniques[r], rowList])
-        table_creator([uniques[r], rowList])
+        sql += table_creator([uniques[r], rowList], database_name) + '\n\n'
 
 
     print("--------->")
-
+    return sql
 ## example 01
 
 # relation = ['A', 'B', 'C']

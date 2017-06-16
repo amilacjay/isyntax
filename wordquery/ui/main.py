@@ -105,12 +105,15 @@ class WordQueryWindow(QMainWindow):
         self.label_3.setText(_translate("Dialog", "Password:"))
         self.label.setText(_translate("Dialog", "Database:"))
         self.txtPassword.setText(_translate("Dialog", "1234"))
-        self.txtDB.setText(_translate("Dialog", "school"))
+        self.txtDB.setText(_translate("Dialog", "company_new_new"))
         self.label_2.setText(_translate("Dialog", "Username:"))
         self.label_5.setText(_translate("Dialog", "Host:"))
         self.txtPort.setText(_translate("Dialog", "3306"))
         self.txtUsername.setText(_translate("Dialog", "root"))
         self.btnTableDetails.setText(_translate("Dialog", "Show Table Details"))
+
+    def closeEvent(self, QCloseEvent):
+        self.parent().showNormal()
 
     def generateSQL(self):
         wordQueryApp = App(self.lineEdit.text())

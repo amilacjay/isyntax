@@ -134,6 +134,9 @@ class SketchQueryWindow(QMainWindow):
         self.txtUsername.setText(_translate("MainWindow", "root"))
         self.btnTestConn.setText(_translate("MainWindow", "Test Connection"))
 
+    def closeEvent(self, QCloseEvent):
+        self.parent().showNormal()
+
     def browseBtnClicked(self):
         path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='sketchquery/samples/', filter='*.png;*.jpg')
         self.filePath = path

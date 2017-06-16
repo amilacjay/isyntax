@@ -1,5 +1,5 @@
 Each professor has a SSN, a name, an age, a rank, and a research specialty.
-Each projects has a project number, a sponsor name, a starting date, an ending date, and a budget.
+Each project has a project number, a sponsor name, a starting date, an ending date, and a budget.
 A graduate student has a SSN, a name, an age, and a degree program.
 Each project is managed by one professor known as the project’s principal investigator.
 Each project is worked on by one or more professors known as the project’s co-investigators.

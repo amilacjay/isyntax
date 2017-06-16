@@ -108,7 +108,7 @@ class DBNormalizerWindow(QMainWindow):
         self.label_3.setText(_translate("MainWindow", "Password:"))
         self.label.setText(_translate("MainWindow", "Database:"))
         self.txtPassword.setText(_translate("MainWindow", "1234"))
-        self.txtDB.setText(_translate("MainWindow", "school"))
+        self.txtDB.setText(_translate("MainWindow", "demo1"))
         self.label_2.setText(_translate("MainWindow", "Username:"))
         self.label_5.setText(_translate("MainWindow", "Host:"))
         self.txtPort.setText(_translate("MainWindow", "3306"))
@@ -117,13 +117,16 @@ class DBNormalizerWindow(QMainWindow):
         self.label_6.setText(_translate("MainWindow", "Functional Dependency File:"))
         self.label_7.setText(_translate("MainWindow", "SQL Script for Normalized Database:"))
 
+    def closeEvent(self, QCloseEvent):
+        self.parent().showNormal()
+
     def browseBtnClicked(self):
         path, _ = QtWidgets.QFileDialog.getOpenFileName(directory='../input/', filter='*.txt')
         self.filePath = path
         self.txtFilePath.setText(self.filePath)
 
     def executeBtnClicked(self):
-        start_normalizer(file_name=self.filePath, xml_file=self.txtDB.text() + '.xml')
+        self.textEdit.setText(start_normalizer(file_name=self.filePath, xml_file=self.txtDB.text() + '.xml', database_name=self.txtDB.text()))
 
     def testConn(self):
         try:

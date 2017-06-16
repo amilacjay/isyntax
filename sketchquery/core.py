@@ -129,6 +129,10 @@ def getPointsOfCircle(center, radius, shape):
 
     where = np.argwhere(mask == 255)
     return where
+    # mask = cv2.cvtColor(np.zeros(shape, dtype=np.uint8), cv2.COLOR_BGR2GRAY)
+    # cv2.circle(mask, center, radius, 255, 2)
+    # ret, conts, hier = cv2.findContours(mask, mode=cv2.RETR_EXTERNAL, method=cv2.CHAIN_APPROX_SIMPLE)
+    # return conts[0]
 
 def getCommonPoints(points1, points2):
     commonPts = []

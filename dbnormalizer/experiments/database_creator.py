@@ -5,25 +5,25 @@ from configparser import ConfigParser
 
 # tMatrix = [['course_id'], ['course_id', 'title', 'department_name']]
 tMatrix = [['Dnumber'], ['Dnumber', 'Dname', 'Dmgr_ssn']]
-database_name = 'example'
+# database_name = 'example'
 db_name = ""
 
 def create_name(matrix, db_name):
     return str((matrix[0][0]))+'_'+db_name
 
 # create database
-def table_creator(tableMatrix):
+def table_creator(tableMatrix, database_name):
     attrib_string = ",".join(str(single) for single in tableMatrix[0])
     asd = 'PRIMARY KEY(' + attrib_string + ')'
     sql = 'CREATE TABLE ' + create_name(tableMatrix,database_name) + '_new (' + (
-        ",".join(str(get_datatype(single)[0]) for single in tableMatrix[1])) + ' ,' + asd + ');'
+        ",".join(str(get_datatype(single,database_name)[0] ) for single in tableMatrix[1])) + ' ,' + asd + ');'
 
     print(sql)
     exec_query(sql)
-
+    return sql
 
 # get the relevent datatype from the XML file
-def get_datatype(attrib):
+def get_datatype(attrib, database_name):
     returntype = ''
     attrib_list = attribute_types(database_name + '.xml')
     for singleattrib in attrib_list:
@@ -36,7 +36,7 @@ def get_datatype(attrib):
 # get attribute datatypes from the XML
 def attribute_types(file):
     attribute_type = []
-    database = xml.etree.ElementTree.parse('../output/' + file).getroot()
+    database = xml.etree.ElementTree.parse('dbnormalizer/output/' + file).getroot()
     for a in database.iter('attribute'):
         attribute_type.append([a.attrib['attname'], a.find('dataType').text])
         if a.find('maxLength').text.lower() != 'none':
@@ -61,7 +61,7 @@ def dbConn(user, passwd, db):
 # Excute SQL query
 def exec_query(query):
     config = ConfigParser()
-    config.read('../../config.ini')
+    config.read('config.ini')
 
     txtHost = config.get('DBNormalizer', 'host')
     txtPort = config.get('DBNormalizer', 'port')
@@ -80,6 +80,7 @@ def exec_query(query):
     #     connection.close()
     # pass
     print(query)
+    return query
 
 
 # table_creator(tableMatrix=tMatrix)

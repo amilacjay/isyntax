@@ -90,6 +90,8 @@ class SketchQueryApp:
         elements = []
         queryList = []
 
+        circlesImage = resized.copy()
+
         logger.info("iterating texts and identifying their category")
         for i, tas in enumerate(textAndStats):
             text = tas[0]
@@ -174,6 +176,7 @@ class SketchQueryApp:
                             parent = conts[hier[0][c][3]]
                             # remove joined circles
                             cv2.drawContours(removed, [parent], -1, 0, cv2.FILLED)
+                            # cv2.drawContours(circlesImage, ptsInEncCircle, -1, 0)
 
                             elements.append([1, text, scaledUp])
 
@@ -259,6 +262,7 @@ class SketchQueryApp:
             cv2.imshow('Grayscale', gray)
             cv2.imshow('test', r)
             cv2.imshow('removed', removed)
+            # cv2.imshow('circles', circlesImage)
             cv2.waitKey(0)
             cv2.destroyAllWindows()
 

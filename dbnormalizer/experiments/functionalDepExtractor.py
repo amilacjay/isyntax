@@ -58,7 +58,7 @@ def remove(signList, tokens):
 
 # get attribute names from the XML
 def table_names(file):
-    database = xml.etree.ElementTree.parse('../output/' + file).getroot()
+    database = xml.etree.ElementTree.parse('dbnormalizer/output/' + file).getroot()
     for a in database.iter('attribute'):
         attributes.append(a.attrib['attname'])
     return attributes
