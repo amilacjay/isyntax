@@ -35,6 +35,7 @@ Installation
 Supervisors:
 ------------
 Dr. Supunmali Ahangama
+
 Dr. Lochandaka Ranathunga
 
 Members:
