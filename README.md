@@ -20,3 +20,8 @@ Requirements
 
 Installation
 ============
+
+1. Install Python and all the required dependencies.
+2. Install PyCharm.
+3. Open this project from Pycharm.
+4. Run the "WelcomeWindow.py" script.
